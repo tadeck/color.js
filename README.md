@@ -57,7 +57,7 @@ var hexValue = yellow.toString();     // hexValue = "#FFFF00"
 Color proerties are also mutable:
 
 ``` javascript
-var color = new Color.white();
+var color = Color.white();
 
 color.setRed(255);
 color.setGreen(255);
