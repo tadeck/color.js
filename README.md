@@ -13,22 +13,22 @@ color.js provides several different methods for creating colors.
 
 ``` javascript
 // constructors
-var red = new Color(255, 0, 0);     // RGB constructor
-var green = new Color("#00FF00");   // hexidecimal constructor six digits with hash
-var blue = new Color("#00F");       // hexidecimal constructor three digits with hash
-var white = new Color("FFFFFF");    // hexidecimal constructor six digits without hash
-var black = new Color("000");       // hexidecimal constructor three digits without hash
+var red = new Color(255, 0, 0);    // RGB constructor
+var green = new Color("#00FF00");  // hexidecimal constructor six digits with hash
+var blue = new Color("#00F");      // hexidecimal constructor three digits with hash
+var white = new Color("FFFFFF");   // hexidecimal constructor six digits without hash
+var black = new Color("000");      // hexidecimal constructor three digits without hash
 
 // color model functions.
-var green = Color.rgb(0, 255, 0);   // RGB color model
-var blue = Color.hsl(240, 1, 0.5);  // HSL color model
-var cyan = Color.hsv(180, 1, 1);    // HSV color model
+var green = Color.rgb(0, 255, 0);  // RGB color model
+var blue = Color.hsl(240, 1, 0.5); // HSL color model
+var cyan = Color.hsv(180, 1, 1);   // HSV color model
 
 // hexidecimal functions
-var magenta = Color.hex("#FF00FF"); // hexideciaml six digits with hash
-var yellow = Color.hex("#FF0");     // hexidecimal three digits with hash
-var white = Color.hex("FFFFFF");    // hexidecimal six digits without hash
-var black = Color.hex("000");       // hexidecimal three digits without hash
+var cyan = Color.hex("#00FFFF");   // hexideciaml six digits with hash
+var magenta = Color.hex("#F0F");   // hexidecimal three digits with hash
+var yellow = Color.hex("FFFF00");  // hexidecimal six digits without hash
+var black = Color.hex("000");      // hexidecimal three digits without hash
 ```
 
 In addition, named colors functions are provided.  These colors are defined in the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
