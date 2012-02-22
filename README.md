@@ -1,11 +1,6 @@
 # color.js
 
-color.js is a simple JavaScript color library.  It's designed to be:
-
-* Complete: color.js should contain every useful color function.
-* Flexibile: color.js should allow the developer to use it in multiple ways.
-* Error-free: color.js should be well-tested.
-* Fast: color.js should be as efficient as possible.
+color.js is a simple JavaScript color library.  It's designed to be complete, flexible, error-free, well-documented and fast.
 
 ## Creating Colors
 
