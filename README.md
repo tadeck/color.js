@@ -86,6 +86,6 @@ values are equal.
 var red = Color.red();
 var green = Color.green();
 
-var result1 = red.equals(red);  // result1 = true
+var result1 = red.equals(red);   // result1 = true
 var result2 = red.equals(green); // result2 = false
 ```
