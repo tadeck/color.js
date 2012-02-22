@@ -79,7 +79,7 @@ color.setHex("FFF");
 
 ## Color Comparisons
 
-Finally, colors can be compared for equality.  Two colors are equal if their red, green and blue 
+Colors can be compared for equality.  Two colors are equal if their red, green and blue 
 values are equal.
 
 ``` javascript
