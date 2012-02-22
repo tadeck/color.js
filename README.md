@@ -4,8 +4,8 @@ color.js is a simple JavaScript color library.  It's designed to be:
 
 * Complete: color.js should contain every useful color function.
 * Flexibile: color.js should allow the developer to use it in multiple ways.
-* Error-free: Everything is well-tested.
-* Fast: Everything should be as efficient as possible.
+* Error-free: color.js should be well-tested.
+* Fast: color.js should be as efficient as possible.
 
 ## Creating Colors
 
