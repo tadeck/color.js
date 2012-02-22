@@ -2,6 +2,8 @@
 
 color.js is a simple, flexible JavaScript color library.
 
+## Creating Colors
+
 color.js provides several different methods for creating colors.
 
     /*
@@ -31,6 +33,8 @@ color.js provides several different methods for creating colors.
 In addition, named colors functions are provided.  These colors are taken directly from the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
 
 TODO: add CSS3 Color list http://www.w3.org/TR/css3-color/
+
+## Getting and Setting Color Properties
 
 Several accessors for color data are provided:
 
@@ -68,6 +72,8 @@ Colors are also mutable:
     color.setHex("FFFFFF");
     color.setHex("FFF");
 
+## Color Comparisons
+
 Finally, colors can be compared for equality.  Two colors are equal if their red, green and blue 
 values are equal.
 
@@ -77,5 +83,3 @@ values are equal.
 
     var result1 = red1.equals(red2);  // result1 = true
     var result2 = red1.equals(green); // result2 = false
-
-TODO: add equals
