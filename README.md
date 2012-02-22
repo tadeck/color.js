@@ -89,10 +89,9 @@ Finally, colors can be compared for equality.  Two colors are equal if their red
 values are equal.
 
 ``` javascript
-var red1 = Color.red();
-var red2 = new Color("#FF0000")
+var red = Color.red();
 var green = Color.green();
 
-var result1 = red1.equals(red2);  // result1 = true
-var result2 = red1.equals(green); // result2 = false
+var result1 = red.equals(red);  // result1 = true
+var result2 = red.equals(green); // result2 = false
 ```
