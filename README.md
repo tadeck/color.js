@@ -35,13 +35,13 @@ color.js provides several different methods for creating colors.
     var white = Color.hex("FFFFFF");
     var black = Color.hex("000");
 
-In addition, named colors functions are provided.  These colors are taken directly from the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
+In addition, named colors functions are provided.  These colors are defined in the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
 
 TODO: add CSS3 Color list http://www.w3.org/TR/css3-color/
 
 ## Getting and Setting Color Properties
 
-Several accessors for color data are provided:
+Several accessors for color properties are provided:
 
     var yellow = Color.yellow();
 
@@ -56,9 +56,9 @@ Several accessors for color data are provided:
 
     var hexValue = yellow.toString();     // hexValue = "#FFFF00"
 
-Colors are also mutable:
+Color proerties are also mutable:
 
-    var color = new Color.gray();
+    var color = new Color.white();
 
     color.setRed(255);
     color.setGreen(255);
