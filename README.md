@@ -183,7 +183,7 @@ var yellowGreen = Color.yellowGreen();
 
 ## Getting and Setting Color Properties
 
-Several accessors for color properties are provided:
+Several accessors for color properties are provided.
 
 ``` javascript
 var color = Color.yellow();
@@ -200,7 +200,8 @@ var blue = color.blue();             // blue = 0
 var hexValue = color.toString();     // hexValue = "#FFFF00"
 ```
 
-Color proerties are also mutable:
+Color proerties are also mutable.  All setters return the color object, which allows them to be
+chained.
 
 ``` javascript
 var color = Color.white();
@@ -221,6 +222,9 @@ color.setHex("#FFFFFF");
 color.setHex("#FFF");
 color.setHex("FFFFFF");
 color.setHex("FFF");
+
+// chaining
+color.setHue(0).setSaturation(0).setValue(0);
 ```
 
 ## Color Comparisons
@@ -236,3 +240,7 @@ var color3 = Color.green();
 var result1 = color1.equals(color2); // result1 = true
 var result2 = color1.equals(color3); // result2 = false
 ```
+
+## Cloning Objects
+
+The Color prototype implements a clone function
