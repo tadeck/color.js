@@ -35,18 +35,18 @@ TODO: add CSS3 Color list http://www.w3.org/TR/css3-color/
 Several accessors for color properties are provided:
 
 ``` javascript
-var yellow = Color.yellow();
+var color = Color.yellow();
 
-var hue = yellow.hue();               // hue = 60
-var saturation = yellow.saturation(); // saturation = 1
-var value = yellow.value();           // value = 1
-var lightness = yellow.lightness();   // lightness = 0.5
+var hue = color.hue();               // hue = 60
+var saturation = color.saturation(); // saturation = 1
+var value = color.value();           // value = 1
+var lightness = color.lightness();   // lightness = 0.5
 
-var red = yellow.red();               // red = 255
-var green = yellow.green();           // green = 255
-var blue = yellow.blue();             // blue = 0
+var red = color.red();               // red = 255
+var green = color.green();           // green = 255
+var blue = color.blue();             // blue = 0
 
-var hexValue = yellow.toString();     // hexValue = "#FFFF00"
+var hexValue = color.toString();     // hexValue = "#FFFF00"
 ```
 
 Color proerties are also mutable:
