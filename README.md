@@ -24,6 +24,9 @@ var cyan = Color.hex("#00FFFF");   // hexideciaml six digits with hash
 var magenta = Color.hex("#F0F");   // hexidecimal three digits with hash
 var yellow = Color.hex("FFFF00");  // hexidecimal six digits without hash
 var black = Color.hex("000");      // hexidecimal three digits without hash
+
+// copy constructor
+var gray = new Color(new Color(127, 127, 127));
 ```
 
 In addition, named colors functions are provided.  These colors are defined in the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
@@ -223,7 +226,7 @@ color.setHex("FFF");
 ## Color Comparisons
 
 Colors can be compared for equality.  Two colors are equal if their red, green and blue 
-values are equal.
+values are the same.
 
 ``` javascript
 var color1 = Color.red();
