@@ -267,5 +267,5 @@ var result2 = color1.equals(color3); // result2 = false
 The Color prototype implements a clone function.
 
 ``` javascript
-var color = Color.red().clone();
+var redClone = Color.red().clone();
 ```
