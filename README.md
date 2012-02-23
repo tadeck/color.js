@@ -200,7 +200,7 @@ var blue = color.blue();             // blue = 0
 var hexValue = color.toString();     // hexValue = "#FFFF00"
 ```
 
-Color proerties are also mutable.
+Color proerties are mutable.
 
 ``` javascript
 var color = Color.white();
