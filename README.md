@@ -64,7 +64,7 @@ color.setSaturation(0);
 color.setValue(1);
 color.setLightness(1);
 color.setHSV(0, 0, 1);
-color.setHSL(0, 1, 1);
+color.setHSL(0, 0, 1);
 
 color.setHex("#FFFFFF");
 color.setHex("#FFF");
