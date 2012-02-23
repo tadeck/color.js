@@ -200,32 +200,53 @@ var blue = color.blue();             // blue = 0
 var hexValue = color.toString();     // hexValue = "#FFFF00"
 ```
 
-Color proerties are also mutable.  All setters return the color object, which allows them to be
-chained.
+Color proerties are also mutable.
 
 ``` javascript
 var color = Color.white();
 
+// set red, green and blue
 color.setRed(255);
 color.setGreen(255);
 color.setBlue(255);
-color.setRGB(255, 255, 255);
 
+// set hue, saturation, value and lightness
 color.setHue(0);
 color.setSaturation(0);
 color.setValue(1);
 color.setLightness(1);
+
+// set full color models
+color.setRGB(255, 255, 255);
 color.setHSV(0, 0, 1);
 color.setHSL(0, 0, 1);
 
+// set hex
 color.setHex("#FFFFFF");
 color.setHex("#FFF");
 color.setHex("FFFFFF");
 color.setHex("FFF");
 
-// chaining
+// adjust hue
+color.rotateHue(-30);
+color.complement();
+
+// adjust saturation
+color.saturate(0.25);
+color.desaturate(0.25);
+
+// adjust lightness
+color.lighten(0.25);
+color.darken(0.25);
+```
+
+All mutator methods return the color object.  This allows them to be chained.
+
+``` javascript
 color.setHue(0).setSaturation(0).setValue(0);
 ```
+
+
 
 ## Color Comparisons
 
@@ -243,4 +264,8 @@ var result2 = color1.equals(color3); // result2 = false
 
 ## Cloning Objects
 
-The Color prototype implements a clone function
+The Color prototype implements a clone function.
+
+``` javascript
+var color = Color.red().clone();
+```
