@@ -19,8 +19,69 @@ Constructor for color.  This constructor can be called in the following ways:
 */
 function Color(redOrHexOrColor, green, blue) 
 {
+	if (redOrHexOrColor instanceof Color)
+	{
+		// perform copy
+		this.setRGB(redOrHexOrColor.red(), redOrHexOrColor.green(), redOrHexOrColor.blue());
+	}
+	else if (typeof redOrHexOrColor === "string")
+	{
 
+	}
+	else
+	{
+		// interpret the values as colors
+		this.setRGB(redOrHexOrColor, green, blue);
+	}
 }
+
+/*
+Accessor for the red component of this Color.
+*/
+Color.prototype.red = function()
+{
+	return this._red;
+};
+
+/*
+Accessor for the green component of this Color.
+*/
+Color.prototype.green = function()
+{
+	return this._green;
+};
+
+/*
+Accessor for the blue component of this Color.
+*/
+Color.prototype.blue = function()
+{
+	return this._blue;
+};
+
+/*
+Accessor for the hue component of this Color.
+*/
+Color.prototype.hue = function()
+{
+	return this._hue;
+};
+
+/*
+Accessor for the saturation component of this Color.
+*/
+Color.prototype.saturation = function()
+{
+	return this._saturation;
+};
+
+/*
+Accessor for the value component of this Color.
+*/
+Color.prototype.value = function()
+{
+	return this._value;
+};
 
 /*
 Sets the red, green, and blue values of this color.  This method takes three arguments, 
@@ -71,67 +132,11 @@ Color.prototype.setRGB = function(red, green, blue)
 
 	// calculate the hue
 	if (chroma === 0)
-	{
 		this._hue = 0;
-	}
 	else if (this._value === red)
-	{
 		this._hue = ((green - blue) / chroma + 6) % 6 * 60;
-	}
 	else if (this._value === green)
-	{
 		this._hue = ((blue - red) / chroma + 2) * 60;
-	}
 	else
-	{
 		this._hue = ((red - green) / chroma + 4) * 60;
-	}
-};
-
-/*
-Accessor for the red component of this Color.
-*/
-Color.prototype.red = function()
-{
-	return this._red;
-};
-
-/*
-Accessor for the green component of this Color.
-*/
-Color.prototype.green = function()
-{
-	return this._green;
-};
-
-/*
-Accessor for the blue component of this Color.
-*/
-Color.prototype.blue = function()
-{
-	return this._blue;
-};
-
-/*
-Accessor for the hue component of this Color.
-*/
-Color.prototype.hue = function()
-{
-	return this._hue;
-};
-
-/*
-Accessor for the saturation component of this Color.
-*/
-Color.prototype.saturation = function()
-{
-	return this._saturation;
-};
-
-/*
-Accessor for the value component of this Color.
-*/
-Color.prototype.value = function()
-{
-	return this._value;
 };
