@@ -16,7 +16,6 @@ var black = new Color("000");      // hexidecimal constructor three digits witho
 
 // color model functions.
 var green = Color.rgb(0, 255, 0);  // RGB color model
-var blue = Color.hsl(240, 1, 0.5); // HSL color model
 var cyan = Color.hsv(180, 1, 1);   // HSV color model
 
 // hexidecimal functions
@@ -191,7 +190,6 @@ var color = Color.yellow();
 var hue = color.hue();               // hue = 60
 var saturation = color.saturation(); // saturation = 1
 var value = color.value();           // value = 1
-var lightness = color.lightness();   // lightness = 0.5
 
 var red = color.red();               // red = 255
 var green = color.green();           // green = 255
@@ -214,12 +212,10 @@ color.setBlue(255);
 color.setHue(0);
 color.setSaturation(0);
 color.setValue(1);
-color.setLightness(1);
 
 // set full color models
 color.setRGB(255, 255, 255);
 color.setHSV(0, 0, 1);
-color.setHSL(0, 0, 1);
 
 // set hex
 color.setHex("#FFFFFF");
@@ -235,7 +231,7 @@ color.complement();
 color.saturate(0.25);
 color.desaturate(0.25);
 
-// adjust lightness
+// darken and lighten the color
 color.lighten(0.25);
 color.darken(0.25);
 ```
