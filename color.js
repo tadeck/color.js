@@ -28,10 +28,14 @@ function Color(redOrHexOrColor, green, blue)
 	{
 
 	}
-	else
+	else if(typeof redOrHexOrColor === "number" && typeof green === "number" && typeof blue === "number")
 	{
 		// interpret the values as colors
 		this.setRGB(redOrHexOrColor, green, blue);
+	}
+	else
+	{
+		throw "illegal_argument_exception";
 	}
 }
 
