@@ -17,7 +17,7 @@ Constructor for color.  This constructor can be called in the following ways:
 * With three red, green and blue integers.
 * * new Color(0, 255, 0);
 */
-function Color(redOrHexOrColor, green, blue) 
+function Color() 
 {
 	if (redOrHexOrColor instanceof Color)
 	{

@@ -240,32 +240,38 @@ describe("color", function() {
 
       describe("and the red is above 255", function() {
 
+        var color;
+
+        beforeEach(function() {
+          color = new Color(383, 255, 255);
+        });
+
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.red()).toEqual(255);
         });
   
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.green()).toEqual(255);
         });
   
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.blue()).toEqual(255);
         });
   
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.hue()).toEqual(0);
         });
   
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.saturation()).toEqual(100);
         });
   
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+             expect(color.value()).toEqual(100); 
         });
 
         it("should set the string component", function() {
-             expect('pending').toEqual('completed'); 
+             expect(color.hex()).toEqual("#FFFFFF"); 
         });
       });
 
@@ -339,32 +345,38 @@ describe("color", function() {
 
       describe("and the green is above 255", function() {
 
+        var color;
+
+        beforeEach(function() {
+          color = new Color(255, 383, 255);
+        });
+
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.red()).toEqual(255);
         });
   
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.green()).toEqual(255);
         });
   
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.blue()).toEqual(255);
         });
   
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.hue()).toEqual(0);
         });
   
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.saturation()).toEqual(100);
         });
   
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+             expect(color.value()).toEqual(100); 
         });
 
         it("should set the string component", function() {
-             expect('pending').toEqual('completed'); 
+             expect(color.hex()).toEqual("#FFFFFF"); 
         });
       });
 
@@ -438,32 +450,38 @@ describe("color", function() {
 
       describe("and the blue is above 255", function() {
 
+        var color;
+
+        beforeEach(function() {
+          color = new Color(255, 255, 383);
+        });
+
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.red()).toEqual(255);
         });
   
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.green()).toEqual(255);
         });
   
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.blue()).toEqual(255);
         });
   
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.hue()).toEqual(0);
         });
   
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+             expect(color.saturation()).toEqual(100);
         });
   
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+             expect(color.value()).toEqual(100); 
         });
 
         it("should set the string component", function() {
-             expect('pending').toEqual('completed'); 
+             expect(color.hex()).toEqual("#FFFFFF"); 
         });
       });
 
