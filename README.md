@@ -8,21 +8,21 @@ color.js provides several different methods for creating colors.
 
 ``` javascript
 // constructors
-var red = new Color(255, 0, 0);    // RGB constructor
-var green = new Color("#00FF00");  // hexidecimal constructor six digits with hash
-var blue = new Color("#00F");      // hexidecimal constructor three digits with hash
-var white = new Color("FFFFFF");   // hexidecimal constructor six digits without hash
-var black = new Color("000");      // hexidecimal constructor three digits without hash
+var red = new Color(255, 0, 0);      // RGB constructor
+var green = new Color("#00FF00");    // hexidecimal constructor six digits with hash
+var blue = new Color("#00F");        // hexidecimal constructor three digits with hash
+var white = new Color("FFFFFF");     // hexidecimal constructor six digits without hash
+var black = new Color("000");        // hexidecimal constructor three digits without hash
 
 // color model functions.
-var green = Color.rgb(0, 255, 0);  // RGB color model
-var cyan = Color.hsv(180, 1, 1);   // HSV color model
+var red = Color.rgb(255, 0, 0);      // RGB color model
+var cyan = Color.hsv(180, 100, 100); // HSV color model
 
 // hexidecimal functions
-var cyan = Color.hex("#00FFFF");   // hexideciaml six digits with hash
-var magenta = Color.hex("#F0F");   // hexidecimal three digits with hash
-var yellow = Color.hex("FFFF00");  // hexidecimal six digits without hash
-var black = Color.hex("000");      // hexidecimal three digits without hash
+var cyan = Color.hex("#00FFFF");     // hexideciaml six digits with hash
+var magenta = Color.hex("#F0F");     // hexidecimal three digits with hash
+var yellow = Color.hex("FFFF00");    // hexidecimal six digits without hash
+var black = Color.hex("000");        // hexidecimal three digits without hash
 
 // copy constructor
 var gray = new Color(new Color(127, 127, 127));
@@ -188,8 +188,8 @@ Several accessors for color properties are provided.
 var color = Color.yellow();
 
 var hue = color.hue();               // hue = 60
-var saturation = color.saturation(); // saturation = 1
-var value = color.value();           // value = 1
+var saturation = color.saturation(); // saturation = 100
+var value = color.value();           // value = 100
 
 var red = color.red();               // red = 255
 var green = color.green();           // green = 255
@@ -211,11 +211,11 @@ color.setBlue(255);
 // set hue, saturation, value and lightness
 color.setHue(0);
 color.setSaturation(0);
-color.setValue(1);
+color.setValue(100);
 
 // set full color models
 color.setRGB(255, 255, 255);
-color.setHSV(0, 0, 1);
+color.setHSV(0, 0, 100);
 
 // set hex
 color.setHex("#FFFFFF");
@@ -228,12 +228,12 @@ color.rotateHue(-30);
 color.complement();
 
 // adjust saturation
-color.saturate(0.25);
-color.desaturate(0.25);
+color.saturate(25);
+color.desaturate(25);
 
 // darken and lighten the color
-color.lighten(0.25);
-color.darken(0.25);
+color.lighten(25);
+color.darken(25);
 ```
 
 All mutator methods return the color object.  This allows them to be chained.
