@@ -138,8 +138,6 @@ describe("color", function() {
 
 	describe("constructor", function() {
 
-		var huelessColor0, huelessColor1, huelessColor2, huelessColor3, huelessColor4;
-
 		describe("when three integers are provided", function() {
 
 			it("should set the red component", function() {
