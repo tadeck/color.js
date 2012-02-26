@@ -1,8 +1,6 @@
 eval(require('fs').readFileSync('./color.js','utf-8'));
 
-describe("color", function() {
-
-  console.log(Color);
+describe("Color", function() {
 
   // a large array of pre-calculated test color properties
   var colors;
@@ -23,7 +21,7 @@ describe("color", function() {
     });
 
     // set up the test colors
-    colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8'));
+    colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).colors;
   });
 
   describe("constructor", function() {
@@ -142,7 +140,7 @@ describe("color", function() {
         });
   
         it("should set the saturation component", function() {
-             expect(color.saturation()).toEqual(100);
+             expect(color.saturation()).toEqual(0);
         });
   
         it("should set the value component", function() {
@@ -156,32 +154,54 @@ describe("color", function() {
 
       describe("and the red contains a decimal", function() {
 
+        beforeEach(function() {
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].r + 0.75, colors[i].g, colors[i].b);
+          }
+        });
+
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
         });
-  
+
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
         });
-  
+
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
         });
-  
+
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
         });
-  
+
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
         });
-  
+
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
         });
 
         it("should set the string component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
         });
       });
 
@@ -247,7 +267,7 @@ describe("color", function() {
         });
   
         it("should set the saturation component", function() {
-             expect(color.saturation()).toEqual(100);
+             expect(color.saturation()).toEqual(0);
         });
   
         it("should set the value component", function() {
@@ -261,32 +281,54 @@ describe("color", function() {
 
       describe("and the green contains a decimal", function() {
 
+        beforeEach(function() {
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].r, colors[i].g + 0.75, colors[i].b);
+          }
+        });
+
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
         });
-  
+
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
         });
-  
+
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
         });
-  
+
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
         });
-  
+
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
         });
-  
+
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
         });
 
         it("should set the string component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
         });
       });
 
@@ -311,7 +353,7 @@ describe("color", function() {
         });
   
         it("should set the hue component", function() {
-             expect(color.hue()).toEqual(59.882352);
+             expect(color.hue()).toEqual(60);
         });
   
         it("should set the saturation component", function() {
@@ -352,7 +394,7 @@ describe("color", function() {
         });
   
         it("should set the saturation component", function() {
-             expect(color.saturation()).toEqual(100);
+             expect(color.saturation()).toEqual(0);
         });
   
         it("should set the value component", function() {
@@ -366,228 +408,583 @@ describe("color", function() {
 
       describe("and the blue contains a decimal", function() {
 
+        beforeEach(function() {
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].r, colors[i].g, colors[i].b + 0.75);
+          }
+        });
+
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
         });
-  
+
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
         });
-  
+
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
         });
-  
+
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
         });
-  
+
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
         });
-  
+
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
         });
 
         it("should set the string component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
         });
       });
 
       describe("and the second argument is not a number", function() {
         it("should throw an exception", function() {
-             expect('pending').toEqual('completed'); 
+          expect(function() { new Color(0, "testing", 0); }).toThrow("illegal_argument_exception");
         });
       });
 
       describe("and the third argument is not a number", function() {
         it("should throw an exception", function() {
-             expect('pending').toEqual('completed'); 
+          expect(function() { new Color(0, 0, "testing"); }).toThrow("illegal_argument_exception");
         });
       });
     });
 
     describe("when a Color is provided for the first argument", function() {
 
+      beforeEach(function() {
+        newColors = [];
+
+        for(var i = 0; i < colors.length; i++) {
+          var color = new Color(colors[i].r, colors[i].g, colors[i].b);
+          newColors[i] = new Color(color);
+        }
+      });
+
       it("should set the red component", function() {
-           expect('pending').toEqual('completed');
+        for(var i = 0; i < colors.length; i++) {
+          expect(newColors[i].red()).toEqual(colors[i].r);
+        }
       });
-  
+
       it("should set the green component", function() {
-           expect('pending').toEqual('completed');
+        for(var i = 0; i < colors.length; i++) {
+          expect(newColors[i].green()).toEqual(colors[i].g);
+        }
       });
-  
+
       it("should set the blue component", function() {
-           expect('pending').toEqual('completed');
+        for(var i = 0; i < colors.length; i++) {
+          expect(newColors[i].blue()).toEqual(colors[i].b);
+        }
       });
-  
+
       it("should set the hue component", function() {
-           expect('pending').toEqual('completed');
+        for(var i = 0; i < colors.length; i++) {
+          expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+        }
       });
-  
+
       it("should set the saturation component", function() {
-           expect('pending').toEqual('completed');
+        for(var i = 0; i < colors.length; i++) {
+          expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+        }
       });
-  
+
       it("should set the value component", function() {
-           expect('pending').toEqual('completed'); 
+        for(var i = 0; i < colors.length; i++) {
+          expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+        }
       });
 
       it("should set the string component", function() {
-           expect('pending').toEqual('completed'); 
+        for(var i = 0; i < colors.length; i++) {
+          expect(newColors[i].toString()).toEqual(colors[i].hex);
+        }
       });
     });
 
     describe("when a string is provided for the first argument", function() {
-      describe("with a hash and six hexidecimal digits", function() {
+      describe("with a hash and capitalized six hexidecimal digits", function() {
+
+        beforeEach(function() {
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].hex);
+          }
+        });
 
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
         });
-  
+
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
         });
-  
+
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
         });
-  
+
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
         });
-  
+
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
         });
-  
+
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
         });
 
         it("should set the string component", function() {
-           expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
         });
       });
 
-      describe("with six hexidecimal digits", function() {
+      describe("with a hash and lowercased six hexidecimal digits", function() {
+
+        beforeEach(function() {
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].hex.toLowerCase());
+          }
+        });
 
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
         });
-  
+
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
         });
-  
+
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
         });
-  
+
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
         });
-  
+
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
         });
-  
+
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
         });
 
         it("should set the string component", function() {
-           expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
         });
       });
 
-      describe("with a hash and three hexidecimal digits", function() {
+      describe("with six capitalized hexidecimal digits", function() {
+
+        beforeEach(function() {
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].hex.slice(1, 8));
+          }
+        });
 
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
         });
-  
+
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
         });
-  
+
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
         });
-  
+
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
         });
-  
+
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
         });
-  
+
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
         });
 
         it("should set the string component", function() {
-           expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
         });
       });
 
-      describe("with three hexidecimal digits", function() {
+      describe("with six lowercased hexidecimal digits", function() {
+
+        beforeEach(function() {
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].hex.slice(1, 8).toLowerCase());
+          }
+        });
 
         it("should set the red component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
         });
-  
+
         it("should set the green component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
         });
-  
+
         it("should set the blue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
         });
-  
+
         it("should set the hue component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
         });
-  
+
         it("should set the saturation component", function() {
-             expect('pending').toEqual('completed');
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
         });
-  
+
         it("should set the value component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
         });
 
         it("should set the string component", function() {
-             expect('pending').toEqual('completed'); 
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
+        });
+      });
+
+      describe("with a hash and three capitalized hexidecimal digits", function() {
+
+        beforeEach(function() {
+          // set up the test colors
+          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
+
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].threeDigitHex);
+          }
+        });
+
+        it("should set the red component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
+        });
+
+        it("should set the green component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
+        });
+
+        it("should set the blue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
+        });
+
+        it("should set the hue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
+        });
+
+        it("should set the saturation component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
+        });
+
+        it("should set the value component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
+        });
+
+        it("should set the string component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
+        });
+      });
+
+      describe("with a hash and three lowercased hexidecimal digits", function() {
+
+        beforeEach(function() {
+          // set up the test colors
+          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
+
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].threeDigitHex.toLowerCase());
+          }
+        });
+
+        it("should set the red component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
+        });
+
+        it("should set the green component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
+        });
+
+        it("should set the blue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
+        });
+
+        it("should set the hue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
+        });
+
+        it("should set the saturation component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
+        });
+
+        it("should set the value component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
+        });
+
+        it("should set the string component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
+        });
+      });
+
+      describe("with three lowercased hexidecimal digits", function() {
+
+        beforeEach(function() {
+          // set up the test colors
+          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
+
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].threeDigitHex.slice(1, 5).toLowerCase());
+          }
+        });
+
+        it("should set the red component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
+        });
+
+        it("should set the green component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
+        });
+
+        it("should set the blue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
+        });
+
+        it("should set the hue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
+        });
+
+        it("should set the saturation component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
+        });
+
+        it("should set the value component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
+        });
+
+        it("should set the string component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
+        });
+      });
+
+      describe("with three capitalized hexidecimal digits", function() {
+
+        beforeEach(function() {
+          // set up the test colors
+          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
+
+          newColors = [];
+
+          for(var i = 0; i < colors.length; i++) {
+            newColors[i] = new Color(colors[i].threeDigitHex.slice(1, 5));
+          }
+        });
+
+        it("should set the red component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].red()).toEqual(colors[i].r);
+          }
+        });
+
+        it("should set the green component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].green()).toEqual(colors[i].g);
+          }
+        });
+
+        it("should set the blue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].blue()).toEqual(colors[i].b);
+          }
+        });
+
+        it("should set the hue component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
+          }
+        });
+
+        it("should set the saturation component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
+          }
+        });
+
+        it("should set the value component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
+          }
+        });
+
+        it("should set the string component", function() {
+          for(var i = 0; i < colors.length; i++) {
+            expect(newColors[i].toString()).toEqual(colors[i].hex);
+          }
         });
       });
 
       describe("and the string is in some other format", function() {
 
-        var strings;
+        it("should throw an exception", function() {
+          var invalidStrings = [ "","0", "00", "0000", "00000", "0000000", "00000000", "#0", 
+            "#00", "#0000", "#00000", "#0000000", "#00000000", "rgba(0, 0, 0, 0)", "#G0FFFF", 
+            "#FFG0FF", "#FFFFG0", "G0FFFF", "FFG0FF", "FFFFG0", "#GFF", "#FGF", "#FFG", "GFF", 
+            "FGF", "FFG", "#g0ffff", "#ffg0ff", "#ffffg0", "g0ffff", "ffg0ff", "ffffg0", "#gff", 
+            "#fgf", "#ffg", "gff", "fgf", "ffg", "invalid", "black", "white", "FFFFFF\nFFFFFF" ];
 
-        beforeEach(function() {
-          strings = ["0", "00", "0000", "00000", "0000000", "00000000", "#0", "#00", "#0000", "#00000", "#0000000", "#00000000", "rgba(0, 0, 0, 0)", "#G0FFFF", "#FFG0FF", "#FFFFG0", "G0FFFF", "FFG0FF", "FFFFG0", "#GFF", "#FGF", "#FFG", "GFF", "FGF", "FFG", "black", "white"];
-        });
-
-        it ("should throw an exception", function() {
-          expect('pending').toEqual('completed');
+          for (var i = 0; i < invalidStrings.length; i++)
+            expect(function() { new Color(invalidStrings[i]); }).toThrow("illegal_argument_exception");
         });
       });
     });
 
-    describe("when some other kind of object is provided for the first argument", function()
-    {
-      var objects;
-
-      beforeEach(function() {
-        objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
-      });
+    describe("when some other kind of object is provided for the first argument", function() {
 
       it("should throw an exception", function() {
-             expect('pending').toEqual('completed'); 
+        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
+
+        for (var i = 0; i < objects.length; i++)
+          expect(function() { new Color(objects[i]); }).toThrow("illegal_argument_exception");
       });
     });
   });

@@ -8,11 +8,12 @@ color.js provides several different methods for creating colors.
 
 ``` javascript
 // constructors
-var red = new Color(255, 0, 0);      // RGB constructor
-var green = new Color("#00FF00");    // hexidecimal constructor six digits with hash
-var blue = new Color("#00F");        // hexidecimal constructor three digits with hash
-var white = new Color("FFFFFF");     // hexidecimal constructor six digits without hash
-var black = new Color("000");        // hexidecimal constructor three digits without hash
+var red = new Color(255, 0, 0);                 // RGB constructor
+var green = new Color("#00FF00");               // hexidecimal constructor six digits with hash
+var blue = new Color("#00F");                   // hexidecimal constructor three digits with hash
+var white = new Color("FFFFFF");                // hexidecimal constructor six digits without hash
+var black = new Color("000");                   // hexidecimal constructor three digits without hash
+var gray = new Color(new Color(127, 127, 127)); // copy constructor
 
 // color model functions.
 var red = Color.rgb(255, 0, 0);      // RGB color model
@@ -24,8 +25,8 @@ var magenta = Color.hex("#F0F");     // hexidecimal three digits with hash
 var yellow = Color.hex("FFFF00");    // hexidecimal six digits without hash
 var black = Color.hex("000");        // hexidecimal three digits without hash
 
-// copy constructor
-var gray = new Color(new Color(127, 127, 127));
+// random color
+var color = Color.random();
 ```
 
 In addition, named colors functions are provided.  These colors are defined in the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
@@ -195,6 +196,7 @@ var red = color.red();               // red = 255
 var green = color.green();           // green = 255
 var blue = color.blue();             // blue = 0
 
+var hex = color.hex();               // hex = "#FFFF00";
 var hexValue = color.toString();     // hexValue = "#FFFF00"
 ```
 

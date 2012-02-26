@@ -8,25 +8,35 @@ http://sam.zoy.org/wtfpl/COPYING for more details.
 /*
 Constructor for color.  This constructor can be called in the following ways:
 * With a single argument hexidecimal string:
-* * new Color("#00FF00");
-* * new Color("00FF00");
-* * new Color("#0F0");
-* * new Color("0F0");
+* * new Color("#FF00FF");
+* * new Color("#ff00ff");
+* * new Color("FF00FF");
+* * new Color("ff00ff");
+* * new Color("#F0F");
+* * new Color("#f0f");
+* * new Color("F0F");
+* * new Color("f0f");
 * With a single argument Color:
-* * new Color(Color.red());
+* * new Color(Color.cyan());
 * With three red, green and blue integers.
-* * new Color(0, 255, 0);
+* * new Color(255, 0, 255);
 */
 function Color(redOrHexOrColor, green, blue) 
 {
 	if (redOrHexOrColor instanceof Color)
 	{
 		// perform copy
-		this.setRGB(redOrHexOrColor.red(), redOrHexOrColor.green(), redOrHexOrColor.blue());
+		this._red = redOrHexOrColor.red();
+		this._green = redOrHexOrColor.green();
+		this._blue = redOrHexOrColor.blue();
+		this._hue = redOrHexOrColor.hue();
+		this._saturation = redOrHexOrColor.saturation();
+		this._value = redOrHexOrColor.value();
+		this._hex = redOrHexOrColor.hex();
 	}
 	else if (typeof redOrHexOrColor === "string")
 	{
-
+		this.setHex(redOrHexOrColor);
 	}
 	else if(typeof redOrHexOrColor === "number" && typeof green === "number" && typeof blue === "number")
 	{
@@ -112,6 +122,9 @@ converted to integer values.
 */
 Color.prototype.setRGB = function(red, green, blue)
 {
+	if (typeof red !== "number" || typeof green !== "number" || typeof blue !== "number")
+		throw "illegal_argument_exception";
+
 	// floor the values
 	red = Math.floor(red);
 	green = Math.floor(green);
@@ -131,6 +144,57 @@ Color.prototype.setRGB = function(red, green, blue)
 	this._red = red;
 	this._green = green;
 	this._blue = blue;
+
+	this._calculateHSV();
+	this._calculateHex();
+};
+
+/*
+Sets the red, green and blue values of this color using the provided hexidecimal string.  The 
+string may be in the formats:
+* "#FF00FF"
+* "#ff00ff"
+* "FF00FF"
+* "ff00ff"
+* "#F0F"
+* "#f0f"
+* "F0F"
+* "f0f"
+*/
+Color.prototype.setHex = function(hex)
+{
+	if (typeof hex !== "string")
+		throw "illegal_argument_exception";
+
+	// parse out the components
+	var components;
+
+	if (hex.length === 6 || hex.length === 7)
+	{
+		components = /^#?([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$/i.exec(hex);
+	}
+	else if (hex.length === 3 || hex.length === 4)
+	{
+		components = /^#?([0-9A-F])([0-9A-F])([0-9A-F])$/i.exec(hex);
+
+		if (components)
+		{
+			components[1] = components[1] + components[1];
+			components[2] = components[2] + components[2];
+			components[3] = components[3] + components[3];
+		}
+	}
+	else
+	{
+		throw "illegal_argument_exception";
+	}
+
+	if (!components)
+		throw "illegal_argument_exception";
+
+	this._red = parseInt(components[1], 16);
+	this._green = parseInt(components[2], 16);
+	this._blue = parseInt(components[3], 16);
 
 	this._calculateHSV();
 	this._calculateHex();
@@ -168,9 +232,10 @@ Color.prototype._calculateHSV = function()
 	else
 		this._hue = ((red - green) / chroma + 4) * 60;
 
-	// multiply the value and saturation
-	this._value *= 100;
-	this._saturation *= 100;
+	// multiplay and round the values
+	this._hue = Math.round(this._hue);
+	this._value = Math.round(this._value * 100);
+	this._saturation = Math.round(this._saturation * 100);
 };
 
 /*
