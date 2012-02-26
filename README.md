@@ -16,14 +16,14 @@ var black = new Color("000");                   // hexidecimal constructor three
 var gray = new Color(new Color(127, 127, 127)); // copy constructor
 
 // color model functions.
-var red = Color.rgb(255, 0, 0);      // RGB color model
-var cyan = Color.hsv(180, 100, 100); // HSV color model
+var red = Color.rgb(255, 0, 0);                 // RGB color model
+var cyan = Color.hsv(180, 100, 100);            // HSV color model
 
 // hexidecimal functions
-var cyan = Color.hex("#00FFFF");     // hexideciaml six digits with hash
-var magenta = Color.hex("#F0F");     // hexidecimal three digits with hash
-var yellow = Color.hex("FFFF00");    // hexidecimal six digits without hash
-var black = Color.hex("000");        // hexidecimal three digits without hash
+var cyan = Color.hex("#00FFFF");                // hexideciaml six digits with hash
+var magenta = Color.hex("#F0F");                // hexidecimal three digits with hash
+var yellow = Color.hex("FFFF00");               // hexidecimal six digits without hash
+var black = Color.hex("000");                   // hexidecimal three digits without hash
 
 // random color
 var color = Color.random();
