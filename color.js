@@ -1,4 +1,6 @@
 /* 
+color.js is a simple JavaScript color library. It's designed to be complete, flexible, error-free, well-documented and fast.  color.js is written by Landon Schropp.
+
 This program is free software. It comes without any warranty, to the extent permitted by 
 applicable law. You can redistribute it and/or modify it under the terms of the Do What The Fuck 
 You Want To Public License, Version 2, as published by Sam Hocevar. See 
@@ -147,6 +149,8 @@ Color.prototype.setRGB = function(red, green, blue)
 
 	this._calculateHSV();
 	this._calculateHex();
+
+	return this;
 };
 
 /*
@@ -198,6 +202,8 @@ Color.prototype.setHex = function(hex)
 
 	this._calculateHSV();
 	this._calculateHex();
+
+	return this;
 };
 
 /*
