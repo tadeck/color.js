@@ -17,7 +17,7 @@ Constructor for color.  This constructor can be called in the following ways:
 * With three red, green and blue integers.
 * * new Color(0, 255, 0);
 */
-function Color() 
+function Color(redOrHexOrColor, green, blue) 
 {
 	if (redOrHexOrColor instanceof Color)
 	{
@@ -88,6 +88,23 @@ Color.prototype.value = function()
 };
 
 /*
+Returns a string representing this color.  This string will be a six-digit hexidecimal number 
+preceeded by the "#" character.  It's format will be "#RRGGBB".
+*/
+Color.prototype.hex = function()
+{
+	return this._hex;
+}
+
+/*
+Alias for hex().
+*/
+Color.prototype.toString = function()
+{
+	return this.hex();
+};
+
+/*
 Sets the red, green, and blue values of this color.  This method takes three arguments, 
 corresponding to each of these colors.  These values are expected to be in the range 0 to 255 
 inclusive.  If they are not, the values will be clamped.  Any decimal values will also be 
@@ -115,12 +132,19 @@ Color.prototype.setRGB = function(red, green, blue)
 	this._green = green;
 	this._blue = blue;
 
-	/*
-	All of these calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV.
-	*/
-	red /= 255;
-	green /= 255;
-	blue /= 255;
+	this._calculateHSV();
+	this._calculateHex();
+};
+
+/*
+Private helper method which calculates the hue, saturation, and lightness values based upon the
+current RGB values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV.
+*/
+Color.prototype._calculateHSV = function()
+{
+	var red = this._red / 255;
+	var green = this._green / 255;
+	var blue = this._blue / 255;
 
 	// calculate the value
 	this._value = Math.max(red, green, blue);
@@ -143,4 +167,17 @@ Color.prototype.setRGB = function(red, green, blue)
 		this._hue = ((blue - red) / chroma + 2) * 60;
 	else
 		this._hue = ((red - green) / chroma + 4) * 60;
+
+	// multiply the value and saturation
+	this._value *= 100;
+	this._saturation *= 100;
 };
+
+/*
+Private helper method which calculates the hex value based upon the current RGB values.
+*/
+Color.prototype._calculateHex = function()
+{
+	var hex = (this._red * 256 * 256 + this._green * 256 + this._blue).toString(16);
+	this._hex = "#00000".slice(0, 7 - hex.length) + hex.toUpperCase();
+}
