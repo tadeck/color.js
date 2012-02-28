@@ -200,7 +200,7 @@ var hex = color.hex();               // hex = "#FFFF00";
 var hexValue = color.toString();     // hexValue = "#FFFF00"
 ```
 
-Color proerties are mutable.
+Color properties are mutable.
 
 ``` javascript
 var color = Color.white();

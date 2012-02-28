@@ -1,9 +1,81 @@
+// load the color library
 eval(require('fs').readFileSync('./color.js','utf-8'));
+
+/*
+Shared specs for color creation.  Takes the following arguments:
+* colorData An array of objects used to create the colors.  Each one of these items will be
+  iterated over and will be passed to colorCreationFunction.
+* colorCreationFunction A function used to create colors.  This should take in one argument, which
+  is a color data object, and should return a newly created color.
+*/
+
+function colorCreationSharedSpecs(colorData, colorCreationFunction) {
+
+    var newColors;
+
+    beforeEach(function() {
+      newColors = [];
+
+      for (var i = 0; i < colorData.length; i++)
+        newColors[i]= colorCreationFunction(colorData[i]); 
+    });
+
+    it("should set the red component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].red()).toEqual(colorData[i].r);
+      }
+    });
+
+    it("should set the green component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].green()).toEqual(colorData[i].g);
+      }
+    });
+
+    it("should set the blue component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].blue()).toEqual(colorData[i].b);
+      }
+    });
+
+    it("should set the hue component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].hue()).toAlmostEqual(colorData[i].h);
+      }
+    });
+
+    it("should set the saturation component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].saturation()).toAlmostEqual(colorData[i].s);
+      }
+    });
+
+    it("should set the value component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].value()).toAlmostEqual(colorData[i].v);
+      }
+    });
+
+    it("should set the hex component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].hex()).toEqual(colorData[i].hex);
+      }
+    });
+
+    it("should set the string component", function() {
+      for(var i = 0; i < colorData.length; i++) {
+        expect(newColors[i].toString()).toEqual(colorData[i].hex);
+      }
+    });
+}
 
 describe("Color", function() {
 
   // a large array of pre-calculated test color properties
-  var colors;
+  var colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).colors;
+
+  // a large array of pre-calculated test color properties with three-digit hex codes
+  var threeDigitHexColors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
 
   // an array of colors to be created by the spec for testing
   var newColors;
@@ -19,63 +91,14 @@ describe("Color", function() {
         return Math.abs(this.actual - expected) <= epsilon;
       }
     });
-
-    // set up the test colors
-    colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).colors;
   });
 
   describe("constructor", function() {
 
     describe("when three numbers are provided for the arguments", function() {
 
-      beforeEach(function() {
-        newColors = [];
-
-        for(var i = 0; i < colors.length; i++) {
-          newColors[i] = new Color(colors[i].r, colors[i].g, colors[i].b);
-        }
-      });
-
-      it("should set the red component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].red()).toEqual(colors[i].r);
-        }
-      });
-
-      it("should set the green component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].green()).toEqual(colors[i].g);
-        }
-      });
-
-      it("should set the blue component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].blue()).toEqual(colors[i].b);
-        }
-      });
-
-      it("should set the hue component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-        }
-      });
-
-      it("should set the saturation component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-        }
-      });
-
-      it("should set the value component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-        }
-      });
-
-      it("should set the string component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].toString()).toEqual(colors[i].hex);
-        }
+      colorCreationSharedSpecs(colors, function(data) { 
+        return new Color(data.r, data.g, data.b); 
       });
 
       describe("and the red is below 0", function() {
@@ -154,54 +177,8 @@ describe("Color", function() {
 
       describe("and the red contains a decimal", function() {
 
-        beforeEach(function() {
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].r + 0.75, colors[i].g, colors[i].b);
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(colors, function(data) { 
+          return new Color(data.r + 0.75, data.g, data.b); 
         });
       });
 
@@ -281,55 +258,10 @@ describe("Color", function() {
 
       describe("and the green contains a decimal", function() {
 
-        beforeEach(function() {
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].r, colors[i].g + 0.75, colors[i].b);
-          }
+        colorCreationSharedSpecs(colors, function(data) { 
+          return new Color(data.r, data.g + 0.75, data.b); 
         });
 
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
-        });
       });
 
       describe("and the blue is below 0", function() {
@@ -408,55 +340,10 @@ describe("Color", function() {
 
       describe("and the blue contains a decimal", function() {
 
-        beforeEach(function() {
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].r, colors[i].g, colors[i].b + 0.75);
-          }
+        colorCreationSharedSpecs(colors, function(data) { 
+          return new Color(data.r, data.g, data.b + 0.75); 
         });
 
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
-        });
       });
 
       describe("and the second argument is not a number", function() {
@@ -474,492 +361,68 @@ describe("Color", function() {
 
     describe("when a Color is provided for the first argument", function() {
 
-      beforeEach(function() {
-        newColors = [];
-
-        for(var i = 0; i < colors.length; i++) {
-          var color = new Color(colors[i].r, colors[i].g, colors[i].b);
-          newColors[i] = new Color(color);
-        }
+      colorCreationSharedSpecs(colors, function(data) { 
+        var color = new Color(data.r, data.g, data.b)
+        return new Color(color); 
       });
 
-      it("should set the red component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].red()).toEqual(colors[i].r);
-        }
-      });
-
-      it("should set the green component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].green()).toEqual(colors[i].g);
-        }
-      });
-
-      it("should set the blue component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].blue()).toEqual(colors[i].b);
-        }
-      });
-
-      it("should set the hue component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-        }
-      });
-
-      it("should set the saturation component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-        }
-      });
-
-      it("should set the value component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-        }
-      });
-
-      it("should set the string component", function() {
-        for(var i = 0; i < colors.length; i++) {
-          expect(newColors[i].toString()).toEqual(colors[i].hex);
-        }
-      });
     });
 
     describe("when a string is provided for the first argument", function() {
+
       describe("with a hash and capitalized six hexidecimal digits", function() {
 
-        beforeEach(function() {
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].hex);
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(colors, function(data) { 
+          return new Color(data.hex); 
         });
       });
 
       describe("with a hash and lowercased six hexidecimal digits", function() {
 
-        beforeEach(function() {
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].hex.toLowerCase());
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(colors, function(data) { 
+          return new Color(data.hex.toLowerCase()); 
         });
       });
 
       describe("with six capitalized hexidecimal digits", function() {
 
-        beforeEach(function() {
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].hex.slice(1, 8));
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(colors, function(data) { 
+          return new Color(data.hex.slice(1, 8)); 
         });
       });
 
       describe("with six lowercased hexidecimal digits", function() {
 
-        beforeEach(function() {
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].hex.slice(1, 8).toLowerCase());
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(colors, function(data) { 
+          return new Color(data.hex.slice(1, 8).toLowerCase()); 
         });
       });
 
       describe("with a hash and three capitalized hexidecimal digits", function() {
 
-        beforeEach(function() {
-          // set up the test colors
-          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
-
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].threeDigitHex);
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(threeDigitHexColors, function(data) { 
+          return new Color(data.threeDigitHex); 
         });
       });
 
       describe("with a hash and three lowercased hexidecimal digits", function() {
 
-        beforeEach(function() {
-          // set up the test colors
-          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
-
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].threeDigitHex.toLowerCase());
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
-        });
-      });
-
-      describe("with three lowercased hexidecimal digits", function() {
-
-        beforeEach(function() {
-          // set up the test colors
-          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
-
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].threeDigitHex.slice(1, 5).toLowerCase());
-          }
-        });
-
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
-
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(threeDigitHexColors, function(data) { 
+          return new Color(data.threeDigitHex.toLowerCase()); 
         });
       });
 
       describe("with three capitalized hexidecimal digits", function() {
 
-        beforeEach(function() {
-          // set up the test colors
-          colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
-
-          newColors = [];
-
-          for(var i = 0; i < colors.length; i++) {
-            newColors[i] = new Color(colors[i].threeDigitHex.slice(1, 5));
-          }
+        colorCreationSharedSpecs(threeDigitHexColors, function(data) { 
+          return new Color(data.threeDigitHex.slice(1, 5)); 
         });
+      });
 
-        it("should set the red component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].red()).toEqual(colors[i].r);
-          }
-        });
+      describe("with three lowercased hexidecimal digits", function() {
 
-        it("should set the green component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].green()).toEqual(colors[i].g);
-          }
-        });
-
-        it("should set the blue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].blue()).toEqual(colors[i].b);
-          }
-        });
-
-        it("should set the hue component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].hue()).toAlmostEqual(colors[i].h);
-          }
-        });
-
-        it("should set the saturation component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].saturation()).toAlmostEqual(colors[i].s);
-          }
-        });
-
-        it("should set the value component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].value()).toAlmostEqual(colors[i].v);
-          }
-        });
-
-        it("should set the string component", function() {
-          for(var i = 0; i < colors.length; i++) {
-            expect(newColors[i].toString()).toEqual(colors[i].hex);
-          }
+        colorCreationSharedSpecs(threeDigitHexColors, function(data) { 
+          return new Color(data.threeDigitHex.slice(1, 5).toLowerCase()); 
         });
       });
 
