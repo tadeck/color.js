@@ -113,11 +113,12 @@ Color.prototype.toString = function()
 };
 
 /*
-Sets the red, green, and blue values of this color.  This method takes three arguments, 
-corresponding to each of these colors.  The color values will be clamped between 0 and 255.  Any 
-decimal values will be rounded down to the nearest integer.  This method will throw an exception 
-if any of the provided arguments are not a number object.  This method returns the current color 
-object.
+Sets the red, green, and blue components of this color.  This method takes three arguments, 
+corresponding to each of these components.  The red, green and blue components will be clamped 
+between 0 and 255.  Any decimal values will be rounded down to the nearest integer.  This method 
+will calculate the hue, saturation and value components based upon the provided red, green and 
+blue components.  It will throw an exception if any of the provided arguments are not a number 
+object.  This method returns the current color object.
 */
 Color.prototype.setRGB = function(red, green, blue)
 {
@@ -139,11 +140,106 @@ Color.prototype.setRGB = function(red, green, blue)
 	if (blue < 0) blue = 0;
 	if (blue > 255) blue = 255;
 
-	// set the values
+	// set the components
 	this._red = red;
 	this._green = green;
 	this._blue = blue;
 
+	// calculate the other components
+	this._calculateHSV();
+	this._calculateHex();
+
+	return this;
+};
+
+/*
+Sets the hue, saturation and value of this color.  This method takes three arguments, 
+corresponding to each of these components.  The hue components will be calculated modulo 360.  The 
+saturation and value components will be clamped between 0 and 255.  Any decimal values will be 
+rounded down to the nearest integer.  This method will calculate the red, green, blue, and hex 
+components of this Color based upon the provided hue, saturation and value components.  This 
+method will throw an exception if any of the provided arguments are not a number object.  This 
+method returns the current color object.
+*/
+Color.prototype.setHSV = function(hue, saturation, value)
+{
+	if (typeof hue !== "number" || typeof saturation !== "number" || typeof value !== "number")
+		throw "illegal_argument_exception";
+
+	// floor the values
+	hue = Math.floor(hue);
+	saturation = Math.floor(saturation);
+	value = Math.floor(value);
+
+	// properly mod the hue
+	hue = (hue % 360 + 360) % 360;
+
+	// clamp the saturation and value
+	if (saturation < 0) saturation = 0;
+	if (saturation > 100) saturation = 100;
+
+	if (value < 0) value = 0;
+	if (value > 100) value = 100;
+
+	// set the components
+	this._hue = hue;
+	this._saturation = saturation;
+	this._value = value;
+
+	// calculate the other components
+	this._calculateRGB();
+	this._calculateHex();
+
+	return this;
+};
+
+/*
+Sets the red, green and blue values of this color using the provided hexidecimal string.  This method will calculate the red, green, blue, hue, saturation and value components using the provided hex string.  The string argument may be uppercase or lowercase but can only be in one of the following formats:
+* "#FF00FF"
+* "FF00FF"
+* "#F0F"
+* "F0F"
+If the string argument is not in one of these formats, this method will throw an illegal_argument_exception.
+*/
+Color.prototype.setHex = function(hex)
+{
+	if (typeof hex !== "string")
+		throw "illegal_argument_exception";
+
+	// parse out the components
+	var components;
+
+	// check the lengths of the components and parse accordingly
+	if (hex.length === 6 || hex.length === 7)
+	{
+		components = /^#?([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$/i.exec(hex);
+	}
+	else if (hex.length === 3 || hex.length === 4)
+	{
+		components = /^#?([0-9A-F])([0-9A-F])([0-9A-F])$/i.exec(hex);
+
+		if (components)
+		{
+			components[1] = components[1] + components[1];
+			components[2] = components[2] + components[2];
+			components[3] = components[3] + components[3];
+		}
+	}
+	else
+	{
+		throw "illegal_argument_exception";
+	}
+
+	// make sure the components were successfully parsed
+	if (!components)
+		throw "illegal_argument_exception";
+
+	// set the components
+	this._red = parseInt(components[1], 16);
+	this._green = parseInt(components[2], 16);
+	this._blue = parseInt(components[3], 16);
+
+	// calculate the other components
 	this._calculateHSV();
 	this._calculateHex();
 
@@ -186,59 +282,6 @@ Color.prototype.setBlue = function(blue)
 };
 
 /*
-Sets the red, green and blue values of this color using the provided hexidecimal string.  The 
-string may be in the formats:
-* "#FF00FF"
-* "#ff00ff"
-* "FF00FF"
-* "ff00ff"
-* "#F0F"
-* "#f0f"
-* "F0F"
-* "f0f"
-*/
-Color.prototype.setHex = function(hex)
-{
-	if (typeof hex !== "string")
-		throw "illegal_argument_exception";
-
-	// parse out the components
-	var components;
-
-	if (hex.length === 6 || hex.length === 7)
-	{
-		components = /^#?([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$/i.exec(hex);
-	}
-	else if (hex.length === 3 || hex.length === 4)
-	{
-		components = /^#?([0-9A-F])([0-9A-F])([0-9A-F])$/i.exec(hex);
-
-		if (components)
-		{
-			components[1] = components[1] + components[1];
-			components[2] = components[2] + components[2];
-			components[3] = components[3] + components[3];
-		}
-	}
-	else
-	{
-		throw "illegal_argument_exception";
-	}
-
-	if (!components)
-		throw "illegal_argument_exception";
-
-	this._red = parseInt(components[1], 16);
-	this._green = parseInt(components[2], 16);
-	this._blue = parseInt(components[3], 16);
-
-	this._calculateHSV();
-	this._calculateHex();
-
-	return this;
-};
-
-/*
 Private helper method which calculates the red, green and blue values based upon the current HSV values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV.
 */
 Color.prototype._calculateRGB = function()
@@ -246,7 +289,7 @@ Color.prototype._calculateRGB = function()
 	// calculate the color distributions
 	var chroma = this._value * this._saturation / 10000;
 	var huePrime = this._hue / 60;
-	var middleComponent = chroma * Math.abs(huePrime % 2 - 1);
+	var middleComponent = chroma * (1 - Math.abs(huePrime % 2 - 1));
 
 	// set the correct colors based upon the hue
 	if (huePrime < 1)
@@ -287,7 +330,7 @@ Color.prototype._calculateRGB = function()
 	}
 
 	// add the match value to the components
-	var matchValue = this._value - chroma;
+	var matchValue = this._value / 100 - chroma;
 
 	this._red += matchValue;
 	this._green += matchValue;

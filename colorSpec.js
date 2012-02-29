@@ -326,12 +326,186 @@ describe("Color", function() {
     });
 
     describe("and something other than a string is provided as an argument", function() {
-      it("", function() {
+      it("should throw an exception", function() {
         var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
 
         for (var i = 0; i < objects.length; i++) {
           var color = new Color(0, 0, 0);
           expect(function() { color.setHex(objects[i]); }).toThrow("illegal_argument_exception");
+        }
+      });
+    });
+  });
+
+
+
+  describe("setHSV() method", function() {
+
+    colorSharedSpecs(colors, colors, function(data) { 
+      var color = new Color(0, 0, 0);
+      color.setHSV(data.h, data.s, data.v);
+      return color; 
+    });
+
+    it("should return the object being mutated", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.setHSV(0, 0, 0)).toEqual(color);
+    });
+
+    describe("when the hue is out of range", function() {
+
+      var colorData = [
+        { r:255, g:  0, b:  0, h:-360, s:100, v:100, hex:"#FF0000" },
+        { r:255, g:255, b:  0, h:-300, s:100, v:100, hex:"#FFFF00" },
+        { r:  0, g:255, b:  0, h:-240, s:100, v:100, hex:"#00FF00" },
+        { r:  0, g:255, b:255, h:-180, s:100, v:100, hex:"#00FFFF" },
+        { r:  0, g:  0, b:255, h:-120, s:100, v:100, hex:"#0000FF" },
+        { r:255, g:  0, b:255, h: -60, s:100, v:100, hex:"#FF00FF" },
+        { r:255, g:  0, b:  0, h: 360, s:100, v:100, hex:"#FF0000" },
+        { r:255, g:255, b:  0, h: 420, s:100, v:100, hex:"#FFFF00" },
+        { r:  0, g:255, b:  0, h: 480, s:100, v:100, hex:"#00FF00" },
+        { r:  0, g:255, b:255, h: 540, s:100, v:100, hex:"#00FFFF" },
+        { r:  0, g:  0, b:255, h: 600, s:100, v:100, hex:"#0000FF" },
+        { r:255, g:  0, b:255, h: 660, s:100, v:100, hex:"#FF00FF" }
+      ];
+
+      var comparisonData = [
+        { r:255, g:  0, b:  0, h:   0, s:100, v:100, hex:"#FF0000" },
+        { r:255, g:255, b:  0, h:  60, s:100, v:100, hex:"#FFFF00" },
+        { r:  0, g:255, b:  0, h: 120, s:100, v:100, hex:"#00FF00" },
+        { r:  0, g:255, b:255, h: 180, s:100, v:100, hex:"#00FFFF" },
+        { r:  0, g:  0, b:255, h: 240, s:100, v:100, hex:"#0000FF" },
+        { r:255, g:  0, b:255, h: 300, s:100, v:100, hex:"#FF00FF" },
+        { r:255, g:  0, b:  0, h:   0, s:100, v:100, hex:"#FF0000" },
+        { r:255, g:255, b:  0, h:  60, s:100, v:100, hex:"#FFFF00" },
+        { r:  0, g:255, b:  0, h: 120, s:100, v:100, hex:"#00FF00" },
+        { r:  0, g:255, b:255, h: 180, s:100, v:100, hex:"#00FFFF" },
+        { r:  0, g:  0, b:255, h: 240, s:100, v:100, hex:"#0000FF" },
+        { r:255, g:  0, b:255, h: 300, s:100, v:100, hex:"#FF00FF" }
+      ];
+
+      colorSharedSpecs(colorData, comparisonData, function(data) {
+        var color = new Color(0, 0, 0);
+        color.setHSV(data.h, data.s, data.v);
+        return color; 
+      });
+    });
+
+    describe("when the saturation and value are out of range it should clamp their values", function() {
+
+      var colorData = [
+        { r:255, g:  0, b:  0, h:  0, s:150, v:100, hex:"#FF0000" },
+        { r:255, g:255, b:255, h:  0, s:-50, v:100, hex:"#FFFFFF" },
+        { r:255, g:  0, b:  0, h:  0, s:100, v:150, hex:"#FF0000" },
+        { r:  0, g:  0, b:  0, h:  0, s:100, v:-50, hex:"#000000" }
+      ];
+
+      var comparisonData = [
+        { r:255, g:  0, b:  0, h:  0, s:100, v:100, hex:"#FF0000" },
+        { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
+        { r:255, g:  0, b:  0, h:  0, s:100, v:100, hex:"#FF0000" },
+        { r:  0, g:  0, b:  0, h:  0, s:100, v:  0, hex:"#000000" }
+      ];
+
+      colorSharedSpecs(colorData, comparisonData, function(data) {
+        var color = new Color(0, 0, 0);
+        color.setHSV(data.h, data.s, data.v);
+        return color; 
+      });
+    });
+
+    describe("when the hue can correspond to multiple RGB values it should retain the provided value", function() {
+
+      var colorData = [
+        { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
+        { r:255, g:255, b:255, h: 60, s:  0, v:100, hex:"#FFFFFF" },
+        { r:255, g:255, b:255, h:120, s:  0, v:100, hex:"#FFFFFF" },
+        { r:255, g:255, b:255, h:180, s:  0, v:100, hex:"#FFFFFF" },
+        { r:255, g:255, b:255, h:240, s:  0, v:100, hex:"#FFFFFF" },
+        { r:255, g:255, b:255, h:300, s:  0, v:100, hex:"#FFFFFF" }
+      ];
+
+      colorSharedSpecs(colorData, colorData, function(data) {
+        var color = new Color(0, 0, 0);
+        color.setHSV(data.h, data.s, data.v);
+        return color; 
+      });
+
+    });
+
+    describe("when the saturation can correspond to multiple RGB values", function() {
+
+      var colorData = [
+        { r:  0, g:  0, b:  0, h:  0, s:  0, v:  0, hex:"#000000" },
+        { r:  0, g:  0, b:  0, h:  0, s: 25, v:  0, hex:"#000000" },
+        { r:  0, g:  0, b:  0, h:  0, s: 50, v:  0, hex:"#000000" },
+        { r:  0, g:  0, b:  0, h:  0, s: 75, v:  0, hex:"#000000" },
+        { r:  0, g:  0, b:  0, h:  0, s:100, v:  0, hex:"#000000" }
+      ];
+
+      colorSharedSpecs(colorData, colorData, function(data) {
+        var color = new Color(0, 0, 0);
+        color.setHSV(data.h, data.s, data.v);
+        return color; 
+      });
+    });
+
+    describe("when the hue contains a decimal", function() {
+
+      colorSharedSpecs(colors, colors, function(data) { 
+        var color = new Color(0, 0, 0);
+        color.setHSV(data.h + 0.75, data.s, data.v);
+        return color; 
+      });
+    });
+
+    describe("when the saturation contains a decimal", function() {
+
+      colorSharedSpecs(colors, colors, function(data) { 
+        var color = new Color(0, 0, 0);
+        color.setHSV(data.h, data.s + 0.75, data.v);
+        return color; 
+      });
+    });
+
+    describe("when the value contains a decimal", function() {
+
+      colorSharedSpecs(colors, colors, function(data) { 
+        var color = new Color(0, 0, 0);
+        color.setHSV(data.h, data.s, data.v + 0.75);
+        return color; 
+      });
+    });
+
+    describe("when something other than a number is provided for the first argument", function() {
+      it("should throw an exception", function() {
+        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
+
+        for (var i = 0; i < objects.length; i++) {
+          var color = new Color(0, 0, 0);
+          expect(function() { color.setHSV(objects[i], 0, 0); }).toThrow("illegal_argument_exception");
+        }
+      });
+    });
+
+    describe("when something other than a number is provided for the second argument", function() {
+      it("should throw an exception", function() {
+        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
+
+        for (var i = 0; i < objects.length; i++) {
+          var color = new Color(0, 0, 0);
+          expect(function() { color.setHSV(0, objects[i], 0); }).toThrow("illegal_argument_exception");
+        }
+      });
+    });
+
+    describe("when something other than a number is provided for the third argument", function() {
+      it("should throw an exception", function() {
+        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
+
+        for (var i = 0; i < objects.length; i++) {
+          var color = new Color(0, 0, 0);
+          expect(function() { color.setHSV(0, 0, objects[i]); }).toThrow("illegal_argument_exception");
         }
       });
     });
@@ -391,5 +565,17 @@ describe("Color", function() {
       var color = new Color(0, 0, 0);
       expect(color.setBlue(0)).toEqual(color);
     });
+  });
+
+  describe("setHue() method", function() {
+
+  });
+
+  describe("setSaturation() method", function() {
+
+  });
+
+  describe("setValue() method", function() {
+
   });
 });
