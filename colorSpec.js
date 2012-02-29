@@ -120,75 +120,13 @@ describe("Color", function() {
     });
 
     describe("when a string is provided for the first argument", function() {
-
-      describe("with a hash and capitalized six hexidecimal digits", function() {
-
-        colorSharedSpecs(colors, colors, function(data) { 
-          return new Color(data.hex); 
-        });
-      });
-
-      describe("with a hash and lowercased six hexidecimal digits", function() {
-
-        colorSharedSpecs(colors, colors, function(data) { 
-          return new Color(data.hex.toLowerCase()); 
-        });
-      });
-
-      describe("with six capitalized hexidecimal digits", function() {
-
-        colorSharedSpecs(colors, colors, function(data) { 
-          return new Color(data.hex.slice(1, 8)); 
-        });
-      });
-
-      describe("with six lowercased hexidecimal digits", function() {
-
-        colorSharedSpecs(colors, colors, function(data) { 
-          return new Color(data.hex.slice(1, 8).toLowerCase()); 
-        });
-      });
-
-      describe("with a hash and three capitalized hexidecimal digits", function() {
-
-        colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
-          return new Color(data.threeDigitHex); 
-        });
-      });
-
-      describe("with a hash and three lowercased hexidecimal digits", function() {
-
-        colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
-          return new Color(data.threeDigitHex.toLowerCase()); 
-        });
-      });
-
-      describe("with three capitalized hexidecimal digits", function() {
-
-        colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
-          return new Color(data.threeDigitHex.slice(1, 5)); 
-        });
-      });
-
-      describe("with three lowercased hexidecimal digits", function() {
-
-        colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
-          return new Color(data.threeDigitHex.slice(1, 5).toLowerCase()); 
-        });
-      });
-
-      describe("and the string is in some other format", function() {
-
-        it("should throw an exception", function() {
-          var invalidStrings = [ "","0", "00", "0000", "00000", "0000000", "00000000", "#0", 
-            "#00", "#0000", "#00000", "#0000000", "#00000000", "rgba(0, 0, 0, 0)", "#G0FFFF", 
-            "#FFG0FF", "#FFFFG0", "G0FFFF", "FFG0FF", "FFFFG0", "#GFF", "#FGF", "#FFG", "GFF", 
-            "FGF", "FFG", "#g0ffff", "#ffg0ff", "#ffffg0", "g0ffff", "ffg0ff", "ffffg0", "#gff", 
-            "#fgf", "#ffg", "gff", "fgf", "ffg", "invalid", "black", "white", "FFFFFF\nFFFFFF" ];
-
-          for (var i = 0; i < invalidStrings.length; i++)
-            expect(function() { new Color(invalidStrings[i]); }).toThrow("illegal_argument_exception");
-        });
+      /*
+      WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+      */
+      it("should call the setHex method with the provided argument", function() {
+        spyOn(Color.prototype, 'setHex');
+        var color = new Color("#FFFFFF");
+        expect(color.setHex).wasCalledWith("#FFFFFF");
       });
     });
 

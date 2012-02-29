@@ -233,7 +233,7 @@ color.complement();
 color.saturate(25);
 color.desaturate(25);
 
-// darken and lighten the color
+// darken and lighten the value of the color
 color.lighten(25);
 color.darken(25);
 ```
@@ -241,7 +241,7 @@ color.darken(25);
 All mutator methods return the color object.  This allows them to be chained.
 
 ``` javascript
-color.setHue(0).setSaturation(0).setValue(0);
+color.setHue(40).desaturate(30).darken(10);
 ```
 
 
