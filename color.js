@@ -239,11 +239,64 @@ Color.prototype.setHex = function(hex)
 };
 
 /*
-Private helper method which calculates the red, green and blue values based upon the current HSV values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV.
+Private helper method which calculates the red, green and blue values based upon the current HSV values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV.
 */
 Color.prototype._calculateRGB = function()
 {
+	// calculate the color distributions
+	var chroma = this._value * this._saturation / 10000;
+	var huePrime = this._hue / 60;
+	var middleComponent = chroma * Math.abs(huePrime % 2 - 1);
 
+	// set the correct colors based upon the hue
+	if (huePrime < 1)
+	{
+		this._red = chroma;
+		this._green = middleComponent;
+		this._blue = 0;
+	}
+	else if (huePrime < 2)
+	{
+		this._red = middleComponent;
+		this._green = chroma;
+		this._blue = 0;
+	}
+	else if (huePrime < 3)
+	{
+		this._red = 0;
+		this._green = chroma;
+		this._blue = middleComponent;
+	}
+	else if (huePrime < 4)
+	{
+		this._red = 0;
+		this._green = middleComponent;
+		this._blue = chroma;
+	}
+	else if (huePrime < 5)
+	{
+		this._red = middleComponent;
+		this._green = 0;
+		this._blue = chroma;
+	}
+	else
+	{
+		this._red = chroma;
+		this._green = 0;
+		this._blue = middleComponent;
+	}
+
+	// add the match value to the components
+	var matchValue = this._value - chroma;
+
+	this._red += matchValue;
+	this._green += matchValue;
+	this._blue += matchValue;
+
+	// multiply out the colors and floor them
+	this._red = Math.floor(this._red * 255);
+	this._green = Math.floor(this._green * 255);
+	this._blue = Math.floor(this._blue * 255);
 };
 
 /*
