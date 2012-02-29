@@ -40,14 +40,10 @@ function Color(redOrHexOrColor, green, blue)
 	{
 		this.setHex(redOrHexOrColor);
 	}
-	else if(typeof redOrHexOrColor === "number" && typeof green === "number" && typeof blue === "number")
+	else
 	{
 		// interpret the values as colors
 		this.setRGB(redOrHexOrColor, green, blue);
-	}
-	else
-	{
-		throw "illegal_argument_exception";
 	}
 }
 
@@ -118,9 +114,10 @@ Color.prototype.toString = function()
 
 /*
 Sets the red, green, and blue values of this color.  This method takes three arguments, 
-corresponding to each of these colors.  These values are expected to be in the range 0 to 255 
-inclusive.  If they are not, the values will be clamped.  Any decimal values will also be 
-converted to integer values.
+corresponding to each of these colors.  The color values will be clamped between 0 and 255.  Any 
+decimal values will be rounded down to the nearest integer.  This method will throw an exception 
+if any of the provided arguments are not a number object.  This method returns the current color 
+object.
 */
 Color.prototype.setRGB = function(red, green, blue)
 {
@@ -150,6 +147,41 @@ Color.prototype.setRGB = function(red, green, blue)
 	this._calculateHSV();
 	this._calculateHex();
 
+	return this;
+};
+
+/*
+Sets the red component of this color.  This method takes one argument, which is the new value of 
+red to set.  This value will be clamped between 0 and 255.  Any decimal value will be rounded down 
+to the nearest integer.  This method will throw an exception if the provided color object is not a 
+decimal.  This method returns the current color object.
+*/
+Color.prototype.setRed = function(red)
+{
+	this.setRGB(red, this._green, this._blue);
+	return this;
+};
+
+/*
+Sets the green component of this color.  This method takes one argument, which is the new value of 
+green to set.  This value will be clamped between 0 and 255.  Any decimal value will be rounded down to the nearest integer.  This method will throw an exception if the provided color object is 
+not a decimal.  This method returns the current color object.
+*/
+Color.prototype.setGreen = function(green)
+{
+	this.setRGB(this._red, green, this._blue);
+	return this;
+};
+
+/*
+Sets the blue component of this color.  This method takes one argument, which is the new value of 
+blue to set.  This value will be clamped between 0 and 255.  Any decimal value will be rounded down
+to the nearest integer.  This method will throw an exception if the provided color object is not a 
+decimal.  This method returns the current color object.
+*/
+Color.prototype.setBlue = function(blue)
+{
+	this.setRGB(this._red, this._green, blue);
 	return this;
 };
 
@@ -204,6 +236,14 @@ Color.prototype.setHex = function(hex)
 	this._calculateHex();
 
 	return this;
+};
+
+/*
+Private helper method which calculates the red, green and blue values based upon the current HSV values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV.
+*/
+Color.prototype._calculateRGB = function()
+{
+
 };
 
 /*

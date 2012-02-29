@@ -100,67 +100,13 @@ describe("Color", function() {
 
     describe("when three numbers are provided for the arguments", function() {
 
-      colorSharedSpecs(colors, colors, function(data) { 
-        return new Color(data.r, data.g, data.b); 
-      });
-
-      describe("and the values are not between 0 and 255", function() {
-
-        var colorData = [
-          { r:-96, g:255, b:255, h:180, s:100, v:100, hex:"#00FFFF" },
-          { r:383, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-          { r:255, g:-96, b:255, h:300, s:100, v:100, hex:"#FF00FF" },
-          { r:255, g:383, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-          { r:255, g:255, b:-96, h: 60, s:100, v:100, hex:"#FFFF00" },
-          { r:255, g:255, b:383, h:  0, s:  0, v:100, hex:"#FFFFFF" }
-        ];
-
-        var comparisonData = [
-          { r:  0, g:255, b:255, h:180, s:100, v:100, hex:"#00FFFF" },
-          { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-          { r:255, g:  0, b:255, h:300, s:100, v:100, hex:"#FF00FF" },
-          { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-          { r:255, g:255, b:  0, h: 60, s:100, v:100, hex:"#FFFF00" },
-          { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" }
-        ];
-
-        colorSharedSpecs(colorData, comparisonData, function(data) {
-
-          return new Color(data.r, data.g, data.b);
-        });
-      });
-
-      describe("and the red contains a decimal", function() {
-
-        colorSharedSpecs(colors, colors, function(data) { 
-          return new Color(data.r + 0.75, data.g, data.b); 
-        });
-      });
-
-      describe("and the green contains a decimal", function() {
-
-        colorSharedSpecs(colors, colors, function(data) { 
-          return new Color(data.r, data.g + 0.75, data.b); 
-        });
-      });
-
-      describe("and the blue contains a decimal", function() {
-
-        colorSharedSpecs(colors, colors, function(data) { 
-          return new Color(data.r, data.g, data.b + 0.75); 
-        });
-      });
-
-      describe("and the second argument is not a number", function() {
-        it("should throw an exception", function() {
-          expect(function() { new Color(0, "testing", 0); }).toThrow("illegal_argument_exception");
-        });
-      });
-
-      describe("and the third argument is not a number", function() {
-        it("should throw an exception", function() {
-          expect(function() { new Color(0, 0, "testing"); }).toThrow("illegal_argument_exception");
-        });
+      /*
+      WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+      */
+      it("should call the setRGB method with the provided arguments", function() {
+        spyOn(Color.prototype, 'setRGB');
+        var color = new Color(63, 127, 191);
+        expect(color.setRGB).wasCalledWith(63, 127, 191);
       });
     });
 
@@ -450,6 +396,62 @@ describe("Color", function() {
           expect(function() { color.setHex(objects[i]); }).toThrow("illegal_argument_exception");
         }
       });
+    });
+  });
+
+
+
+  describe("setRed() method", function() {
+
+    /*
+    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    */
+    it("should call the setRGB method with the new value of red and the current values of green and blue", function() {
+      var color = new Color(63, 127, 191);
+      spyOn(Color.prototype, 'setRGB');
+      color.setRed(255);
+      expect(color.setRGB).wasCalledWith(255, 127, 191);
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.setRed(0)).toEqual(color);
+    });
+  });
+
+  describe("setGreen() method", function() {
+
+    /*
+    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    */
+    it("should call the setRGB method with the new value of green and the current values of red and blue", function() {
+      var color = new Color(63, 127, 191);
+      spyOn(Color.prototype, 'setRGB');
+      color.setGreen(255);
+      expect(color.setRGB).wasCalledWith(63, 255, 191);
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.setGreen(0)).toEqual(color);
+    });
+  });
+
+  describe("setBlue() method", function() {
+
+    /*
+    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    */
+    it("should call the setRGB method with the new value of blue and the current values of red and green", function() {
+      var color = new Color(63, 127, 191);
+      spyOn(Color.prototype, 'setRGB');
+      color.setBlue(255);
+      expect(color.setRGB).wasCalledWith(63, 127, 255);
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.setBlue(0)).toEqual(color);
     });
   });
 });
