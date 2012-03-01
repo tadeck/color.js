@@ -2,6 +2,8 @@
 
 color.js is a simple JavaScript color library.  It's designed to be complete, flexible, error-free, well-documented and fast.
 
+color.js is open source and is released under the [MIT License](http://en.wikipedia.org/wiki/MIT_License "MIT License").
+
 ## Creating Colors
 
 color.js provides several different methods for creating colors.
