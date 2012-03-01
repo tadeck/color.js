@@ -237,7 +237,7 @@ describe("Color", function() {
       expect(color.setHex("#000000")).toEqual(color);
     });
 
-    describe("with a hash and capitalized six hexidecimal digits", function() {
+    describe("with a hash and capitalized six hexadecimal digits", function() {
 
       colorSharedSpecs(colors, colors, function(data) { 
         var color = new Color(0, 0, 0);
@@ -246,7 +246,7 @@ describe("Color", function() {
       });
     });
 
-    describe("with a hash and lowercased six hexidecimal digits", function() {
+    describe("with a hash and lowercased six hexadecimal digits", function() {
 
       colorSharedSpecs(colors, colors, function(data) { 
         var color = new Color(0, 0, 0);
@@ -255,7 +255,7 @@ describe("Color", function() {
       });
     });
 
-    describe("with six capitalized hexidecimal digits", function() {
+    describe("with six capitalized hexadecimal digits", function() {
 
       colorSharedSpecs(colors, colors, function(data) { 
         var color = new Color(0, 0, 0);
@@ -264,7 +264,7 @@ describe("Color", function() {
       });
     });
 
-    describe("with six lowercased hexidecimal digits", function() {
+    describe("with six lowercased hexadecimal digits", function() {
 
       colorSharedSpecs(colors, colors, function(data) { 
         var color = new Color(0, 0, 0);
@@ -273,7 +273,7 @@ describe("Color", function() {
       });
     });
 
-    describe("with a hash and three capitalized hexidecimal digits", function() {
+    describe("with a hash and three capitalized hexadecimal digits", function() {
 
       colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) {
         var color = new Color(0, 0, 0);
@@ -282,7 +282,7 @@ describe("Color", function() {
       });
     });
 
-    describe("with a hash and three lowercased hexidecimal digits", function() {
+    describe("with a hash and three lowercased hexadecimal digits", function() {
 
       colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
         var color = new Color(0, 0, 0);
@@ -291,7 +291,7 @@ describe("Color", function() {
       });
     });
 
-    describe("with three capitalized hexidecimal digits", function() {
+    describe("with three capitalized hexadecimal digits", function() {
 
       colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
         var color = new Color(0, 0, 0);
@@ -300,7 +300,7 @@ describe("Color", function() {
       });
     });
 
-    describe("with three lowercased hexidecimal digits", function() {
+    describe("with three lowercased hexadecimal digits", function() {
 
       colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
         var color = new Color(0, 0, 0);

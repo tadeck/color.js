@@ -14,7 +14,7 @@ color.js is a simple JavaScript color library. It's designed to be complete, fle
 
 /*
 Constructor for color.  This constructor can be called in the following ways:
-* With a single argument hexidecimal string:
+* With a single argument hexadecimal string:
 * * new Color("#FF00FF");
 * * new Color("#ff00ff");
 * * new Color("FF00FF");
@@ -101,7 +101,7 @@ Color.prototype.value = function()
 };
 
 /*
-Returns a string representing this color.  This string will be a six-digit hexidecimal number 
+Returns a string representing this color.  This string will be a six-digit hexadecimal number 
 preceeded by the "#" character.  It's format will be "#RRGGBB".
 */
 Color.prototype.hex = function()
@@ -199,7 +199,7 @@ Color.prototype.setHSV = function(hue, saturation, value)
 };
 
 /*
-Sets the red, green and blue values of this color using the provided hexidecimal string.  This method will calculate the red, green, blue, hue, saturation and value components using the provided hex string.  The string argument may be uppercase or lowercase but can only be in one of the following formats:
+Sets the red, green and blue values of this color using the provided hexadecimal string.  This method will calculate the red, green, blue, hue, saturation and value components using the provided hex string.  The string argument may be uppercase or lowercase but can only be in one of the following formats:
 * "#FF00FF"
 * "FF00FF"
 * "#F0F"
@@ -289,7 +289,7 @@ Color.prototype.setBlue = function(blue)
 
 /*
 Sets the hue component of this color.  This method takes one argument, which is the new value of 
-hue to set.  This number will be moduloed with 360.  Any decimal number will be rounded down to 
+hue to set.  This number will be computed modulo with 360.  Any decimal number will be rounded down to 
 the nearest integer.  This method will throw an exception if the provided argument is not a number.
 This method returns the current color object.
 */
@@ -300,9 +300,9 @@ Color.prototype.setHue = function(hue)
 };
 
 /*
-Sets the saturation component of this color.  This method takes one argument, which is the new value of saturation to set.  This number will be moduloed with 360.  Any decimal number will be 
-rounded down to the nearest integer.  This method will throw an exception if the provided argument 
-is not a number.  This method returns the current color object.
+Sets the saturation component of this color.  This method takes one argument, which is the new value of saturation to set.  This number will be clamped between 0 and 255.  Any decimal number 
+will be rounded down to the nearest integer.  This method will throw an exception if the provided 
+argument is not a number.  This method returns the current color object.
 */
 Color.prototype.setSaturation = function(saturation)
 {
@@ -312,9 +312,9 @@ Color.prototype.setSaturation = function(saturation)
 
 /*
 Sets the value component of this color.  This method takes one argument, which is the new value of 
-value to set.  This number will be moduloed with 360.  Any decimal number will be rounded down to 
-the nearest integer.  This method will throw an exception if the provided argument is not a number.
-This method returns the current color object.
+value to set.  This number will be clamped between 0 and 255.  Any decimal number will be rounded 
+down to the nearest integer.  This method will throw an exception if the provided argument is not 
+a number.  This method returns the current color object.
 */
 Color.prototype.setValue = function(value)
 {
@@ -415,7 +415,7 @@ Color.prototype._calculateHSV = function()
 	else
 		this._hue = ((red - green) / chroma + 4) * 60;
 
-	// multiplay and round the values
+	// multiply and round the values
 	this._hue = Math.round(this._hue);
 	this._value = Math.round(this._value * 100);
 	this._saturation = Math.round(this._saturation * 100);

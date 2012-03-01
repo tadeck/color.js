@@ -1,6 +1,6 @@
 # color.js
 
-color.js is a simple JavaScript color library.  It's designed to be complete, flexible, error-free, well-documented and fast.
+color.js is a simple JavaScript color library.  It's designed to be complete, flexible, error-free, fast, dependency-free and well-documented.
 
 color.js is open source and is released under the [MIT License](http://en.wikipedia.org/wiki/MIT_License "MIT License").
 
@@ -11,21 +11,21 @@ color.js provides several different methods for creating colors.
 ``` javascript
 // constructors
 var red = new Color(255, 0, 0);                 // RGB constructor
-var green = new Color("#00FF00");               // hexidecimal constructor six digits with hash
-var blue = new Color("#00F");                   // hexidecimal constructor three digits with hash
-var white = new Color("FFFFFF");                // hexidecimal constructor six digits without hash
-var black = new Color("000");                   // hexidecimal constructor three digits without hash
+var green = new Color("#00FF00");               // hexadecimal constructor six digits with hash
+var blue = new Color("#00F");                   // hexadecimal constructor three digits with hash
+var white = new Color("FFFFFF");                // hexadecimal constructor six digits without hash
+var black = new Color("000");                   // hexadecimal constructor three digits without hash
 var gray = new Color(new Color(127, 127, 127)); // copy constructor
 
 // color model functions.
 var red = Color.rgb(255, 0, 0);                 // RGB color model
 var cyan = Color.hsv(180, 100, 100);            // HSV color model
 
-// hexidecimal functions
-var cyan = Color.hex("#00FFFF");                // hexideciaml six digits with hash
-var magenta = Color.hex("#F0F");                // hexidecimal three digits with hash
-var yellow = Color.hex("FFFF00");               // hexidecimal six digits without hash
-var black = Color.hex("000");                   // hexidecimal three digits without hash
+// hexadecimal functions
+var cyan = Color.hex("#00FFFF");                // hexadecimal six digits with hash
+var magenta = Color.hex("#F0F");                // hexadecimal three digits with hash
+var yellow = Color.hex("FFFF00");               // hexadecimal six digits without hash
+var black = Color.hex("000");                   // hexadecimal three digits without hash
 
 // random color
 var color = Color.random();                     // returns a random color
@@ -92,7 +92,7 @@ var green = Color.green();
 var greenYellow = Color.greenYellow();
 var grey = Color.grey();
 var honeydew = Color.honeydew();
-var hotpink = Color.hotpink();
+var hotPink = Color.hotPink();
 var indianRed = Color.indianRed();
 var indigo = Color.indigo();
 var ivory = Color.ivory();
@@ -163,7 +163,7 @@ var seaGreen = Color.seaGreen();
 var seashell = Color.seashell();
 var sienna = Color.sienna();
 var silver = Color.silver();
-var skyblue = Color.skyblue();
+var skyBlue = Color.skyBlue();
 var slateBlue = Color.slateBlue();
 var slateGray = Color.slateGray();
 var slateGrey = Color.slateGrey();
@@ -221,7 +221,7 @@ color.setValue(100);
 color.setRGB(255, 255, 255);
 color.setHSV(0, 0, 100);
 
-// set the hexidecimal string representation of the color
+// set the hexadecimal string representation of the color
 color.setHex("#FFFFFF");
 color.setHex("#FFF");
 color.setHex("FFFFFF");
