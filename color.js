@@ -110,7 +110,7 @@ Color.prototype.hex = function()
 }
 
 /*
-Alias for hex().
+Returns a representation of this color parsable with a canvas context fillStyle property.
 */
 Color.prototype.toString = function()
 {
@@ -253,9 +253,9 @@ Color.prototype.setHex = function(hex)
 
 /*
 Sets the red component of this color.  This method takes one argument, which is the new value of 
-red to set.  This value will be clamped between 0 and 255.  Any decimal value will be rounded down 
-to the nearest integer.  This method will throw an exception if the provided color object is not a 
-decimal.  This method returns the current color object.
+red to set.  This number will be clamped between 0 and 255.  Any decimal number will be rounded 
+down to the nearest integer.  This method will throw an exception if the provided argument is not 
+a number.  This method returns the current color object.
 */
 Color.prototype.setRed = function(red)
 {
@@ -265,8 +265,9 @@ Color.prototype.setRed = function(red)
 
 /*
 Sets the green component of this color.  This method takes one argument, which is the new value of 
-green to set.  This value will be clamped between 0 and 255.  Any decimal value will be rounded down to the nearest integer.  This method will throw an exception if the provided color object is 
-not a decimal.  This method returns the current color object.
+green to set.  This number will be clamped between 0 and 255.  Any decimal number will be rounded 
+down to the nearest integer.  This method will throw an exception if the provided argument is not 
+a number.  This method returns the current color object.
 */
 Color.prototype.setGreen = function(green)
 {
@@ -276,13 +277,48 @@ Color.prototype.setGreen = function(green)
 
 /*
 Sets the blue component of this color.  This method takes one argument, which is the new value of 
-blue to set.  This value will be clamped between 0 and 255.  Any decimal value will be rounded down
-to the nearest integer.  This method will throw an exception if the provided color object is not a 
-decimal.  This method returns the current color object.
+blue to set.  This number will be clamped between 0 and 255.  Any decimal number will be rounded 
+down to the nearest integer.  This method will throw an exception if the provided argument is not 
+a number.  This method returns the current color object.
 */
 Color.prototype.setBlue = function(blue)
 {
 	this.setRGB(this._red, this._green, blue);
+	return this;
+};
+
+/*
+Sets the hue component of this color.  This method takes one argument, which is the new value of 
+hue to set.  This number will be moduloed with 360.  Any decimal number will be rounded down to 
+the nearest integer.  This method will throw an exception if the provided argument is not a number.
+This method returns the current color object.
+*/
+Color.prototype.setHue = function(hue)
+{
+	this.setHSV(hue, this._saturation, this._value);
+	return this;
+};
+
+/*
+Sets the saturation component of this color.  This method takes one argument, which is the new value of saturation to set.  This number will be moduloed with 360.  Any decimal number will be 
+rounded down to the nearest integer.  This method will throw an exception if the provided argument 
+is not a number.  This method returns the current color object.
+*/
+Color.prototype.setSaturation = function(saturation)
+{
+	this.setHSV(this._hue, saturation, this._value);
+	return this;
+};
+
+/*
+Sets the value component of this color.  This method takes one argument, which is the new value of 
+value to set.  This number will be moduloed with 360.  Any decimal number will be rounded down to 
+the nearest integer.  This method will throw an exception if the provided argument is not a number.
+This method returns the current color object.
+*/
+Color.prototype.setValue = function(value)
+{
+	this.setHSV(this._hue, this._saturation, value);
 	return this;
 };
 

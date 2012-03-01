@@ -569,13 +569,58 @@ describe("Color", function() {
 
   describe("setHue() method", function() {
 
+    /*
+    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    */
+    it("should call the setHSV method with the new value of hue and the current values of saturation and value", function() {
+      var color = new Color(0, 0, 0);
+      color.setHSV(0, 50, 75);
+      spyOn(Color.prototype, 'setHSV');
+      color.setHue(180);
+      expect(color.setHSV).wasCalledWith(180, 50, 75);
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.setHue(0)).toEqual(color);
+    });
   });
 
   describe("setSaturation() method", function() {
 
+    /*
+    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    */
+    it("should call the setHSV method with the new value of saturation and the current values of hue and value", function() {
+      var color = new Color(0, 0, 0);
+      color.setHSV(0, 50, 75);
+      spyOn(Color.prototype, 'setHSV');
+      color.setSaturation(25);
+      expect(color.setHSV).wasCalledWith(0, 25, 75);
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.setSaturation(0)).toEqual(color);
+    });
   });
 
   describe("setValue() method", function() {
 
+    /*
+    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    */
+    it("should call the setHSV method with the new value of value and the current values of hue and saturation", function() {
+      var color = new Color(0, 0, 0);
+      color.setHSV(0, 50, 75);
+      spyOn(Color.prototype, 'setHSV');
+      color.setValue(25);
+      expect(color.setHSV).wasCalledWith(0, 50, 25);
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.setValue(0)).toEqual(color);
+    });
   });
 });
