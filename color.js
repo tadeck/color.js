@@ -110,7 +110,7 @@ Color.prototype.hex = function()
 }
 
 /*
-Returns a representation of this color parsable with a canvas context fillStyle property.
+Returns a representation of this color which can be used with a canvas context fillStyle property.
 */
 Color.prototype.toString = function()
 {

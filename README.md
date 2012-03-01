@@ -28,7 +28,7 @@ var yellow = Color.hex("FFFF00");               // hexidecimal six digits withou
 var black = Color.hex("000");                   // hexidecimal three digits without hash
 
 // random color
-var color = Color.random();
+var color = Color.random();                     // returns a random color
 ```
 
 In addition, named colors functions are provided.  These colors are defined in the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
@@ -212,26 +212,26 @@ color.setRed(255);
 color.setGreen(255);
 color.setBlue(255);
 
-// set hue, saturation, value and lightness
+// set hue, saturation and value
 color.setHue(0);
 color.setSaturation(0);
 color.setValue(100);
 
-// set full color models
+// set red, green, and blue or hue, saturation and value all at the same time
 color.setRGB(255, 255, 255);
 color.setHSV(0, 0, 100);
 
-// set hex
+// set the hexidecimal string representation of the color
 color.setHex("#FFFFFF");
 color.setHex("#FFF");
 color.setHex("FFFFFF");
 color.setHex("FFF");
 
-// adjust hue
+// adjust the hue of the color
 color.rotateHue(-30);
 color.complement();
 
-// adjust saturation
+// increase and decrease the saturation of the color
 color.saturate(25);
 color.desaturate(25);
 
@@ -251,7 +251,7 @@ color.setHue(40).desaturate(30).darken(10);
 ## Color Comparisons
 
 Colors can be compared for equality.  Two colors are equal if their red, green and blue 
-values are the same.
+values are equal.
 
 ``` javascript
 var color1 = Color.red();
