@@ -101,7 +101,7 @@ describe("Color", function() {
     describe("when three numbers are provided for the arguments", function() {
 
       /*
-      WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+      WARNING: This spec caters to the implementation.
       */
       it("should call the setRGB method with the provided arguments", function() {
         spyOn(Color.prototype, 'setRGB');
@@ -121,7 +121,7 @@ describe("Color", function() {
 
     describe("when a string is provided for the first argument", function() {
       /*
-      WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+      WARNING: This spec caters to the implementation.
       */
       it("should call the setHex method with the provided argument", function() {
         spyOn(Color.prototype, 'setHex');
@@ -516,7 +516,7 @@ describe("Color", function() {
   describe("setRed() method", function() {
 
     /*
-    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    WARNING: This spec caters to the implementation.
     */
     it("should call the setRGB method with the new value of red and the current values of green and blue", function() {
       var color = new Color(63, 127, 191);
@@ -534,7 +534,7 @@ describe("Color", function() {
   describe("setGreen() method", function() {
 
     /*
-    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    WARNING: This spec caters to the implementation.
     */
     it("should call the setRGB method with the new value of green and the current values of red and blue", function() {
       var color = new Color(63, 127, 191);
@@ -552,7 +552,7 @@ describe("Color", function() {
   describe("setBlue() method", function() {
 
     /*
-    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    WARNING: This spec caters to the implementation.
     */
     it("should call the setRGB method with the new value of blue and the current values of red and green", function() {
       var color = new Color(63, 127, 191);
@@ -570,7 +570,7 @@ describe("Color", function() {
   describe("setHue() method", function() {
 
     /*
-    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    WARNING: This spec caters to the implementation.
     */
     it("should call the setHSV method with the new value of hue and the current values of saturation and value", function() {
       var color = new Color(0, 0, 0);
@@ -589,7 +589,7 @@ describe("Color", function() {
   describe("setSaturation() method", function() {
 
     /*
-    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    WARNING: This spec caters to the implementation.
     */
     it("should call the setHSV method with the new value of saturation and the current values of hue and value", function() {
       var color = new Color(0, 0, 0);
@@ -608,7 +608,7 @@ describe("Color", function() {
   describe("setValue() method", function() {
 
     /*
-    WARNING: This spec caters to the implementation.  However, it significantly reduces code duplication.
+    WARNING: This spec caters to the implementation.
     */
     it("should call the setHSV method with the new value of value and the current values of hue and saturation", function() {
       var color = new Color(0, 0, 0);
@@ -622,5 +622,104 @@ describe("Color", function() {
       var color = new Color(0, 0, 0);
       expect(color.setValue(0)).toEqual(color);
     });
+  });
+
+  describe("rotateHue() method", function() {
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.rotateHue(0)).toEqual(color);
+    });
+
+    describe("when the provided value is positive", function() {
+      describe("when the provided value plus the current hue is not out of bounds", function() {
+        /*
+        WARNING: This spec caters to the implementation.
+        */
+        it("should call setHue with the current value plus the provided value", function() {
+          var color = new Color(0, 0, 0).setHue(30);
+          spyOn(Color.prototype, 'setHue');
+          color.rotateHue(60);
+          expect(color.setHue).wasCalledWith(90);
+        });
+      });
+
+      describe("when the provided value plus the current hue is out of bounds", function() {
+        /*
+        WARNING: This spec caters to the implementation.
+        */
+        it("should call setHue with the current value plus the provided value", function() {
+          var color = new Color(0, 0, 0).setHue(330);
+          spyOn(Color.prototype, 'setHue');
+          color.rotateHue(60);
+          expect(color.setHue).wasCalledWith(390);
+        });
+      });
+    });
+
+    describe("when the provided value is negative", function() {
+      describe("when the provided value plus the current hue is not out of bounds", function() {
+        /*
+        WARNING: This spec caters to the implementation.
+        */
+        it("should call setHue with the current value plus the provided value", function() {
+          var color = new Color(0, 0, 0).setHue(330);
+          spyOn(Color.prototype, 'setHue');
+          color.rotateHue(-60);
+          expect(color.setHue).wasCalledWith(270);
+        });
+      });
+
+      describe("when the provided value plus the current hue is out of bounds", function() {
+        /*
+        WARNING: This spec caters to the implementation.
+        */
+        it("should call setHue with the current value plus the provided value", function() {
+          var color = new Color(0, 0, 0).setHue(30);
+          spyOn(Color.prototype, 'setHue');
+          color.rotateHue(-60);
+          expect(color.setHue).wasCalledWith(-30);
+        });
+      });
+    });
+  });
+
+  describe("complement() method", function() {
+    it("should call setHue with the current value of hue plus 180", function() {
+      spyOn(Color.prototype, 'setHue');
+
+      for (var amount = 0; amount < 360; amount += 30)
+      {
+        /*
+        spyOn breaks the setHue method, so it can't actually be used here.
+        */
+        var color = (new Color(0, 0, 0));
+        color.setHSV(amount, 0, 0);
+        color.setHue.reset();
+        color.complement();
+        expect(color.setHue).wasCalledWith(amount + 180);
+      }
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.complement()).toEqual(color);
+    });
+  });
+
+  describe("saturate() method", function() {
+
+  });
+
+  describe("desaturate() method", function() {
+
+  });
+
+  describe("lighten() method", function() {
+
+  });
+
+  describe("darken() method", function() {
+
   });
 });

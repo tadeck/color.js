@@ -107,7 +107,7 @@ preceeded by the "#" character.  It's format will be "#RRGGBB".
 Color.prototype.hex = function()
 {
 	return this._hex;
-}
+};
 
 /*
 Returns a representation of this color which can be used with a canvas context fillStyle property.
@@ -289,7 +289,7 @@ Color.prototype.setBlue = function(blue)
 
 /*
 Sets the hue component of this color.  This method takes one argument, which is the new value of 
-hue to set.  This number will be computed modulo with 360.  Any decimal number will be rounded down to 
+hue to set.  This number will be computed modulo 360.  Any decimal number will be rounded down to 
 the nearest integer.  This method will throw an exception if the provided argument is not a number.
 This method returns the current color object.
 */
@@ -319,6 +319,27 @@ a number.  This method returns the current color object.
 Color.prototype.setValue = function(value)
 {
 	this.setHSV(this._hue, this._saturation, value);
+	return this;
+};
+
+/*
+Rotates the hue component of this color.  This method takes one argument, which is the amount to
+rotate the hue, expressed in degrees.  If the hue is rotated to a value outside of 0 to 360, then 
+it will be computed modulo 360.  This method will throw an exception if the provided argument is
+not a number.  This method returns the current color object.
+*/
+Color.prototype.rotateHue = function(amount)
+{
+	this.setHue(this._hue + amount);
+	return this;
+};
+
+/*
+Sets the hue of this color to the complement of the current hue.
+*/
+Color.prototype.complement = function() 
+{
+	this.setHue(this._hue + 180);
 	return this;
 };
 
@@ -428,4 +449,4 @@ Color.prototype._calculateHex = function()
 {
 	var hex = (this._red * 256 * 256 + this._green * 256 + this._blue).toString(16);
 	this._hex = "#00000".slice(0, 7 - hex.length) + hex.toUpperCase();
-}
+};
