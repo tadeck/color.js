@@ -708,18 +708,94 @@ describe("Color", function() {
   });
 
   describe("saturate() method", function() {
+    it("should call the setSaturation method with the current value of saturation plus the provided value", function() {
+      spyOn(Color.prototype, 'setSaturation');
 
+      for (var amount = 0; amount <= 100; amount += 25)
+      {
+        /*
+        spyOn breaks the setSaturation method, so it can't actually be used here.
+        */
+        var color = (new Color(0, 0, 0));
+        color.setHSV(0, 50, 0);
+        color.setSaturation.reset();
+        color.saturate(amount);
+        expect(color.setSaturation).wasCalledWith(50 + amount);
+      }
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.saturate(0)).toEqual(color);
+    });
   });
 
   describe("desaturate() method", function() {
+    it("should call the setSaturation method with the current value of saturation minus the provided value", function() {
+      spyOn(Color.prototype, 'setSaturation');
 
+      for (var amount = 0; amount <= 100; amount += 25)
+      {
+        /*
+        spyOn breaks the setSaturation method, so it can't actually be used here.
+        */
+        var color = (new Color(0, 0, 0));
+        color.setHSV(0, 50, 0);
+        color.setSaturation.reset();
+        color.desaturate(amount);
+        expect(color.setSaturation).wasCalledWith(50 - amount);
+      }
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.desaturate(0)).toEqual(color);
+    });
   });
 
   describe("lighten() method", function() {
+    it("should call the setValue() method with the current value of the value component plus the provided value", function() {
+      spyOn(Color.prototype, 'setValue');
 
+      for (var amount = 0; amount <= 100; amount += 25)
+      {
+        /*
+        spyOn breaks the setValue method, so it can't actually be used here.
+        */
+        var color = (new Color(0, 0, 0));
+        color.setHSV(0, 0, 50);
+        color.setValue.reset();
+        color.lighten(amount);
+        expect(color.setValue).wasCalledWith(50 + amount);
+      }
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.lighten(0)).toEqual(color);
+    });
   });
 
   describe("darken() method", function() {
+    it("should call the setValue() method with the current value of the value component plus the provided value", function() {
+      spyOn(Color.prototype, 'setValue');
 
+      for (var amount = 0; amount <= 100; amount += 25)
+      {
+        /*
+        spyOn breaks the setValue method, so it can't actually be used here.
+        */
+        var color = (new Color(0, 0, 0));
+        color.setHSV(0, 0, 50);
+        color.setValue.reset();
+        color.darken(amount);
+        expect(color.setValue).wasCalledWith(50 - amount);
+      }
+    });
+
+    it("should return the current color", function() {
+      var color = new Color(0, 0, 0);
+      expect(color.darken(0)).toEqual(color);
+    });
   });
 });

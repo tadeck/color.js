@@ -344,7 +344,56 @@ Color.prototype.complement = function()
 };
 
 /*
-Private helper method which calculates the red, green and blue values based upon the current HSV values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV.
+Saturates the saturation component of this color.  This method takes one argument, which is the
+amount to saturate this color.  The saturation of this color will be clamped between 0 and 100.  
+Any decimal value will be rounded down to the nearest integer.  This method will throw an 
+exception if the provided argument is not a number.  This method returns the current object.
+*/
+Color.prototype.saturate = function(amount)
+{
+	this.setSaturation(this._saturation + amount);
+	return this;
+};
+
+/*
+Desaturates the saturation component of this color.  This method takes one argument, which is the 
+amount to desaturate this color.  The saturation of this color will be clamped between 0 and 100.  
+Any decimal value will be rounded down to the nearest integer.  This method will throw an 
+exception if the provided argument is not a number.  This method returns the current object.
+*/
+Color.prototype.desaturate = function(amount)
+{
+	this.setSaturation(this._saturation - amount);
+	return this;
+};
+
+/*
+Lightens the value component of this color.  This method takes one argument, which is the amount 
+to lighten this color.  The value of this color will be clamped between 0 and 100.  Any decimal 
+value will be rounded down to the nearest integer.  This method will throw an exception if the 
+provided argument is not a number.  This method returns the current object.
+*/
+Color.prototype.lighten = function(amount)
+{
+	this.setValue(this._value + amount);
+	return this;
+};
+
+/*
+Darkens the value component of this color.  This method takes one argument, which is the amount to 
+darken this color.  The value of this color will be clamped between 0 and 100.  Any decimal value 
+will be rounded down to the nearest integer.  This method will throw an exception if the provided 
+argument is not a number.  This method returns the current object.
+*/
+Color.prototype.darken = function(amount)
+{
+	this.setValue(this._value - amount);
+	return this;
+};
+
+/*
+Private helper method which calculates the red, green and blue values based upon the current HSV 
+values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV.
 */
 Color.prototype._calculateRGB = function()
 {
