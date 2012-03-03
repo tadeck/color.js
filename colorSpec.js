@@ -910,4 +910,46 @@ describe("Color", function() {
       expect(color === clone).toEqual(false);
     });
   });
+
+  describe("Color.rgb() method", function() {
+    it("should return a new color", function() {
+      expect(Color.rgb(0, 0, 0) instanceof Color).toEqual(true);
+    });
+
+    it("should call the setRGB() method with the provided parameters", function() {
+      spyOn(Color.prototype, "setRGB");
+      Color.rgb(30, 50, 70);
+      expect(Color.prototype.setRGB).wasCalledWith(30, 50, 70);
+    });
+  });
+
+  describe("Color.hsv() method", function() {
+    it("should return a new color", function() {
+      expect(Color.hsv(0, 0, 0) instanceof Color).toEqual(true);
+    });
+
+    it("should call the setHSV() method with the provided parameters", function() {
+      spyOn(Color.prototype, "setHSV");
+      Color.hsv(30, 50, 70);
+      expect(Color.prototype.setHSV).wasCalledWith(30, 50, 70);
+    });
+  });
+
+  describe("Color.hex() method", function() {
+    it("should return a new color", function() {
+      expect(Color.hex("#FFFFFF") instanceof Color).toEqual(true);
+    });
+
+    it("should call the setHex() method with the provided parameters", function() {
+      spyOn(Color.prototype, "setHex");
+      Color.hex("#FFFFFF");
+      expect(Color.prototype.setHex).wasCalledWith("#FFFFFF");
+    });
+  });
+
+  describe("Color.random() method", function() {
+    it("should return a new color", function() {
+      expect(Color.random() instanceof Color).toEqual(true);
+    });
+  });
 });
