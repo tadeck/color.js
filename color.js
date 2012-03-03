@@ -30,7 +30,18 @@ Constructor for color.  This constructor can be called in the following ways:
 */
 function Color(redOrHexOrColor, green, blue) 
 {
-	if (redOrHexOrColor instanceof Color)
+	if (arguments.length === 0)
+	{
+		// create a black color
+		this._red = 0;
+		this._green = 0;
+		this._blue = 0;
+		this._hue = 0;
+		this._saturation = 0;
+		this._value = 0;
+		this._hex = "#000000";
+	}
+	else if (arguments.length === 1 && redOrHexOrColor instanceof Color)
 	{
 		// perform copy
 		this._red = redOrHexOrColor.red();
@@ -41,14 +52,18 @@ function Color(redOrHexOrColor, green, blue)
 		this._value = redOrHexOrColor.value();
 		this._hex = redOrHexOrColor.hex();
 	}
-	else if (typeof redOrHexOrColor === "string")
+	else if (arguments.length === 1 && typeof redOrHexOrColor === "string")
 	{
 		this.setHex(redOrHexOrColor);
 	}
-	else
+	else if (arguments.length === 3)
 	{
 		// interpret the values as colors
 		this.setRGB(redOrHexOrColor, green, blue);
+	}
+	else
+	{
+		throw "illegal_argument_exception";
 	}
 }
 

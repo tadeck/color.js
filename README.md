@@ -1,6 +1,6 @@
 # color.js
 
-color.js is a simple JavaScript color library.  It's designed to be complete, flexible, error-free, fast, dependency-free and well-documented.
+color.js is a simple JavaScript color library.  It's designed to be complete, flexible, fast, and dependency-free.
 
 color.js is open source and is released under the [MIT License](http://en.wikipedia.org/wiki/MIT_License "MIT License").
 
@@ -10,6 +10,7 @@ color.js provides several different methods for creating colors.
 
 ``` javascript
 // constructors
+var black = new Color();                        // default constructor
 var red = new Color(255, 0, 0);                 // RGB constructor
 var green = new Color("#00FF00");               // hexadecimal constructor six digits with hash
 var blue = new Color("#00F");                   // hexadecimal constructor three digits with hash
@@ -190,16 +191,16 @@ Several accessors for color properties are provided.
 ``` javascript
 var color = Color.yellow();
 
-var hue = color.hue();               // hue = 60
-var saturation = color.saturation(); // saturation = 100
-var value = color.value();           // value = 100
-
 var red = color.red();               // red = 255
 var green = color.green();           // green = 255
 var blue = color.blue();             // blue = 0
 
+var hue = color.hue();               // hue = 60
+var saturation = color.saturation(); // saturation = 100
+var value = color.value();           // value = 100
+
 var hex = color.hex();               // hex = "#FFFF00";
-var hexValue = color.toString();     // hexValue = "#FFFF00"
+var string = color.toString();       // string = "#FFFF00"
 ```
 
 Color properties are mutable.

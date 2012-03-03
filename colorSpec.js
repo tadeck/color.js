@@ -98,6 +98,40 @@ describe("Color", function() {
 
   describe("constructor", function() {
 
+    describe("when no arguments are provided", function() {
+      it("should have a red component of 0", function() {
+        expect(new Color().red()).toEqual(0);
+      });
+      
+      it("should have a green component of 0", function() {
+        expect(new Color().green()).toEqual(0);
+      });
+      
+      it("should have a blue component of 0", function() {
+        expect(new Color().blue()).toEqual(0);
+      });
+      
+      it("should have a hue component of 0", function() {
+        expect(new Color().hue()).toEqual(0);
+      });
+      
+      it("should have a saturation component of 0", function() {
+        expect(new Color().saturation()).toEqual(0);
+      });
+      
+      it("should have a value component of 0", function() {
+        expect(new Color().value()).toEqual(0);
+      });
+      
+      it("should have a hex component of #000000", function() {
+        expect(new Color().hex()).toEqual("#000000");
+      });
+      
+      it("should have a string component of #000000", function() {
+        expect(new Color().toString()).toEqual("#000000");
+      });
+    });
+
     describe("when three numbers are provided for the arguments", function() {
 
       /*
