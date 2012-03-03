@@ -846,4 +846,34 @@ describe("Color", function() {
           expect(color.equals(objects[i])).toEqual(false);
     });
   });
+
+  describe("clone() method", function() {
+    it("should return a color object", function() {
+      var color = new Color(0, 127, 255);
+      var clone = color.clone();
+
+      expect(clone instanceof Color).toEqual(true);
+    });
+
+    it("should have all of the same properties as the original color", function() {
+      var color = new Color(0, 127, 255);
+      var clone = color.clone();
+
+      expect(color.red() === clone.red()).toEqual(true);
+      expect(color.green() === clone.green()).toEqual(true);
+      expect(color.blue() === clone.blue()).toEqual(true);
+      expect(color.hue() === clone.hue()).toEqual(true);
+      expect(color.saturation() === clone.saturation()).toEqual(true);
+      expect(color.value() === clone.value()).toEqual(true);
+      expect(color.hex() === clone.hex()).toEqual(true);
+      expect(color.toString() === clone.toString()).toEqual(true);
+    });
+
+    it("should not be the same object as the original", function() {
+      var color = new Color(0, 127, 255);
+      var clone = color.clone();
+
+      expect(color === clone).toEqual(false);
+    });
+  });
 });
