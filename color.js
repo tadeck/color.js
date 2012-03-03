@@ -404,6 +404,13 @@ Color.prototype.equals = function(color)
 };
 
 /*
+Returns an exact copy of this Color object.
+*/
+Color.prototype.clone = function() {
+	return new Color(this);
+};
+
+/*
 Private helper method which calculates the red, green and blue values based upon the current HSV 
 values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV.
 */
