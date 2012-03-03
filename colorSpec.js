@@ -798,4 +798,52 @@ describe("Color", function() {
       expect(color.darken(0)).toEqual(color);
     });
   });
+
+  describe("equals() method", function() {
+    it ("should return true if two colors are exactly the same", function() {
+      var color1 = new Color(255, 0, 0);
+      var color2 = new Color(255, 0, 0);
+      expect(color1.equals(color2)).toEqual(true);
+    });
+    
+    it ("should return true if two have the same RGB values but different hues", function() {
+      var color1 = new Color(0, 0, 0);
+      var color2 = new Color(0, 0, 0);
+      color2.setHue(180);
+      expect(color1.equals(color2)).toEqual(true);
+    });
+    
+    it ("should return true if two have the same RGB values but different saturations", function() {
+      var color1 = new Color(0, 0, 0);
+      var color2 = new Color(0, 0, 0);
+      color2.setSaturation(50);
+      expect(color1.equals(color2)).toEqual(true);
+    });
+    
+    it ("should return false if two colors have different red components", function() {
+      var color1 = new Color(255, 0, 0);
+      var color2 = new Color(0, 0, 0);
+      expect(color1.equals(color2)).toEqual(false);
+    });
+    
+    it ("should return false if two colors have different green components", function() {
+      var color1 = new Color(0, 255, 0);
+      var color2 = new Color(0, 0, 0);
+      expect(color1.equals(color2)).toEqual(false);
+    });
+    
+    it ("should return false if two colors have different blue components", function() {
+      var color1 = new Color(0, 0, 255);
+      var color2 = new Color(0, 0, 0);
+      expect(color1.equals(color2)).toEqual(false);
+    });
+
+    it("should return false if the provided object is not a color", function() {
+      var color = new Color(0, 0, 0);
+      var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
+
+        for (var i = 0; i < objects.length; i++)
+          expect(color.equals(objects[i])).toEqual(false);
+    });
+  });
 });

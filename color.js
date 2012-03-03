@@ -392,6 +392,18 @@ Color.prototype.darken = function(amount)
 };
 
 /*
+Returns true if this color equals the provided object and false otherwise.  Two colors are 
+considered to be equal if their red, green and blue components are equal.
+*/
+Color.prototype.equals = function(color)
+{
+	if (!(color instanceof Color))
+		return false;
+
+	return this._red === color._red && this._green === color._green && this._blue === color._blue;
+};
+
+/*
 Private helper method which calculates the red, green and blue values based upon the current HSV 
 values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV.
 */
