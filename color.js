@@ -533,3 +533,54 @@ Color.prototype._calculateHex = function()
 	var hex = (this._red * 256 * 256 + this._green * 256 + this._blue).toString(16);
 	this._hex = "#00000".slice(0, 7 - hex.length) + hex.toUpperCase();
 };
+
+/*
+Creates a new color using the red, green and blue color model.  This method takes three arguments, 
+corresponding to each of these components.  The red, green and blue components will be clamped 
+between 0 and 255.  Any decimal values will be rounded down to the nearest integer.  This method 
+will calculate the hue, saturation and value components based upon the provided red, green and 
+blue components.  It will throw an exception if any of the provided arguments are not a number 
+object.
+*/
+Color.rgb = function(red, green, blue) {
+	return new Color().setRGB(red, green, blue);
+};
+
+/*
+Creates a new color using the hue, saturation and value color model.  This method takes three 
+arguments, corresponding to each of these components.  The hue components will be calculated 
+modulo 360.  The saturation and value components will be clamped between 0 and 255.  Any decimal 
+values will be rounded down to the nearest integer.  This method will calculate the red, green, 
+blue, and hex components of this Color based upon the provided hue, saturation and value 
+components.  This method will throw an exception if any of the provided arguments are not a number 
+object.
+*/
+Color.hsv = function(hue, saturation, value) {
+	return new Color().setHSV(hue, saturation, value);
+};
+
+/*
+Creates a new color using the provided hexadecimal string.  This method will calculate the red, 
+green, blue, hue, saturation and value components using the provided hex string.  The string 
+argument may be uppercase or lowercase but can only be in one of the following formats:
+* "#FF00FF"
+* "FF00FF"
+* "#F0F"
+* "F0F"
+If the string argument is not in one of these formats, this method will throw an 
+illegal_argument_exception.
+*/
+Color.hex = function(hex) {
+	return new Color().setHex(hex);
+};
+
+/*
+Creates a new, random color object.
+*/
+Color.random = function() {
+	var red = Math.floor(Math.random() * 255);
+	var green = Math.floor(Math.random() * 255);
+	var blue = Math.floor(Math.random() * 255);
+
+	return new Color().setRGB(red, green, blue);
+};
