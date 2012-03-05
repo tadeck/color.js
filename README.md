@@ -10,26 +10,26 @@ color.js provides several different methods for creating colors.
 
 ``` javascript
 // constructors
-var black = new Color();                        // default constructor
-var red = new Color(255, 0, 0);                 // RGB constructor
-var green = new Color("#00FF00");               // hexadecimal constructor six digits with hash
-var blue = new Color("#00F");                   // hexadecimal constructor three digits with hash
-var white = new Color("FFFFFF");                // hexadecimal constructor six digits without hash
-var black = new Color("000");                   // hexadecimal constructor three digits without hash
-var gray = new Color(new Color(127, 127, 127)); // copy constructor
+var black = new Color();                // default constructor
+var white = new Color(255, 255, 255);   // RGB constructor
+var gray = new Color("#7F7F7F");        // hexadecimal constructor six digits with hash
+var red = new Color("#F00");            // hexadecimal constructor three digits with hash
+var green = new Color("00FF00");        // hexadecimal constructor six digits without hash
+var blue = new Color("00F");            // hexadecimal constructor three digits without hash
+var navy = new Color(new Color.navy()); // copy constructor
 
 // color model functions.
-var red = Color.rgb(255, 0, 0);                 // RGB color model
-var cyan = Color.hsv(180, 100, 100);            // HSV color model
+var maroon = Color.rgb(128, 0, 0);      // RGB color model
+var teal = Color.hsv(0, 128, 128);      // HSV color model
 
 // hexadecimal functions
-var cyan = Color.hex("#00FFFF");                // hexadecimal six digits with hash
-var magenta = Color.hex("#F0F");                // hexadecimal three digits with hash
-var yellow = Color.hex("FFFF00");               // hexadecimal six digits without hash
-var black = Color.hex("000");                   // hexadecimal three digits without hash
+var cyan = Color.hex("#00FFFF");        // hexadecimal six digits with hash
+var magenta = Color.hex("#F0F");        // hexadecimal three digits with hash
+var yellow = Color.hex("FFFF00");       // hexadecimal six digits without hash
+var purple = Color.hex("707");          // hexadecimal three digits without hash
 
 // random color
-var color = Color.random();                     // returns a random color
+var color = Color.random();             // returns a random color
 ```
 
 In addition, named colors functions are provided.  These colors are defined in the [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/ "CSS Color Module Level 3") specification.
