@@ -174,7 +174,7 @@ colors.each do |color_data|
 end
 
 # a prefix for every generated line, used to insert space before the generated code
-prefix = "  "
+pre = "  "
 
 # generate the test code
 colors.each do |color_data|
@@ -183,18 +183,18 @@ colors.each do |color_data|
 	green = color_data[1][1]
 	blue  = color_data[1][2]
 
-	puts "#{prefix}describe(\"Color.#{name}() function\", function() {"
-	puts "#{prefix}  it(\"should return a color with the correct red value\", function() {"
-	puts "#{prefix}    expect(Color.#{name}().red()).toEqual(#{red});"
-	puts "#{prefix}  });"
-	puts "#{prefix}"
-	puts "#{prefix}  it(\"should return a color with the correct green value\", function() {"
-	puts "#{prefix}    expect(Color.#{name}().green()).toEqual(#{green});"
-	puts "#{prefix}  });"
-	puts "#{prefix}"
-	puts "#{prefix}  it(\"should return a color with the correct blue value\", function() {"
-	puts "#{prefix}    expect(Color.#{name}().blue()).toEqual(#{blue});"
-	puts "#{prefix}  });"
-	puts "#{prefix}});"
-	puts
+	puts "#{pre}describe(\"Color.#{name}() function\", function() {"
+	puts "#{pre}#{pre}it(\"should return a color with the correct red value\", function() {"
+	puts "#{pre}#{pre}#{pre}expect(Color.#{name}().red()).toEqual(#{red});"
+	puts "#{pre}#{pre}});"
+	puts "#{pre}"
+	puts "#{pre}#{pre}it(\"should return a color with the correct green value\", function() {"
+	puts "#{pre}#{pre}#{pre}expect(Color.#{name}().green()).toEqual(#{green});"
+	puts "#{pre}#{pre}});"
+	puts "#{pre}"
+	puts "#{pre}#{pre}it(\"should return a color with the correct blue value\", function() {"
+	puts "#{pre}#{pre}#{pre}expect(Color.#{name}().blue()).toEqual(#{blue});"
+	puts "#{pre}#{pre}});"
+	puts "#{pre}});"
+	puts "#{pre}"
 end
