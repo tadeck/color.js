@@ -64,7 +64,7 @@ FileUtils.cp(color_path, new_color_path)
 FileUtils.cp(color_path, new_color_compressed_path)
 
 # uglify the compressed file
-system("uglifyjs -nc --overwrite #{new_color_compressed_path}")
+system("uglifyjs --overwrite #{new_color_compressed_path}")
 
 # gzip the compressed file
 system("gzip #{new_color_compressed_path}")

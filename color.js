@@ -9,20 +9,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 /* 
-color.js is a simple JavaScript color library. It's designed to be complete, flexible, error-free, well-documented and fast.  color.js is written by Landon Schropp.
+color.js is a JavaScript color library. It's designed to be complete, flexible, error-free, well-documented and fast.  color.js is written by Landon Schropp.
 */
 
 /*
 Constructor for color.  This constructor can be called in the following ways:
-* With a single argument hexadecimal string:
+* With a single argument hexadecimal string ignoring case:
 * * new Color("#FF00FF");
-* * new Color("#ff00ff");
 * * new Color("FF00FF");
-* * new Color("ff00ff");
-* * new Color("#F0F");
-* * new Color("#f0f");
+* * new Color("#F0F");]
 * * new Color("F0F");
-* * new Color("f0f");
 * With a single argument Color:
 * * new Color(Color.cyan());
 * With three red, green and blue integers.
@@ -116,8 +112,8 @@ Color.prototype.value = function()
 };
 
 /*
-Returns a string representing this color.  This string will be a six-digit hexadecimal number 
-preceeded by the "#" character.  It's format will be "#RRGGBB".
+Returns a six-digit hexadecimal number preceeded by the "#" character which represents this color.
+It's format will be "#RRGGBB".
 */
 Color.prototype.hex = function()
 {
@@ -178,8 +174,8 @@ corresponding to each of these components.  The hue components will be calculate
 saturation and value components will be clamped between 0 and 255.  Any decimal values will be 
 rounded down to the nearest integer.  This method will calculate the red, green, blue, and hex 
 components of this Color based upon the provided hue, saturation and value components.  This 
-method will throw an exception if any of the provided arguments are not a number object.  This 
-method returns the current color object.
+method will throw an exception if any of the provided arguments are not a number.  This method 
+returns the current color object.
 */
 Color.prototype.setHSV = function(hue, saturation, value)
 {
@@ -214,12 +210,16 @@ Color.prototype.setHSV = function(hue, saturation, value)
 };
 
 /*
-Sets the red, green and blue values of this color using the provided hexadecimal string.  This method will calculate the red, green, blue, hue, saturation and value components using the provided hex string.  The string argument may be uppercase or lowercase but can only be in one of the following formats:
+Sets the red, green and blue values of this color using the provided hexadecimal string.  This 
+method will calculate the red, green, blue, hue, saturation and value components using the 
+provided hex string.  This method ignores the case of the argument and accepts strings in one of 
+the following formats:
 * "#FF00FF"
 * "FF00FF"
 * "#F0F"
 * "F0F"
-If the string argument is not in one of these formats, this method will throw an illegal_argument_exception.
+If the string argument is not in one of these formats, this method will throw an 
+illegal_argument_exception.
 */
 Color.prototype.setHex = function(hex)
 {
@@ -426,6 +426,55 @@ Color.prototype.clone = function() {
 };
 
 /*
+Creates a new color using the red, green and blue color model.  This method takes three arguments, 
+corresponding to each of these components.  The red, green and blue components will be clamped 
+between 0 and 255.  Any decimal values will be rounded down to the nearest integer.  This method 
+will calculate the hue, saturation and value components based upon the provided red, green and 
+blue components.  It will throw an exception if any of the provided arguments are not a number.
+*/
+Color.rgb = function(red, green, blue) {
+	return new Color().setRGB(red, green, blue);
+};
+
+/*
+Creates a new color using the hue, saturation and value color model.  This method takes three 
+arguments, corresponding to each of these components.  The hue components will be calculated 
+modulo 360.  The saturation and value components will be clamped between 0 and 100.  Any decimal 
+values will be rounded down to the nearest integer.  This method will calculate the red, green, 
+blue, and hex components of this Color based upon the provided hue, saturation and value 
+components.  This method will throw an exception if any of the provided arguments are not a number.
+*/
+Color.hsv = function(hue, saturation, value) {
+	return new Color().setHSV(hue, saturation, value);
+};
+
+/*
+Creates a new color using the provided hexadecimal string.  This method will calculate the red, 
+green, blue, hue, saturation and value components using the provided hex string.  The string 
+argument ignores case and can only be in one of the following formats:
+* "#FF00FF"
+* "FF00FF"
+* "#F0F"
+* "F0F"
+If the string argument is not in one of these formats, this method will throw an 
+illegal_argument_exception.
+*/
+Color.hex = function(hex) {
+	return new Color().setHex(hex);
+};
+
+/*
+Creates a new, random color object.
+*/
+Color.random = function() {
+	var red = Math.floor(Math.random() * 255);
+	var green = Math.floor(Math.random() * 255);
+	var blue = Math.floor(Math.random() * 255);
+
+	return new Color().setRGB(red, green, blue);
+};
+
+/*
 Private helper method which calculates the red, green and blue values based upon the current HSV 
 values.  These calculations are taken from: http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV.
 */
@@ -532,55 +581,4 @@ Color.prototype._calculateHex = function()
 {
 	var hex = (this._red * 256 * 256 + this._green * 256 + this._blue).toString(16);
 	this._hex = "#00000".slice(0, 7 - hex.length) + hex.toUpperCase();
-};
-
-/*
-Creates a new color using the red, green and blue color model.  This method takes three arguments, 
-corresponding to each of these components.  The red, green and blue components will be clamped 
-between 0 and 255.  Any decimal values will be rounded down to the nearest integer.  This method 
-will calculate the hue, saturation and value components based upon the provided red, green and 
-blue components.  It will throw an exception if any of the provided arguments are not a number 
-object.
-*/
-Color.rgb = function(red, green, blue) {
-	return new Color().setRGB(red, green, blue);
-};
-
-/*
-Creates a new color using the hue, saturation and value color model.  This method takes three 
-arguments, corresponding to each of these components.  The hue components will be calculated 
-modulo 360.  The saturation and value components will be clamped between 0 and 255.  Any decimal 
-values will be rounded down to the nearest integer.  This method will calculate the red, green, 
-blue, and hex components of this Color based upon the provided hue, saturation and value 
-components.  This method will throw an exception if any of the provided arguments are not a number 
-object.
-*/
-Color.hsv = function(hue, saturation, value) {
-	return new Color().setHSV(hue, saturation, value);
-};
-
-/*
-Creates a new color using the provided hexadecimal string.  This method will calculate the red, 
-green, blue, hue, saturation and value components using the provided hex string.  The string 
-argument may be uppercase or lowercase but can only be in one of the following formats:
-* "#FF00FF"
-* "FF00FF"
-* "#F0F"
-* "F0F"
-If the string argument is not in one of these formats, this method will throw an 
-illegal_argument_exception.
-*/
-Color.hex = function(hex) {
-	return new Color().setHex(hex);
-};
-
-/*
-Creates a new, random color object.
-*/
-Color.random = function() {
-	var red = Math.floor(Math.random() * 255);
-	var green = Math.floor(Math.random() * 255);
-	var blue = Math.floor(Math.random() * 255);
-
-	return new Color().setRGB(red, green, blue);
 };
