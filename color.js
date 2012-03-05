@@ -582,3 +582,1179 @@ Color.prototype._calculateHex = function()
 	var hex = (this._red * 256 * 256 + this._green * 256 + this._blue).toString(16);
 	this._hex = "#00000".slice(0, 7 - hex.length) + hex.toUpperCase();
 };
+
+/*
+Returns the color alice blue.
+*/
+Color.aliceBlue = function()
+{
+  return Color.rgb(240, 248, 255);
+};
+
+/*
+Returns the color antique white.
+*/
+Color.antiqueWhite = function()
+{
+  return Color.rgb(250, 235, 215);
+};
+
+/*
+Returns the color aqua.
+*/
+Color.aqua = function()
+{
+  return Color.rgb(0, 255, 255);
+};
+
+/*
+Returns the color aquamarine.
+*/
+Color.aquamarine = function()
+{
+  return Color.rgb(127, 255, 212);
+};
+
+/*
+Returns the color azure.
+*/
+Color.azure = function()
+{
+  return Color.rgb(240, 255, 255);
+};
+
+/*
+Returns the color beige.
+*/
+Color.beige = function()
+{
+  return Color.rgb(245, 245, 220);
+};
+
+/*
+Returns the color bisque.
+*/
+Color.bisque = function()
+{
+  return Color.rgb(255, 228, 196);
+};
+
+/*
+Returns the color black.
+*/
+Color.black = function()
+{
+  return Color.rgb(0, 0, 0);
+};
+
+/*
+Returns the color blanched almond.
+*/
+Color.blanchedAlmond = function()
+{
+  return Color.rgb(255, 235, 205);
+};
+
+/*
+Returns the color blue.
+*/
+Color.blue = function()
+{
+  return Color.rgb(0, 0, 255);
+};
+
+/*
+Returns the color blue violet.
+*/
+Color.blueViolet = function()
+{
+  return Color.rgb(138, 43, 226);
+};
+
+/*
+Returns the color brown.
+*/
+Color.brown = function()
+{
+  return Color.rgb(165, 42, 42);
+};
+
+/*
+Returns the color burlywood.
+*/
+Color.burlywood = function()
+{
+  return Color.rgb(222, 184, 135);
+};
+
+/*
+Returns the color cadet blue.
+*/
+Color.cadetBlue = function()
+{
+  return Color.rgb(95, 158, 160);
+};
+
+/*
+Returns the color chartreuse.
+*/
+Color.chartreuse = function()
+{
+  return Color.rgb(127, 255, 0);
+};
+
+/*
+Returns the color chocolate.
+*/
+Color.chocolate = function()
+{
+  return Color.rgb(210, 105, 30);
+};
+
+/*
+Returns the color coral.
+*/
+Color.coral = function()
+{
+  return Color.rgb(255, 127, 80);
+};
+
+/*
+Returns the color cornflower blue.
+*/
+Color.cornflowerBlue = function()
+{
+  return Color.rgb(100, 149, 237);
+};
+
+/*
+Returns the color cornsilk.
+*/
+Color.cornsilk = function()
+{
+  return Color.rgb(255, 248, 220);
+};
+
+/*
+Returns the color crimson.
+*/
+Color.crimson = function()
+{
+  return Color.rgb(220, 20, 60);
+};
+
+/*
+Returns the color cyan.
+*/
+Color.cyan = function()
+{
+  return Color.rgb(0, 255, 255);
+};
+
+/*
+Returns the color dark blue.
+*/
+Color.darkBlue = function()
+{
+  return Color.rgb(0, 0, 139);
+};
+
+/*
+Returns the color dark cyan.
+*/
+Color.darkCyan = function()
+{
+  return Color.rgb(0, 139, 139);
+};
+
+/*
+Returns the color dark goldenrod.
+*/
+Color.darkGoldenrod = function()
+{
+  return Color.rgb(184, 134, 11);
+};
+
+/*
+Returns the color dark gray.
+*/
+Color.darkGray = function()
+{
+  return Color.rgb(169, 169, 169);
+};
+
+/*
+Returns the color dark green.
+*/
+Color.darkGreen = function()
+{
+  return Color.rgb(0, 100, 0);
+};
+
+/*
+Returns the color dark grey.
+*/
+Color.darkGrey = function()
+{
+  return Color.rgb(169, 169, 169);
+};
+
+/*
+Returns the color dark khaki.
+*/
+Color.darkKhaki = function()
+{
+  return Color.rgb(189, 183, 107);
+};
+
+/*
+Returns the color dark magenta.
+*/
+Color.darkMagenta = function()
+{
+  return Color.rgb(139, 0, 139);
+};
+
+/*
+Returns the color dark olive green.
+*/
+Color.darkOliveGreen = function()
+{
+  return Color.rgb(85, 107, 47);
+};
+
+/*
+Returns the color dark orange.
+*/
+Color.darkOrange = function()
+{
+  return Color.rgb(255, 140, 0);
+};
+
+/*
+Returns the color dark orchid.
+*/
+Color.darkOrchid = function()
+{
+  return Color.rgb(153, 50, 204);
+};
+
+/*
+Returns the color dark red.
+*/
+Color.darkRed = function()
+{
+  return Color.rgb(139, 0, 0);
+};
+
+/*
+Returns the color dark salmon.
+*/
+Color.darkSalmon = function()
+{
+  return Color.rgb(233, 150, 122);
+};
+
+/*
+Returns the color dark sea green.
+*/
+Color.darkSeaGreen = function()
+{
+  return Color.rgb(143, 188, 143);
+};
+
+/*
+Returns the color dark slate blue.
+*/
+Color.darkSlateBlue = function()
+{
+  return Color.rgb(72, 61, 139);
+};
+
+/*
+Returns the color dark slate gray.
+*/
+Color.darkSlateGray = function()
+{
+  return Color.rgb(47, 79, 79);
+};
+
+/*
+Returns the color dark slate grey.
+*/
+Color.darkSlateGrey = function()
+{
+  return Color.rgb(47, 79, 79);
+};
+
+/*
+Returns the color dark turquoise.
+*/
+Color.darkTurquoise = function()
+{
+  return Color.rgb(0, 206, 209);
+};
+
+/*
+Returns the color dark violet.
+*/
+Color.darkViolet = function()
+{
+  return Color.rgb(148, 0, 211);
+};
+
+/*
+Returns the color deep pink.
+*/
+Color.deepPink = function()
+{
+  return Color.rgb(255, 20, 147);
+};
+
+/*
+Returns the color deep sky blue.
+*/
+Color.deepSkyBlue = function()
+{
+  return Color.rgb(0, 191, 255);
+};
+
+/*
+Returns the color dim gray.
+*/
+Color.dimGray = function()
+{
+  return Color.rgb(105, 105, 105);
+};
+
+/*
+Returns the color dim grey.
+*/
+Color.dimGrey = function()
+{
+  return Color.rgb(105, 105, 105);
+};
+
+/*
+Returns the color dodger blue.
+*/
+Color.dodgerBlue = function()
+{
+  return Color.rgb(30, 144, 255);
+};
+
+/*
+Returns the color firebrick.
+*/
+Color.firebrick = function()
+{
+  return Color.rgb(178, 34, 34);
+};
+
+/*
+Returns the color floral white.
+*/
+Color.floralWhite = function()
+{
+  return Color.rgb(255, 250, 240);
+};
+
+/*
+Returns the color forest green.
+*/
+Color.forestGreen = function()
+{
+  return Color.rgb(34, 139, 34);
+};
+
+/*
+Returns the color fuchsia.
+*/
+Color.fuchsia = function()
+{
+  return Color.rgb(255, 0, 255);
+};
+
+/*
+Returns the color gainsboro.
+*/
+Color.gainsboro = function()
+{
+  return Color.rgb(220, 220, 220);
+};
+
+/*
+Returns the color ghost white.
+*/
+Color.ghostWhite = function()
+{
+  return Color.rgb(248, 248, 255);
+};
+
+/*
+Returns the color gold.
+*/
+Color.gold = function()
+{
+  return Color.rgb(255, 215, 0);
+};
+
+/*
+Returns the color goldenrod.
+*/
+Color.goldenrod = function()
+{
+  return Color.rgb(218, 165, 32);
+};
+
+/*
+Returns the color gray.
+*/
+Color.gray = function()
+{
+  return Color.rgb(128, 128, 128);
+};
+
+/*
+Returns the color green.
+*/
+Color.green = function()
+{
+  return Color.rgb(0, 128, 0);
+};
+
+/*
+Returns the color green yellow.
+*/
+Color.greenYellow = function()
+{
+  return Color.rgb(173, 255, 47);
+};
+
+/*
+Returns the color grey.
+*/
+Color.grey = function()
+{
+  return Color.rgb(128, 128, 128);
+};
+
+/*
+Returns the color honeydew.
+*/
+Color.honeydew = function()
+{
+  return Color.rgb(240, 255, 240);
+};
+
+/*
+Returns the color hot pink.
+*/
+Color.hotPink = function()
+{
+  return Color.rgb(255, 105, 180);
+};
+
+/*
+Returns the color indian red.
+*/
+Color.indianRed = function()
+{
+  return Color.rgb(205, 92, 92);
+};
+
+/*
+Returns the color indigo.
+*/
+Color.indigo = function()
+{
+  return Color.rgb(75, 0, 130);
+};
+
+/*
+Returns the color ivory.
+*/
+Color.ivory = function()
+{
+  return Color.rgb(255, 255, 240);
+};
+
+/*
+Returns the color khaki.
+*/
+Color.khaki = function()
+{
+  return Color.rgb(240, 230, 140);
+};
+
+/*
+Returns the color lavender.
+*/
+Color.lavender = function()
+{
+  return Color.rgb(230, 230, 250);
+};
+
+/*
+Returns the color lavender blush.
+*/
+Color.lavenderBlush = function()
+{
+  return Color.rgb(255, 240, 245);
+};
+
+/*
+Returns the color lawn green.
+*/
+Color.lawnGreen = function()
+{
+  return Color.rgb(124, 252, 0);
+};
+
+/*
+Returns the color lemon chiffon.
+*/
+Color.lemonChiffon = function()
+{
+  return Color.rgb(255, 250, 205);
+};
+
+/*
+Returns the color light blue.
+*/
+Color.lightBlue = function()
+{
+  return Color.rgb(173, 216, 230);
+};
+
+/*
+Returns the color light coral.
+*/
+Color.lightCoral = function()
+{
+  return Color.rgb(240, 128, 128);
+};
+
+/*
+Returns the color light cyan.
+*/
+Color.lightCyan = function()
+{
+  return Color.rgb(224, 255, 255);
+};
+
+/*
+Returns the color light goldenrod yellow.
+*/
+Color.lightGoldenrodYellow = function()
+{
+  return Color.rgb(250, 250, 210);
+};
+
+/*
+Returns the color light gray.
+*/
+Color.lightGray = function()
+{
+  return Color.rgb(211, 211, 211);
+};
+
+/*
+Returns the color light green.
+*/
+Color.lightGreen = function()
+{
+  return Color.rgb(144, 238, 144);
+};
+
+/*
+Returns the color light grey.
+*/
+Color.lightGrey = function()
+{
+  return Color.rgb(211, 211, 211);
+};
+
+/*
+Returns the color light pink.
+*/
+Color.lightPink = function()
+{
+  return Color.rgb(255, 182, 193);
+};
+
+/*
+Returns the color light salmon.
+*/
+Color.lightSalmon = function()
+{
+  return Color.rgb(255, 160, 122);
+};
+
+/*
+Returns the color light sea green.
+*/
+Color.lightSeaGreen = function()
+{
+  return Color.rgb(32, 178, 170);
+};
+
+/*
+Returns the color light sky blue.
+*/
+Color.lightSkyBlue = function()
+{
+  return Color.rgb(135, 206, 250);
+};
+
+/*
+Returns the color light slate gray.
+*/
+Color.lightSlateGray = function()
+{
+  return Color.rgb(119, 136, 153);
+};
+
+/*
+Returns the color light slate grey.
+*/
+Color.lightSlateGrey = function()
+{
+  return Color.rgb(119, 136, 153);
+};
+
+/*
+Returns the color light steel blue.
+*/
+Color.lightSteelBlue = function()
+{
+  return Color.rgb(176, 196, 222);
+};
+
+/*
+Returns the color light yellow.
+*/
+Color.lightYellow = function()
+{
+  return Color.rgb(255, 255, 224);
+};
+
+/*
+Returns the color lime.
+*/
+Color.lime = function()
+{
+  return Color.rgb(0, 255, 0);
+};
+
+/*
+Returns the color lime green.
+*/
+Color.limeGreen = function()
+{
+  return Color.rgb(50, 205, 50);
+};
+
+/*
+Returns the color linen.
+*/
+Color.linen = function()
+{
+  return Color.rgb(250, 240, 230);
+};
+
+/*
+Returns the color magenta.
+*/
+Color.magenta = function()
+{
+  return Color.rgb(255, 0, 255);
+};
+
+/*
+Returns the color maroon.
+*/
+Color.maroon = function()
+{
+  return Color.rgb(128, 0, 0);
+};
+
+/*
+Returns the color medium aquamarine.
+*/
+Color.mediumAquamarine = function()
+{
+  return Color.rgb(102, 205, 170);
+};
+
+/*
+Returns the color medium blue.
+*/
+Color.mediumBlue = function()
+{
+  return Color.rgb(0, 0, 205);
+};
+
+/*
+Returns the color medium orchid.
+*/
+Color.mediumOrchid = function()
+{
+  return Color.rgb(186, 85, 211);
+};
+
+/*
+Returns the color medium purple.
+*/
+Color.mediumPurple = function()
+{
+  return Color.rgb(147, 112, 219);
+};
+
+/*
+Returns the color medium sea green.
+*/
+Color.mediumSeaGreen = function()
+{
+  return Color.rgb(60, 179, 113);
+};
+
+/*
+Returns the color medium slate blue.
+*/
+Color.mediumSlateBlue = function()
+{
+  return Color.rgb(123, 104, 238);
+};
+
+/*
+Returns the color medium spring green.
+*/
+Color.mediumSpringGreen = function()
+{
+  return Color.rgb(0, 250, 154);
+};
+
+/*
+Returns the color medium turquoise.
+*/
+Color.mediumTurquoise = function()
+{
+  return Color.rgb(72, 209, 204);
+};
+
+/*
+Returns the color medium violet red.
+*/
+Color.mediumVioletRed = function()
+{
+  return Color.rgb(199, 21, 133);
+};
+
+/*
+Returns the color midnight blue.
+*/
+Color.midnightBlue = function()
+{
+  return Color.rgb(25, 25, 112);
+};
+
+/*
+Returns the color mint cream.
+*/
+Color.mintCream = function()
+{
+  return Color.rgb(245, 255, 250);
+};
+
+/*
+Returns the color misty rose.
+*/
+Color.mistyRose = function()
+{
+  return Color.rgb(255, 228, 225);
+};
+
+/*
+Returns the color moccasin.
+*/
+Color.moccasin = function()
+{
+  return Color.rgb(255, 228, 181);
+};
+
+/*
+Returns the color navajo white.
+*/
+Color.navajoWhite = function()
+{
+  return Color.rgb(255, 222, 173);
+};
+
+/*
+Returns the color navy.
+*/
+Color.navy = function()
+{
+  return Color.rgb(0, 0, 128);
+};
+
+/*
+Returns the color old lace.
+*/
+Color.oldLace = function()
+{
+  return Color.rgb(253, 245, 230);
+};
+
+/*
+Returns the color olive.
+*/
+Color.olive = function()
+{
+  return Color.rgb(128, 128, 0);
+};
+
+/*
+Returns the color olive drab.
+*/
+Color.oliveDrab = function()
+{
+  return Color.rgb(107, 142, 35);
+};
+
+/*
+Returns the color orange.
+*/
+Color.orange = function()
+{
+  return Color.rgb(255, 165, 0);
+};
+
+/*
+Returns the color orange red.
+*/
+Color.orangeRed = function()
+{
+  return Color.rgb(255, 69, 0);
+};
+
+/*
+Returns the color orchid.
+*/
+Color.orchid = function()
+{
+  return Color.rgb(218, 112, 214);
+};
+
+/*
+Returns the color pale goldenrod.
+*/
+Color.paleGoldenrod = function()
+{
+  return Color.rgb(238, 232, 170);
+};
+
+/*
+Returns the color pale green.
+*/
+Color.paleGreen = function()
+{
+  return Color.rgb(152, 251, 152);
+};
+
+/*
+Returns the color pale turquoise.
+*/
+Color.paleTurquoise = function()
+{
+  return Color.rgb(175, 238, 238);
+};
+
+/*
+Returns the color pale violet red.
+*/
+Color.paleVioletRed = function()
+{
+  return Color.rgb(219, 112, 147);
+};
+
+/*
+Returns the color papaya whip.
+*/
+Color.papayaWhip = function()
+{
+  return Color.rgb(255, 239, 213);
+};
+
+/*
+Returns the color peach puff.
+*/
+Color.peachPuff = function()
+{
+  return Color.rgb(255, 218, 185);
+};
+
+/*
+Returns the color peru.
+*/
+Color.peru = function()
+{
+  return Color.rgb(205, 133, 63);
+};
+
+/*
+Returns the color pink.
+*/
+Color.pink = function()
+{
+  return Color.rgb(255, 192, 203);
+};
+
+/*
+Returns the color plum.
+*/
+Color.plum = function()
+{
+  return Color.rgb(221, 160, 221);
+};
+
+/*
+Returns the color powder blue.
+*/
+Color.powderBlue = function()
+{
+  return Color.rgb(176, 224, 230);
+};
+
+/*
+Returns the color purple.
+*/
+Color.purple = function()
+{
+  return Color.rgb(128, 0, 128);
+};
+
+/*
+Returns the color red.
+*/
+Color.red = function()
+{
+  return Color.rgb(255, 0, 0);
+};
+
+/*
+Returns the color rosy brown.
+*/
+Color.rosyBrown = function()
+{
+  return Color.rgb(188, 143, 143);
+};
+
+/*
+Returns the color royal blue.
+*/
+Color.royalBlue = function()
+{
+  return Color.rgb(65, 105, 225);
+};
+
+/*
+Returns the color saddle brown.
+*/
+Color.saddleBrown = function()
+{
+  return Color.rgb(139, 69, 19);
+};
+
+/*
+Returns the color salmon.
+*/
+Color.salmon = function()
+{
+  return Color.rgb(250, 128, 114);
+};
+
+/*
+Returns the color sandy brown.
+*/
+Color.sandyBrown = function()
+{
+  return Color.rgb(244, 164, 96);
+};
+
+/*
+Returns the color sea green.
+*/
+Color.seaGreen = function()
+{
+  return Color.rgb(46, 139, 87);
+};
+
+/*
+Returns the color seashell.
+*/
+Color.seashell = function()
+{
+  return Color.rgb(255, 245, 238);
+};
+
+/*
+Returns the color sienna.
+*/
+Color.sienna = function()
+{
+  return Color.rgb(160, 82, 45);
+};
+
+/*
+Returns the color silver.
+*/
+Color.silver = function()
+{
+  return Color.rgb(192, 192, 192);
+};
+
+/*
+Returns the color sky blue.
+*/
+Color.skyBlue = function()
+{
+  return Color.rgb(135, 206, 235);
+};
+
+/*
+Returns the color slate blue.
+*/
+Color.slateBlue = function()
+{
+  return Color.rgb(106, 90, 205);
+};
+
+/*
+Returns the color slate gray.
+*/
+Color.slateGray = function()
+{
+  return Color.rgb(112, 128, 144);
+};
+
+/*
+Returns the color slate grey.
+*/
+Color.slateGrey = function()
+{
+  return Color.rgb(112, 128, 144);
+};
+
+/*
+Returns the color snow.
+*/
+Color.snow = function()
+{
+  return Color.rgb(255, 250, 250);
+};
+
+/*
+Returns the color spring green.
+*/
+Color.springGreen = function()
+{
+  return Color.rgb(0, 255, 127);
+};
+
+/*
+Returns the color steel blue.
+*/
+Color.steelBlue = function()
+{
+  return Color.rgb(70, 130, 180);
+};
+
+/*
+Returns the color tan.
+*/
+Color.tan = function()
+{
+  return Color.rgb(210, 180, 140);
+};
+
+/*
+Returns the color teal.
+*/
+Color.teal = function()
+{
+  return Color.rgb(0, 128, 128);
+};
+
+/*
+Returns the color thistle.
+*/
+Color.thistle = function()
+{
+  return Color.rgb(216, 191, 216);
+};
+
+/*
+Returns the color tomato.
+*/
+Color.tomato = function()
+{
+  return Color.rgb(255, 99, 71);
+};
+
+/*
+Returns the color turquoise.
+*/
+Color.turquoise = function()
+{
+  return Color.rgb(64, 224, 208);
+};
+
+/*
+Returns the color violet.
+*/
+Color.violet = function()
+{
+  return Color.rgb(238, 130, 238);
+};
+
+/*
+Returns the color wheat.
+*/
+Color.wheat = function()
+{
+  return Color.rgb(245, 222, 179);
+};
+
+/*
+Returns the color white.
+*/
+Color.white = function()
+{
+  return Color.rgb(255, 255, 255);
+};
+
+/*
+Returns the color white smoke.
+*/
+Color.whiteSmoke = function()
+{
+  return Color.rgb(245, 245, 245);
+};
+
+/*
+Returns the color yellow.
+*/
+Color.yellow = function()
+{
+  return Color.rgb(255, 255, 0);
+};
+
+/*
+Returns the color yellow green.
+*/
+Color.yellowGreen = function()
+{
+  return Color.rgb(154, 205, 50);
+};

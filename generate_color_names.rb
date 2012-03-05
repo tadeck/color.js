@@ -162,7 +162,7 @@ colors.each do |color_data|
 
 	# Convert the color name into a human-readable format for the comment.
 	puts "/*"
-	puts "Returns an instance of the color #{name.gsub(/(.)([A-Z])/,'\1 \2').downcase}."
+	puts "Returns the color #{name.gsub(/(.)([A-Z])/,'\1 \2').downcase}."
 	puts "*/"
 
 	# Build the color function

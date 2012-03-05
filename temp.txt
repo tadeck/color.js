@@ -1,957 +1,1178 @@
-// load the color library
-eval(require('fs').readFileSync('./color.js','utf-8'));
+/*
+Returns the color alice blue.
+*/
+Color.aliceBlue = function()
+{
+  return Color.rgb(240, 248, 255);
+};
 
 /*
-Shared specs for color modification.  Takes the following arguments:
-* colorData An array of objects used to create the colors.  Each one of these items will be
-  iterated over and will be passed to colorModificationFunction.
-* comparisonData This is the data to be used to determine the expected results.
-* colorModificationFunction A function used to create colors.  This should take in one argument,
-  which is a color data object, and should return a newly created color.
+Returns the color antique white.
 */
-function colorSharedSpecs(colorData, comparisonData, colorModificationFunction) {
-
-  var newColors;
-
-  // set the comparison data
-  comparisonData = comparisonData || colorData;
-
-  beforeEach(function() {
-    newColors = [];
-
-    for (var i = 0; i < colorData.length; i++)
-      newColors[i]= colorModificationFunction(colorData[i]); 
-  });
-
-  it("should set the red component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].red()).toEqual(comparisonData[i].r);
-    }
-  });
-
-  it("should set the green component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].green()).toEqual(comparisonData[i].g);
-    }
-  });
-
-  it("should set the blue component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].blue()).toEqual(comparisonData[i].b);
-    }
-  });
-
-  it("should set the hue component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].hue()).toAlmostEqual(comparisonData[i].h);
-    }
-  });
-
-  it("should set the saturation component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].saturation()).toAlmostEqual(comparisonData[i].s);
-    }
-  });
-
-  it("should set the value component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].value()).toAlmostEqual(comparisonData[i].v);
-    }
-  });
-
-  it("should set the hex component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].hex()).toEqual(comparisonData[i].hex);
-    }
-  });
-
-  it("should set the string component", function() {
-    for(var i = 0; i < colorData.length; i++) {
-      expect(newColors[i].toString()).toEqual(comparisonData[i].hex);
-    }
-  });
-}
-
-describe("Color", function() {
-
-  // a large array of pre-calculated test color properties
-  var colors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).colors;
-
-  // a large array of pre-calculated test color properties with three-digit hex codes
-  var threeDigitHexColors = JSON.parse(require('fs').readFileSync('./colorSpecColors.json','utf-8')).threeDigitHexColors;
-
-  // an array of colors to be created by the spec for testing
-  var newColors;
-
-  beforeEach(function() {
-
-    // the margin of error for tests
-    var epsilon = 0.000001
-
-    // add custom matchers
-    this.addMatchers({
-      toAlmostEqual: function(expected) {
-        return Math.abs(this.actual - expected) <= epsilon;
-      }
-    });
-  });
-
-  describe("constructor", function() {
-
-    describe("when no arguments are provided", function() {
-      it("should have a red component of 0", function() {
-        expect(new Color().red()).toEqual(0);
-      });
-      
-      it("should have a green component of 0", function() {
-        expect(new Color().green()).toEqual(0);
-      });
-      
-      it("should have a blue component of 0", function() {
-        expect(new Color().blue()).toEqual(0);
-      });
-      
-      it("should have a hue component of 0", function() {
-        expect(new Color().hue()).toEqual(0);
-      });
-      
-      it("should have a saturation component of 0", function() {
-        expect(new Color().saturation()).toEqual(0);
-      });
-      
-      it("should have a value component of 0", function() {
-        expect(new Color().value()).toEqual(0);
-      });
-      
-      it("should have a hex component of #000000", function() {
-        expect(new Color().hex()).toEqual("#000000");
-      });
-      
-      it("should have a string component of #000000", function() {
-        expect(new Color().toString()).toEqual("#000000");
-      });
-    });
-
-    describe("when three numbers are provided for the arguments", function() {
-
-      /*
-      WARNING: This spec caters to the implementation.
-      */
-      it("should call the setRGB method with the provided arguments", function() {
-        spyOn(Color.prototype, 'setRGB');
-        var color = new Color(63, 127, 191);
-        expect(color.setRGB).wasCalledWith(63, 127, 191);
-      });
-    });
-
-    describe("when a Color is provided for the first argument", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(data.r, data.g, data.b)
-        return new Color(color); 
-      });
-
-    });
-
-    describe("when a string is provided for the first argument", function() {
-      /*
-      WARNING: This spec caters to the implementation.
-      */
-      it("should call the setHex method with the provided argument", function() {
-        spyOn(Color.prototype, 'setHex');
-        var color = new Color("#FFFFFF");
-        expect(color.setHex).wasCalledWith("#FFFFFF");
-      });
-    });
-
-    describe("when some other kind of object is provided for the first argument", function() {
-
-      it("should throw an exception", function() {
-        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
-
-        for (var i = 0; i < objects.length; i++)
-          expect(function() { new Color(objects[i]); }).toThrow("illegal_argument_exception");
-      });
-    });
-  });
-
-  describe("setRGB() method", function() {
-
-    colorSharedSpecs(colors, colors, function(data) { 
-      var color = new Color(0, 0, 0);
-      color.setRGB(data.r, data.g, data.b);
-      return color; 
-    });
-
-    it("should return the object being mutated", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setRGB(0, 0, 0)).toEqual(color);
-    });
-
-    describe("and the values are not between 0 and 255", function() {
-
-      var colorData = [
-        { r:-96, g:255, b:255, h:180, s:100, v:100, hex:"#00FFFF" },
-        { r:383, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:-96, b:255, h:300, s:100, v:100, hex:"#FF00FF" },
-        { r:255, g:383, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:255, b:-96, h: 60, s:100, v:100, hex:"#FFFF00" },
-        { r:255, g:255, b:383, h:  0, s:  0, v:100, hex:"#FFFFFF" }
-      ];
-
-      var comparisonData = [
-        { r:  0, g:255, b:255, h:180, s:100, v:100, hex:"#00FFFF" },
-        { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:  0, b:255, h:300, s:100, v:100, hex:"#FF00FF" },
-        { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:255, b:  0, h: 60, s:100, v:100, hex:"#FFFF00" },
-        { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" }
-      ];
-
-      colorSharedSpecs(colorData, comparisonData, function(data) {
-        var color = new Color(0, 0, 0);
-        color.setRGB(data.r, data.g, data.b);
-        return color; 
-      });
-    });
-
-    describe("and the red contains a decimal", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setRGB(data.r + 0.75, data.g, data.b);
-        return color; 
-      });
-    });
-
-    describe("and the green contains a decimal", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setRGB(data.r, data.g + 0.75, data.b);
-        return color; 
-      });
-    });
-
-    describe("and the blue contains a decimal", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setRGB(data.r, data.g, data.b + 0.75);
-        return color; 
-      });
-    });
-
-    describe("and the first argument is not a number", function() {
-      it("should throw an exception", function() {
-        var color = new Color(0, 0, 0);
-        expect(function() { color.setRGB("testing", 0, 0); }).toThrow("illegal_argument_exception");
-      });
-    });
-
-    describe("and the second argument is not a number", function() {
-      it("should throw an exception", function() {
-        var color = new Color(0, 0, 0);
-        expect(function() { color.setRGB(0, "testing", 0); }).toThrow("illegal_argument_exception");
-      });
-    });
-
-    describe("and the third argument is not a number", function() {
-      it("should throw an exception", function() {
-        var color = new Color(0, 0, 0);
-        expect(function() { color.setRGB(0, 0, "testing"); }).toThrow("illegal_argument_exception");
-      });
-    });
-  });
-
-  describe ("setHex() method", function() {
-
-    it("should return the object being mutated", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setHex("#000000")).toEqual(color);
-    });
-
-    describe("with a hash and capitalized six hexadecimal digits", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHex(data.hex);
-        return color;
-      });
-    });
-
-    describe("with a hash and lowercased six hexadecimal digits", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHex(data.hex.toLowerCase());
-        return color;
-      });
-    });
-
-    describe("with six capitalized hexadecimal digits", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHex(data.hex.slice(1, 8));
-        return color;
-      });
-    });
-
-    describe("with six lowercased hexadecimal digits", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHex(data.hex.slice(1, 8).toLowerCase());
-        return color;
-      });
-    });
-
-    describe("with a hash and three capitalized hexadecimal digits", function() {
-
-      colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) {
-        var color = new Color(0, 0, 0);
-        color.setHex(data.threeDigitHex);
-        return color; 
-      });
-    });
-
-    describe("with a hash and three lowercased hexadecimal digits", function() {
-
-      colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHex(data.threeDigitHex.toLowerCase());
-        return color;
-      });
-    });
-
-    describe("with three capitalized hexadecimal digits", function() {
-
-      colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHex(data.threeDigitHex.slice(1, 5));
-        return color;
-      });
-    });
-
-    describe("with three lowercased hexadecimal digits", function() {
-
-      colorSharedSpecs(threeDigitHexColors, threeDigitHexColors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHex(data.threeDigitHex.slice(1, 5).toLowerCase());
-        return color;
-      });
-    });
-
-    describe("and the string is in some other format", function() {
-
-      it("should throw an exception", function() {
-        var invalidStrings = [ "","0", "00", "0000", "00000", "0000000", "00000000", "#0", 
-          "#00", "#0000", "#00000", "#0000000", "#00000000", "rgba(0, 0, 0, 0)", "#G0FFFF", 
-          "#FFG0FF", "#FFFFG0", "G0FFFF", "FFG0FF", "FFFFG0", "#GFF", "#FGF", "#FFG", "GFF", 
-          "FGF", "FFG", "#g0ffff", "#ffg0ff", "#ffffg0", "g0ffff", "ffg0ff", "ffffg0", "#gff", 
-          "#fgf", "#ffg", "gff", "fgf", "ffg", "invalid", "black", "white", "FFFFFF\nFFFFFF" ];
-
-        for (var i = 0; i < invalidStrings.length; i++) {
-          var color = new Color(0, 0, 0);
-          expect(function() { color.setHex(invalidStrings[i]); }).toThrow("illegal_argument_exception");
-        }
-      });
-    });
-
-    describe("and something other than a string is provided as an argument", function() {
-      it("should throw an exception", function() {
-        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
-
-        for (var i = 0; i < objects.length; i++) {
-          var color = new Color(0, 0, 0);
-          expect(function() { color.setHex(objects[i]); }).toThrow("illegal_argument_exception");
-        }
-      });
-    });
-  });
-
-
-
-  describe("setHSV() method", function() {
-
-    colorSharedSpecs(colors, colors, function(data) { 
-      var color = new Color(0, 0, 0);
-      color.setHSV(data.h, data.s, data.v);
-      return color; 
-    });
-
-    it("should return the object being mutated", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setHSV(0, 0, 0)).toEqual(color);
-    });
-
-    describe("when the hue is out of range", function() {
-
-      var colorData = [
-        { r:255, g:  0, b:  0, h:-360, s:100, v:100, hex:"#FF0000" },
-        { r:255, g:255, b:  0, h:-300, s:100, v:100, hex:"#FFFF00" },
-        { r:  0, g:255, b:  0, h:-240, s:100, v:100, hex:"#00FF00" },
-        { r:  0, g:255, b:255, h:-180, s:100, v:100, hex:"#00FFFF" },
-        { r:  0, g:  0, b:255, h:-120, s:100, v:100, hex:"#0000FF" },
-        { r:255, g:  0, b:255, h: -60, s:100, v:100, hex:"#FF00FF" },
-        { r:255, g:  0, b:  0, h: 360, s:100, v:100, hex:"#FF0000" },
-        { r:255, g:255, b:  0, h: 420, s:100, v:100, hex:"#FFFF00" },
-        { r:  0, g:255, b:  0, h: 480, s:100, v:100, hex:"#00FF00" },
-        { r:  0, g:255, b:255, h: 540, s:100, v:100, hex:"#00FFFF" },
-        { r:  0, g:  0, b:255, h: 600, s:100, v:100, hex:"#0000FF" },
-        { r:255, g:  0, b:255, h: 660, s:100, v:100, hex:"#FF00FF" }
-      ];
-
-      var comparisonData = [
-        { r:255, g:  0, b:  0, h:   0, s:100, v:100, hex:"#FF0000" },
-        { r:255, g:255, b:  0, h:  60, s:100, v:100, hex:"#FFFF00" },
-        { r:  0, g:255, b:  0, h: 120, s:100, v:100, hex:"#00FF00" },
-        { r:  0, g:255, b:255, h: 180, s:100, v:100, hex:"#00FFFF" },
-        { r:  0, g:  0, b:255, h: 240, s:100, v:100, hex:"#0000FF" },
-        { r:255, g:  0, b:255, h: 300, s:100, v:100, hex:"#FF00FF" },
-        { r:255, g:  0, b:  0, h:   0, s:100, v:100, hex:"#FF0000" },
-        { r:255, g:255, b:  0, h:  60, s:100, v:100, hex:"#FFFF00" },
-        { r:  0, g:255, b:  0, h: 120, s:100, v:100, hex:"#00FF00" },
-        { r:  0, g:255, b:255, h: 180, s:100, v:100, hex:"#00FFFF" },
-        { r:  0, g:  0, b:255, h: 240, s:100, v:100, hex:"#0000FF" },
-        { r:255, g:  0, b:255, h: 300, s:100, v:100, hex:"#FF00FF" }
-      ];
-
-      colorSharedSpecs(colorData, comparisonData, function(data) {
-        var color = new Color(0, 0, 0);
-        color.setHSV(data.h, data.s, data.v);
-        return color; 
-      });
-    });
-
-    describe("when the saturation and value are out of range it should clamp their values", function() {
-
-      var colorData = [
-        { r:255, g:  0, b:  0, h:  0, s:150, v:100, hex:"#FF0000" },
-        { r:255, g:255, b:255, h:  0, s:-50, v:100, hex:"#FFFFFF" },
-        { r:255, g:  0, b:  0, h:  0, s:100, v:150, hex:"#FF0000" },
-        { r:  0, g:  0, b:  0, h:  0, s:100, v:-50, hex:"#000000" }
-      ];
-
-      var comparisonData = [
-        { r:255, g:  0, b:  0, h:  0, s:100, v:100, hex:"#FF0000" },
-        { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:  0, b:  0, h:  0, s:100, v:100, hex:"#FF0000" },
-        { r:  0, g:  0, b:  0, h:  0, s:100, v:  0, hex:"#000000" }
-      ];
-
-      colorSharedSpecs(colorData, comparisonData, function(data) {
-        var color = new Color(0, 0, 0);
-        color.setHSV(data.h, data.s, data.v);
-        return color; 
-      });
-    });
-
-    describe("when the hue can correspond to multiple RGB values it should retain the provided value", function() {
-
-      var colorData = [
-        { r:255, g:255, b:255, h:  0, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:255, b:255, h: 60, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:255, b:255, h:120, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:255, b:255, h:180, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:255, b:255, h:240, s:  0, v:100, hex:"#FFFFFF" },
-        { r:255, g:255, b:255, h:300, s:  0, v:100, hex:"#FFFFFF" }
-      ];
-
-      colorSharedSpecs(colorData, colorData, function(data) {
-        var color = new Color(0, 0, 0);
-        color.setHSV(data.h, data.s, data.v);
-        return color; 
-      });
-
-    });
-
-    describe("when the saturation can correspond to multiple RGB values", function() {
-
-      var colorData = [
-        { r:  0, g:  0, b:  0, h:  0, s:  0, v:  0, hex:"#000000" },
-        { r:  0, g:  0, b:  0, h:  0, s: 25, v:  0, hex:"#000000" },
-        { r:  0, g:  0, b:  0, h:  0, s: 50, v:  0, hex:"#000000" },
-        { r:  0, g:  0, b:  0, h:  0, s: 75, v:  0, hex:"#000000" },
-        { r:  0, g:  0, b:  0, h:  0, s:100, v:  0, hex:"#000000" }
-      ];
-
-      colorSharedSpecs(colorData, colorData, function(data) {
-        var color = new Color(0, 0, 0);
-        color.setHSV(data.h, data.s, data.v);
-        return color; 
-      });
-    });
-
-    describe("when the hue contains a decimal", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHSV(data.h + 0.75, data.s, data.v);
-        return color; 
-      });
-    });
-
-    describe("when the saturation contains a decimal", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHSV(data.h, data.s + 0.75, data.v);
-        return color; 
-      });
-    });
-
-    describe("when the value contains a decimal", function() {
-
-      colorSharedSpecs(colors, colors, function(data) { 
-        var color = new Color(0, 0, 0);
-        color.setHSV(data.h, data.s, data.v + 0.75);
-        return color; 
-      });
-    });
-
-    describe("when something other than a number is provided for the first argument", function() {
-      it("should throw an exception", function() {
-        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
-
-        for (var i = 0; i < objects.length; i++) {
-          var color = new Color(0, 0, 0);
-          expect(function() { color.setHSV(objects[i], 0, 0); }).toThrow("illegal_argument_exception");
-        }
-      });
-    });
-
-    describe("when something other than a number is provided for the second argument", function() {
-      it("should throw an exception", function() {
-        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
-
-        for (var i = 0; i < objects.length; i++) {
-          var color = new Color(0, 0, 0);
-          expect(function() { color.setHSV(0, objects[i], 0); }).toThrow("illegal_argument_exception");
-        }
-      });
-    });
-
-    describe("when something other than a number is provided for the third argument", function() {
-      it("should throw an exception", function() {
-        var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
-
-        for (var i = 0; i < objects.length; i++) {
-          var color = new Color(0, 0, 0);
-          expect(function() { color.setHSV(0, 0, objects[i]); }).toThrow("illegal_argument_exception");
-        }
-      });
-    });
-  });
-
-
-
-  describe("setRed() method", function() {
-
-    /*
-    WARNING: This spec caters to the implementation.
-    */
-    it("should call the setRGB method with the new value of red and the current values of green and blue", function() {
-      var color = new Color(63, 127, 191);
-      spyOn(Color.prototype, 'setRGB');
-      color.setRed(255);
-      expect(color.setRGB).wasCalledWith(255, 127, 191);
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setRed(0)).toEqual(color);
-    });
-  });
-
-  describe("setGreen() method", function() {
-
-    /*
-    WARNING: This spec caters to the implementation.
-    */
-    it("should call the setRGB method with the new value of green and the current values of red and blue", function() {
-      var color = new Color(63, 127, 191);
-      spyOn(Color.prototype, 'setRGB');
-      color.setGreen(255);
-      expect(color.setRGB).wasCalledWith(63, 255, 191);
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setGreen(0)).toEqual(color);
-    });
-  });
-
-  describe("setBlue() method", function() {
-
-    /*
-    WARNING: This spec caters to the implementation.
-    */
-    it("should call the setRGB method with the new value of blue and the current values of red and green", function() {
-      var color = new Color(63, 127, 191);
-      spyOn(Color.prototype, 'setRGB');
-      color.setBlue(255);
-      expect(color.setRGB).wasCalledWith(63, 127, 255);
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setBlue(0)).toEqual(color);
-    });
-  });
-
-  describe("setHue() method", function() {
-
-    /*
-    WARNING: This spec caters to the implementation.
-    */
-    it("should call the setHSV method with the new value of hue and the current values of saturation and value", function() {
-      var color = new Color(0, 0, 0);
-      color.setHSV(0, 50, 75);
-      spyOn(Color.prototype, 'setHSV');
-      color.setHue(180);
-      expect(color.setHSV).wasCalledWith(180, 50, 75);
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setHue(0)).toEqual(color);
-    });
-  });
-
-  describe("setSaturation() method", function() {
-
-    /*
-    WARNING: This spec caters to the implementation.
-    */
-    it("should call the setHSV method with the new value of saturation and the current values of hue and value", function() {
-      var color = new Color(0, 0, 0);
-      color.setHSV(0, 50, 75);
-      spyOn(Color.prototype, 'setHSV');
-      color.setSaturation(25);
-      expect(color.setHSV).wasCalledWith(0, 25, 75);
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setSaturation(0)).toEqual(color);
-    });
-  });
-
-  describe("setValue() method", function() {
-
-    /*
-    WARNING: This spec caters to the implementation.
-    */
-    it("should call the setHSV method with the new value of value and the current values of hue and saturation", function() {
-      var color = new Color(0, 0, 0);
-      color.setHSV(0, 50, 75);
-      spyOn(Color.prototype, 'setHSV');
-      color.setValue(25);
-      expect(color.setHSV).wasCalledWith(0, 50, 25);
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.setValue(0)).toEqual(color);
-    });
-  });
-
-  describe("rotateHue() method", function() {
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.rotateHue(0)).toEqual(color);
-    });
-
-    describe("when the provided value is positive", function() {
-      describe("when the provided value plus the current hue is not out of bounds", function() {
-        /*
-        WARNING: This spec caters to the implementation.
-        */
-        it("should call setHue with the current value plus the provided value", function() {
-          var color = new Color(0, 0, 0).setHue(30);
-          spyOn(Color.prototype, 'setHue');
-          color.rotateHue(60);
-          expect(color.setHue).wasCalledWith(90);
-        });
-      });
-
-      describe("when the provided value plus the current hue is out of bounds", function() {
-        /*
-        WARNING: This spec caters to the implementation.
-        */
-        it("should call setHue with the current value plus the provided value", function() {
-          var color = new Color(0, 0, 0).setHue(330);
-          spyOn(Color.prototype, 'setHue');
-          color.rotateHue(60);
-          expect(color.setHue).wasCalledWith(390);
-        });
-      });
-    });
-
-    describe("when the provided value is negative", function() {
-      describe("when the provided value plus the current hue is not out of bounds", function() {
-        /*
-        WARNING: This spec caters to the implementation.
-        */
-        it("should call setHue with the current value plus the provided value", function() {
-          var color = new Color(0, 0, 0).setHue(330);
-          spyOn(Color.prototype, 'setHue');
-          color.rotateHue(-60);
-          expect(color.setHue).wasCalledWith(270);
-        });
-      });
-
-      describe("when the provided value plus the current hue is out of bounds", function() {
-        /*
-        WARNING: This spec caters to the implementation.
-        */
-        it("should call setHue with the current value plus the provided value", function() {
-          var color = new Color(0, 0, 0).setHue(30);
-          spyOn(Color.prototype, 'setHue');
-          color.rotateHue(-60);
-          expect(color.setHue).wasCalledWith(-30);
-        });
-      });
-    });
-  });
-
-  describe("complement() method", function() {
-    it("should call setHue with the current value of hue plus 180", function() {
-      spyOn(Color.prototype, 'setHue');
-
-      for (var amount = 0; amount < 360; amount += 30)
-      {
-        /*
-        spyOn breaks the setHue method, so it can't actually be used here.
-        */
-        var color = (new Color(0, 0, 0));
-        color.setHSV(amount, 0, 0);
-        color.setHue.reset();
-        color.complement();
-        expect(color.setHue).wasCalledWith(amount + 180);
-      }
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.complement()).toEqual(color);
-    });
-  });
-
-  describe("saturate() method", function() {
-    it("should call the setSaturation method with the current value of saturation plus the provided value", function() {
-      spyOn(Color.prototype, 'setSaturation');
-
-      for (var amount = 0; amount <= 100; amount += 25)
-      {
-        /*
-        spyOn breaks the setSaturation method, so it can't actually be used here.
-        */
-        var color = (new Color(0, 0, 0));
-        color.setHSV(0, 50, 0);
-        color.setSaturation.reset();
-        color.saturate(amount);
-        expect(color.setSaturation).wasCalledWith(50 + amount);
-      }
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.saturate(0)).toEqual(color);
-    });
-  });
-
-  describe("desaturate() method", function() {
-    it("should call the setSaturation method with the current value of saturation minus the provided value", function() {
-      spyOn(Color.prototype, 'setSaturation');
-
-      for (var amount = 0; amount <= 100; amount += 25)
-      {
-        /*
-        spyOn breaks the setSaturation method, so it can't actually be used here.
-        */
-        var color = (new Color(0, 0, 0));
-        color.setHSV(0, 50, 0);
-        color.setSaturation.reset();
-        color.desaturate(amount);
-        expect(color.setSaturation).wasCalledWith(50 - amount);
-      }
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.desaturate(0)).toEqual(color);
-    });
-  });
-
-  describe("lighten() method", function() {
-    it("should call the setValue() method with the current value of the value component plus the provided value", function() {
-      spyOn(Color.prototype, 'setValue');
-
-      for (var amount = 0; amount <= 100; amount += 25)
-      {
-        /*
-        spyOn breaks the setValue method, so it can't actually be used here.
-        */
-        var color = (new Color(0, 0, 0));
-        color.setHSV(0, 0, 50);
-        color.setValue.reset();
-        color.lighten(amount);
-        expect(color.setValue).wasCalledWith(50 + amount);
-      }
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.lighten(0)).toEqual(color);
-    });
-  });
-
-  describe("darken() method", function() {
-    it("should call the setValue() method with the current value of the value component plus the provided value", function() {
-      spyOn(Color.prototype, 'setValue');
-
-      for (var amount = 0; amount <= 100; amount += 25)
-      {
-        /*
-        spyOn breaks the setValue method, so it can't actually be used here.
-        */
-        var color = (new Color(0, 0, 0));
-        color.setHSV(0, 0, 50);
-        color.setValue.reset();
-        color.darken(amount);
-        expect(color.setValue).wasCalledWith(50 - amount);
-      }
-    });
-
-    it("should return the current color", function() {
-      var color = new Color(0, 0, 0);
-      expect(color.darken(0)).toEqual(color);
-    });
-  });
-
-  describe("equals() method", function() {
-    it ("should return true if two colors are exactly the same", function() {
-      var color1 = new Color(255, 0, 0);
-      var color2 = new Color(255, 0, 0);
-      expect(color1.equals(color2)).toEqual(true);
-    });
-    
-    it ("should return true if two have the same RGB values but different hues", function() {
-      var color1 = new Color(0, 0, 0);
-      var color2 = new Color(0, 0, 0);
-      color2.setHue(180);
-      expect(color1.equals(color2)).toEqual(true);
-    });
-    
-    it ("should return true if two have the same RGB values but different saturations", function() {
-      var color1 = new Color(0, 0, 0);
-      var color2 = new Color(0, 0, 0);
-      color2.setSaturation(50);
-      expect(color1.equals(color2)).toEqual(true);
-    });
-    
-    it ("should return false if two colors have different red components", function() {
-      var color1 = new Color(255, 0, 0);
-      var color2 = new Color(0, 0, 0);
-      expect(color1.equals(color2)).toEqual(false);
-    });
-    
-    it ("should return false if two colors have different green components", function() {
-      var color1 = new Color(0, 255, 0);
-      var color2 = new Color(0, 0, 0);
-      expect(color1.equals(color2)).toEqual(false);
-    });
-    
-    it ("should return false if two colors have different blue components", function() {
-      var color1 = new Color(0, 0, 255);
-      var color2 = new Color(0, 0, 0);
-      expect(color1.equals(color2)).toEqual(false);
-    });
-
-    it("should return false if the provided object is not a color", function() {
-      var color = new Color(0, 0, 0);
-      var objects = [null, undefined, true, false, function() {}, [], [0, 0, 0], {}];
-
-        for (var i = 0; i < objects.length; i++)
-          expect(color.equals(objects[i])).toEqual(false);
-    });
-  });
-
-  describe("clone() method", function() {
-    it("should return a color object", function() {
-      var color = new Color(0, 127, 255);
-      var clone = color.clone();
-
-      expect(clone instanceof Color).toEqual(true);
-    });
-
-    it("should have all of the same properties as the original color", function() {
-      var color = new Color(0, 127, 255);
-      var clone = color.clone();
-
-      expect(color.red() === clone.red()).toEqual(true);
-      expect(color.green() === clone.green()).toEqual(true);
-      expect(color.blue() === clone.blue()).toEqual(true);
-      expect(color.hue() === clone.hue()).toEqual(true);
-      expect(color.saturation() === clone.saturation()).toEqual(true);
-      expect(color.value() === clone.value()).toEqual(true);
-      expect(color.hex() === clone.hex()).toEqual(true);
-      expect(color.toString() === clone.toString()).toEqual(true);
-    });
-
-    it("should not be the same object as the original", function() {
-      var color = new Color(0, 127, 255);
-      var clone = color.clone();
-
-      expect(color === clone).toEqual(false);
-    });
-  });
-
-  describe("Color.rgb() method", function() {
-    it("should return a new color", function() {
-      expect(Color.rgb(0, 0, 0) instanceof Color).toEqual(true);
-    });
-
-    it("should call the setRGB() method with the provided parameters", function() {
-      spyOn(Color.prototype, "setRGB");
-      Color.rgb(30, 50, 70);
-      expect(Color.prototype.setRGB).wasCalledWith(30, 50, 70);
-    });
-  });
-
-  describe("Color.hsv() method", function() {
-    it("should return a new color", function() {
-      expect(Color.hsv(0, 0, 0) instanceof Color).toEqual(true);
-    });
-
-    it("should call the setHSV() method with the provided parameters", function() {
-      spyOn(Color.prototype, "setHSV");
-      Color.hsv(30, 50, 70);
-      expect(Color.prototype.setHSV).wasCalledWith(30, 50, 70);
-    });
-  });
-
-  describe("Color.hex() method", function() {
-    it("should return a new color", function() {
-      expect(Color.hex("#FFFFFF") instanceof Color).toEqual(true);
-    });
-
-    it("should call the setHex() method with the provided parameters", function() {
-      spyOn(Color.prototype, "setHex");
-      Color.hex("#FFFFFF");
-      expect(Color.prototype.setHex).wasCalledWith("#FFFFFF");
-    });
-  });
-
-  describe("Color.random() method", function() {
-    it("should return a new color", function() {
-      expect(Color.random() instanceof Color).toEqual(true);
-    });
-  });
+Color.antiqueWhite = function()
+{
+  return Color.rgb(250, 235, 215);
+};
+
+/*
+Returns the color aqua.
+*/
+Color.aqua = function()
+{
+  return Color.rgb(0, 255, 255);
+};
+
+/*
+Returns the color aquamarine.
+*/
+Color.aquamarine = function()
+{
+  return Color.rgb(127, 255, 212);
+};
+
+/*
+Returns the color azure.
+*/
+Color.azure = function()
+{
+  return Color.rgb(240, 255, 255);
+};
+
+/*
+Returns the color beige.
+*/
+Color.beige = function()
+{
+  return Color.rgb(245, 245, 220);
+};
+
+/*
+Returns the color bisque.
+*/
+Color.bisque = function()
+{
+  return Color.rgb(255, 228, 196);
+};
+
+/*
+Returns the color black.
+*/
+Color.black = function()
+{
+  return Color.rgb(0, 0, 0);
+};
+
+/*
+Returns the color blanched almond.
+*/
+Color.blanchedAlmond = function()
+{
+  return Color.rgb(255, 235, 205);
+};
+
+/*
+Returns the color blue.
+*/
+Color.blue = function()
+{
+  return Color.rgb(0, 0, 255);
+};
+
+/*
+Returns the color blue violet.
+*/
+Color.blueViolet = function()
+{
+  return Color.rgb(138, 43, 226);
+};
+
+/*
+Returns the color brown.
+*/
+Color.brown = function()
+{
+  return Color.rgb(165, 42, 42);
+};
+
+/*
+Returns the color burlywood.
+*/
+Color.burlywood = function()
+{
+  return Color.rgb(222, 184, 135);
+};
+
+/*
+Returns the color cadet blue.
+*/
+Color.cadetBlue = function()
+{
+  return Color.rgb(95, 158, 160);
+};
+
+/*
+Returns the color chartreuse.
+*/
+Color.chartreuse = function()
+{
+  return Color.rgb(127, 255, 0);
+};
+
+/*
+Returns the color chocolate.
+*/
+Color.chocolate = function()
+{
+  return Color.rgb(210, 105, 30);
+};
+
+/*
+Returns the color coral.
+*/
+Color.coral = function()
+{
+  return Color.rgb(255, 127, 80);
+};
+
+/*
+Returns the color cornflower blue.
+*/
+Color.cornflowerBlue = function()
+{
+  return Color.rgb(100, 149, 237);
+};
+
+/*
+Returns the color cornsilk.
+*/
+Color.cornsilk = function()
+{
+  return Color.rgb(255, 248, 220);
+};
+
+/*
+Returns the color crimson.
+*/
+Color.crimson = function()
+{
+  return Color.rgb(220, 20, 60);
+};
+
+/*
+Returns the color cyan.
+*/
+Color.cyan = function()
+{
+  return Color.rgb(0, 255, 255);
+};
+
+/*
+Returns the color dark blue.
+*/
+Color.darkBlue = function()
+{
+  return Color.rgb(0, 0, 139);
+};
+
+/*
+Returns the color dark cyan.
+*/
+Color.darkCyan = function()
+{
+  return Color.rgb(0, 139, 139);
+};
+
+/*
+Returns the color dark goldenrod.
+*/
+Color.darkGoldenrod = function()
+{
+  return Color.rgb(184, 134, 11);
+};
+
+/*
+Returns the color dark gray.
+*/
+Color.darkGray = function()
+{
+  return Color.rgb(169, 169, 169);
+};
+
+/*
+Returns the color dark green.
+*/
+Color.darkGreen = function()
+{
+  return Color.rgb(0, 100, 0);
+};
+
+/*
+Returns the color dark grey.
+*/
+Color.darkGrey = function()
+{
+  return Color.rgb(169, 169, 169);
+};
+
+/*
+Returns the color dark khaki.
+*/
+Color.darkKhaki = function()
+{
+  return Color.rgb(189, 183, 107);
+};
+
+/*
+Returns the color dark magenta.
+*/
+Color.darkMagenta = function()
+{
+  return Color.rgb(139, 0, 139);
+};
+
+/*
+Returns the color dark olive green.
+*/
+Color.darkOliveGreen = function()
+{
+  return Color.rgb(85, 107, 47);
+};
+
+/*
+Returns the color dark orange.
+*/
+Color.darkOrange = function()
+{
+  return Color.rgb(255, 140, 0);
+};
+
+/*
+Returns the color dark orchid.
+*/
+Color.darkOrchid = function()
+{
+  return Color.rgb(153, 50, 204);
+};
+
+/*
+Returns the color dark red.
+*/
+Color.darkRed = function()
+{
+  return Color.rgb(139, 0, 0);
+};
+
+/*
+Returns the color dark salmon.
+*/
+Color.darkSalmon = function()
+{
+  return Color.rgb(233, 150, 122);
+};
+
+/*
+Returns the color dark sea green.
+*/
+Color.darkSeaGreen = function()
+{
+  return Color.rgb(143, 188, 143);
+};
+
+/*
+Returns the color dark slate blue.
+*/
+Color.darkSlateBlue = function()
+{
+  return Color.rgb(72, 61, 139);
+};
+
+/*
+Returns the color dark slate gray.
+*/
+Color.darkSlateGray = function()
+{
+  return Color.rgb(47, 79, 79);
+};
+
+/*
+Returns the color dark slate grey.
+*/
+Color.darkSlateGrey = function()
+{
+  return Color.rgb(47, 79, 79);
+};
+
+/*
+Returns the color dark turquoise.
+*/
+Color.darkTurquoise = function()
+{
+  return Color.rgb(0, 206, 209);
+};
+
+/*
+Returns the color dark violet.
+*/
+Color.darkViolet = function()
+{
+  return Color.rgb(148, 0, 211);
+};
+
+/*
+Returns the color deep pink.
+*/
+Color.deepPink = function()
+{
+  return Color.rgb(255, 20, 147);
+};
+
+/*
+Returns the color deep sky blue.
+*/
+Color.deepSkyBlue = function()
+{
+  return Color.rgb(0, 191, 255);
+};
+
+/*
+Returns the color dim gray.
+*/
+Color.dimGray = function()
+{
+  return Color.rgb(105, 105, 105);
+};
+
+/*
+Returns the color dim grey.
+*/
+Color.dimGrey = function()
+{
+  return Color.rgb(105, 105, 105);
+};
+
+/*
+Returns the color dodger blue.
+*/
+Color.dodgerBlue = function()
+{
+  return Color.rgb(30, 144, 255);
+};
+
+/*
+Returns the color firebrick.
+*/
+Color.firebrick = function()
+{
+  return Color.rgb(178, 34, 34);
+};
+
+/*
+Returns the color floral white.
+*/
+Color.floralWhite = function()
+{
+  return Color.rgb(255, 250, 240);
+};
+
+/*
+Returns the color forest green.
+*/
+Color.forestGreen = function()
+{
+  return Color.rgb(34, 139, 34);
+};
+
+/*
+Returns the color fuchsia.
+*/
+Color.fuchsia = function()
+{
+  return Color.rgb(255, 0, 255);
+};
+
+/*
+Returns the color gainsboro.
+*/
+Color.gainsboro = function()
+{
+  return Color.rgb(220, 220, 220);
+};
+
+/*
+Returns the color ghost white.
+*/
+Color.ghostWhite = function()
+{
+  return Color.rgb(248, 248, 255);
+};
+
+/*
+Returns the color gold.
+*/
+Color.gold = function()
+{
+  return Color.rgb(255, 215, 0);
+};
+
+/*
+Returns the color goldenrod.
+*/
+Color.goldenrod = function()
+{
+  return Color.rgb(218, 165, 32);
+};
+
+/*
+Returns the color gray.
+*/
+Color.gray = function()
+{
+  return Color.rgb(128, 128, 128);
+};
+
+/*
+Returns the color green.
+*/
+Color.green = function()
+{
+  return Color.rgb(0, 128, 0);
+};
+
+/*
+Returns the color green yellow.
+*/
+Color.greenYellow = function()
+{
+  return Color.rgb(173, 255, 47);
+};
+
+/*
+Returns the color grey.
+*/
+Color.grey = function()
+{
+  return Color.rgb(128, 128, 128);
+};
+
+/*
+Returns the color honeydew.
+*/
+Color.honeydew = function()
+{
+  return Color.rgb(240, 255, 240);
+};
+
+/*
+Returns the color hot pink.
+*/
+Color.hotPink = function()
+{
+  return Color.rgb(255, 105, 180);
+};
+
+/*
+Returns the color indian red.
+*/
+Color.indianRed = function()
+{
+  return Color.rgb(205, 92, 92);
+};
+
+/*
+Returns the color indigo.
+*/
+Color.indigo = function()
+{
+  return Color.rgb(75, 0, 130);
+};
+
+/*
+Returns the color ivory.
+*/
+Color.ivory = function()
+{
+  return Color.rgb(255, 255, 240);
+};
+
+/*
+Returns the color khaki.
+*/
+Color.khaki = function()
+{
+  return Color.rgb(240, 230, 140);
+};
+
+/*
+Returns the color lavender.
+*/
+Color.lavender = function()
+{
+  return Color.rgb(230, 230, 250);
+};
+
+/*
+Returns the color lavender blush.
+*/
+Color.lavenderBlush = function()
+{
+  return Color.rgb(255, 240, 245);
+};
+
+/*
+Returns the color lawn green.
+*/
+Color.lawnGreen = function()
+{
+  return Color.rgb(124, 252, 0);
+};
+
+/*
+Returns the color lemon chiffon.
+*/
+Color.lemonChiffon = function()
+{
+  return Color.rgb(255, 250, 205);
+};
+
+/*
+Returns the color light blue.
+*/
+Color.lightBlue = function()
+{
+  return Color.rgb(173, 216, 230);
+};
+
+/*
+Returns the color light coral.
+*/
+Color.lightCoral = function()
+{
+  return Color.rgb(240, 128, 128);
+};
+
+/*
+Returns the color light cyan.
+*/
+Color.lightCyan = function()
+{
+  return Color.rgb(224, 255, 255);
+};
+
+/*
+Returns the color light goldenrod yellow.
+*/
+Color.lightGoldenrodYellow = function()
+{
+  return Color.rgb(250, 250, 210);
+};
+
+/*
+Returns the color light gray.
+*/
+Color.lightGray = function()
+{
+  return Color.rgb(211, 211, 211);
+};
+
+/*
+Returns the color light green.
+*/
+Color.lightGreen = function()
+{
+  return Color.rgb(144, 238, 144);
+};
+
+/*
+Returns the color light grey.
+*/
+Color.lightGrey = function()
+{
+  return Color.rgb(211, 211, 211);
+};
+
+/*
+Returns the color light pink.
+*/
+Color.lightPink = function()
+{
+  return Color.rgb(255, 182, 193);
+};
+
+/*
+Returns the color light salmon.
+*/
+Color.lightSalmon = function()
+{
+  return Color.rgb(255, 160, 122);
+};
+
+/*
+Returns the color light sea green.
+*/
+Color.lightSeaGreen = function()
+{
+  return Color.rgb(32, 178, 170);
+};
+
+/*
+Returns the color light sky blue.
+*/
+Color.lightSkyBlue = function()
+{
+  return Color.rgb(135, 206, 250);
+};
+
+/*
+Returns the color light slate gray.
+*/
+Color.lightSlateGray = function()
+{
+  return Color.rgb(119, 136, 153);
+};
+
+/*
+Returns the color light slate grey.
+*/
+Color.lightSlateGrey = function()
+{
+  return Color.rgb(119, 136, 153);
+};
+
+/*
+Returns the color light steel blue.
+*/
+Color.lightSteelBlue = function()
+{
+  return Color.rgb(176, 196, 222);
+};
+
+/*
+Returns the color light yellow.
+*/
+Color.lightYellow = function()
+{
+  return Color.rgb(255, 255, 224);
+};
+
+/*
+Returns the color lime.
+*/
+Color.lime = function()
+{
+  return Color.rgb(0, 255, 0);
+};
+
+/*
+Returns the color lime green.
+*/
+Color.limeGreen = function()
+{
+  return Color.rgb(50, 205, 50);
+};
+
+/*
+Returns the color linen.
+*/
+Color.linen = function()
+{
+  return Color.rgb(250, 240, 230);
+};
+
+/*
+Returns the color magenta.
+*/
+Color.magenta = function()
+{
+  return Color.rgb(255, 0, 255);
+};
+
+/*
+Returns the color maroon.
+*/
+Color.maroon = function()
+{
+  return Color.rgb(128, 0, 0);
+};
+
+/*
+Returns the color medium aquamarine.
+*/
+Color.mediumAquamarine = function()
+{
+  return Color.rgb(102, 205, 170);
+};
+
+/*
+Returns the color medium blue.
+*/
+Color.mediumBlue = function()
+{
+  return Color.rgb(0, 0, 205);
+};
+
+/*
+Returns the color medium orchid.
+*/
+Color.mediumOrchid = function()
+{
+  return Color.rgb(186, 85, 211);
+};
+
+/*
+Returns the color medium purple.
+*/
+Color.mediumPurple = function()
+{
+  return Color.rgb(147, 112, 219);
+};
+
+/*
+Returns the color medium sea green.
+*/
+Color.mediumSeaGreen = function()
+{
+  return Color.rgb(60, 179, 113);
+};
+
+/*
+Returns the color medium slate blue.
+*/
+Color.mediumSlateBlue = function()
+{
+  return Color.rgb(123, 104, 238);
+};
+
+/*
+Returns the color medium spring green.
+*/
+Color.mediumSpringGreen = function()
+{
+  return Color.rgb(0, 250, 154);
+};
+
+/*
+Returns the color medium turquoise.
+*/
+Color.mediumTurquoise = function()
+{
+  return Color.rgb(72, 209, 204);
+};
+
+/*
+Returns the color medium violet red.
+*/
+Color.mediumVioletRed = function()
+{
+  return Color.rgb(199, 21, 133);
+};
+
+/*
+Returns the color midnight blue.
+*/
+Color.midnightBlue = function()
+{
+  return Color.rgb(25, 25, 112);
+};
+
+/*
+Returns the color mint cream.
+*/
+Color.mintCream = function()
+{
+  return Color.rgb(245, 255, 250);
+};
+
+/*
+Returns the color misty rose.
+*/
+Color.mistyRose = function()
+{
+  return Color.rgb(255, 228, 225);
+};
+
+/*
+Returns the color moccasin.
+*/
+Color.moccasin = function()
+{
+  return Color.rgb(255, 228, 181);
+};
+
+/*
+Returns the color navajo white.
+*/
+Color.navajoWhite = function()
+{
+  return Color.rgb(255, 222, 173);
+};
+
+/*
+Returns the color navy.
+*/
+Color.navy = function()
+{
+  return Color.rgb(0, 0, 128);
+};
+
+/*
+Returns the color old lace.
+*/
+Color.oldLace = function()
+{
+  return Color.rgb(253, 245, 230);
+};
+
+/*
+Returns the color olive.
+*/
+Color.olive = function()
+{
+  return Color.rgb(128, 128, 0);
+};
+
+/*
+Returns the color olive drab.
+*/
+Color.oliveDrab = function()
+{
+  return Color.rgb(107, 142, 35);
+};
+
+/*
+Returns the color orange.
+*/
+Color.orange = function()
+{
+  return Color.rgb(255, 165, 0);
+};
+
+/*
+Returns the color orange red.
+*/
+Color.orangeRed = function()
+{
+  return Color.rgb(255, 69, 0);
+};
+
+/*
+Returns the color orchid.
+*/
+Color.orchid = function()
+{
+  return Color.rgb(218, 112, 214);
+};
+
+/*
+Returns the color pale goldenrod.
+*/
+Color.paleGoldenrod = function()
+{
+  return Color.rgb(238, 232, 170);
+};
+
+/*
+Returns the color pale green.
+*/
+Color.paleGreen = function()
+{
+  return Color.rgb(152, 251, 152);
+};
+
+/*
+Returns the color pale turquoise.
+*/
+Color.paleTurquoise = function()
+{
+  return Color.rgb(175, 238, 238);
+};
+
+/*
+Returns the color pale violet red.
+*/
+Color.paleVioletRed = function()
+{
+  return Color.rgb(219, 112, 147);
+};
+
+/*
+Returns the color papaya whip.
+*/
+Color.papayaWhip = function()
+{
+  return Color.rgb(255, 239, 213);
+};
+
+/*
+Returns the color peach puff.
+*/
+Color.peachPuff = function()
+{
+  return Color.rgb(255, 218, 185);
+};
+
+/*
+Returns the color peru.
+*/
+Color.peru = function()
+{
+  return Color.rgb(205, 133, 63);
+};
+
+/*
+Returns the color pink.
+*/
+Color.pink = function()
+{
+  return Color.rgb(255, 192, 203);
+};
+
+/*
+Returns the color plum.
+*/
+Color.plum = function()
+{
+  return Color.rgb(221, 160, 221);
+};
+
+/*
+Returns the color powder blue.
+*/
+Color.powderBlue = function()
+{
+  return Color.rgb(176, 224, 230);
+};
+
+/*
+Returns the color purple.
+*/
+Color.purple = function()
+{
+  return Color.rgb(128, 0, 128);
+};
+
+/*
+Returns the color red.
+*/
+Color.red = function()
+{
+  return Color.rgb(255, 0, 0);
+};
+
+/*
+Returns the color rosy brown.
+*/
+Color.rosyBrown = function()
+{
+  return Color.rgb(188, 143, 143);
+};
+
+/*
+Returns the color royal blue.
+*/
+Color.royalBlue = function()
+{
+  return Color.rgb(65, 105, 225);
+};
+
+/*
+Returns the color saddle brown.
+*/
+Color.saddleBrown = function()
+{
+  return Color.rgb(139, 69, 19);
+};
+
+/*
+Returns the color salmon.
+*/
+Color.salmon = function()
+{
+  return Color.rgb(250, 128, 114);
+};
+
+/*
+Returns the color sandy brown.
+*/
+Color.sandyBrown = function()
+{
+  return Color.rgb(244, 164, 96);
+};
+
+/*
+Returns the color sea green.
+*/
+Color.seaGreen = function()
+{
+  return Color.rgb(46, 139, 87);
+};
+
+/*
+Returns the color seashell.
+*/
+Color.seashell = function()
+{
+  return Color.rgb(255, 245, 238);
+};
+
+/*
+Returns the color sienna.
+*/
+Color.sienna = function()
+{
+  return Color.rgb(160, 82, 45);
+};
+
+/*
+Returns the color silver.
+*/
+Color.silver = function()
+{
+  return Color.rgb(192, 192, 192);
+};
+
+/*
+Returns the color sky blue.
+*/
+Color.skyBlue = function()
+{
+  return Color.rgb(135, 206, 235);
+};
+
+/*
+Returns the color slate blue.
+*/
+Color.slateBlue = function()
+{
+  return Color.rgb(106, 90, 205);
+};
+
+/*
+Returns the color slate gray.
+*/
+Color.slateGray = function()
+{
+  return Color.rgb(112, 128, 144);
+};
+
+/*
+Returns the color slate grey.
+*/
+Color.slateGrey = function()
+{
+  return Color.rgb(112, 128, 144);
+};
+
+/*
+Returns the color snow.
+*/
+Color.snow = function()
+{
+  return Color.rgb(255, 250, 250);
+};
+
+/*
+Returns the color spring green.
+*/
+Color.springGreen = function()
+{
+  return Color.rgb(0, 255, 127);
+};
+
+/*
+Returns the color steel blue.
+*/
+Color.steelBlue = function()
+{
+  return Color.rgb(70, 130, 180);
+};
+
+/*
+Returns the color tan.
+*/
+Color.tan = function()
+{
+  return Color.rgb(210, 180, 140);
+};
+
+/*
+Returns the color teal.
+*/
+Color.teal = function()
+{
+  return Color.rgb(0, 128, 128);
+};
+
+/*
+Returns the color thistle.
+*/
+Color.thistle = function()
+{
+  return Color.rgb(216, 191, 216);
+};
+
+/*
+Returns the color tomato.
+*/
+Color.tomato = function()
+{
+  return Color.rgb(255, 99, 71);
+};
+
+/*
+Returns the color turquoise.
+*/
+Color.turquoise = function()
+{
+  return Color.rgb(64, 224, 208);
+};
+
+/*
+Returns the color violet.
+*/
+Color.violet = function()
+{
+  return Color.rgb(238, 130, 238);
+};
+
+/*
+Returns the color wheat.
+*/
+Color.wheat = function()
+{
+  return Color.rgb(245, 222, 179);
+};
+
+/*
+Returns the color white.
+*/
+Color.white = function()
+{
+  return Color.rgb(255, 255, 255);
+};
+
+/*
+Returns the color white smoke.
+*/
+Color.whiteSmoke = function()
+{
+  return Color.rgb(245, 245, 245);
+};
+
+/*
+Returns the color yellow.
+*/
+Color.yellow = function()
+{
+  return Color.rgb(255, 255, 0);
+};
+
+/*
+Returns the color yellow green.
+*/
+Color.yellowGreen = function()
+{
+  return Color.rgb(154, 205, 50);
+};
 
   describe("Color.aliceBlue() function", function() {
     it("should return a color with the correct red value", function() {
@@ -3010,4 +3231,4 @@ describe("Color", function() {
       expect(Color.yellowGreen().blue()).toEqual(50);
     });
   });
-});
+
