@@ -199,7 +199,7 @@ var hue = color.hue();               // hue = 60
 var saturation = color.saturation(); // saturation = 100
 var value = color.value();           // value = 100
 
-var hex = color.hex();               // hex = "#FFFF00";
+var hex = color.hex();               // hex = "#FFFF00"
 var string = color.toString();       // string = "#FFFF00"
 ```
 
