@@ -1,6 +1,6 @@
 # color.js
 
-color.js is a simple JavaScript color library.  It's designed to be complete, flexible, fast, and dependency-free.  The library is available here:
+color.js is a JavaScript color library.  It's designed to be complete, flexible, fast, and dependency-free.  The library is available here:
 
 * [Unminified and Commented](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.js "color-1.0.0.js")
 * [Minified](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.min.js "color-1.0.0.min.js") 
