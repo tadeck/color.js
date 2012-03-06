@@ -1,6 +1,10 @@
 # color.js
 
-color.js is a simple JavaScript color library.  It's designed to be complete, flexible, fast, and dependency-free.  color.js can be downloaded as an [uncompressed file](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.js "color-1.0.0.js"), a [compressed file](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.min.js "color-1.0.0.min.js") and a [compressed and gzipped file](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.min.js.gz "color-1.0.0.min.js.gz").
+color.js is a simple JavaScript color library.  It's designed to be complete, flexible, fast, and dependency-free.  The library is available here:
+
+* [Unminified and Commented](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.js "color-1.0.0.js")
+* [Minified](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.min.js "color-1.0.0.min.js") 
+* [Compressed and Minified](https://github.com/downloads/LandonSchropp/color.js/color-1.0.0.min.js.gz "color-1.0.0.min.js.gz").
 
 color.js is open source and is released under the [MIT License](http://en.wikipedia.org/wiki/MIT_License "MIT License").
 
