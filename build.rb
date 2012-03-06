@@ -46,7 +46,7 @@ end
 
 # check all of the files and delete them if they match the generated patterns	
 file_paths.each do |file_path|
-	if file_path =~ /color-.+\.js\z/ or file_path =~ /color-.+\.min\.js\.gz\z/
+	if file_path =~ /color-.+\.js\z/ or file_path =~ /color-.+\.min\.js(?:\.gz)?\z/
 		File.delete(file_path)
 	end
 end
@@ -67,4 +67,4 @@ FileUtils.cp(color_path, new_color_compressed_path)
 system("uglifyjs --overwrite #{new_color_compressed_path}")
 
 # gzip the compressed file
-system("gzip #{new_color_compressed_path}")
+system("gzip -c #{new_color_compressed_path} > #{new_color_compressed_path}.gz")
