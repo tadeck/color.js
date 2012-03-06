@@ -244,7 +244,7 @@ color.darken(25);
 All mutator methods return the color object.  This allows them to be chained.
 
 ``` javascript
-color.setHue(40).desaturate(30).darken(10);
+new Color().setHue(40).desaturate(30).darken(10);
 ```
 
 
