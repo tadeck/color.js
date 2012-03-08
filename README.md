@@ -233,7 +233,7 @@ color.setHex("FFFFFF");
 color.setHex("FFF");
 
 // adjust the hue of the color
-color.rotateHue(-30);
+color.rotate(-30);
 color.complement();
 
 // increase and decrease the saturation of the color
