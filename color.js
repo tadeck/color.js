@@ -343,7 +343,7 @@ rotate the hue, expressed in degrees.  If the hue is rotated to a value outside 
 it will be computed modulo 360.  This method will throw an exception if the provided argument is
 not a number.  This method returns the current color object.
 */
-Color.prototype.rotateHue = function(amount)
+Color.prototype.rotate = function(amount)
 {
 	this.setHue(this._hue + amount);
 	return this;

@@ -658,11 +658,11 @@ describe("Color", function() {
     });
   });
 
-  describe("rotateHue() method", function() {
+  describe("rotate() method", function() {
 
     it("should return the current color", function() {
       var color = new Color(0, 0, 0);
-      expect(color.rotateHue(0)).toEqual(color);
+      expect(color.rotate(0)).toEqual(color);
     });
 
     describe("when the provided value is positive", function() {
@@ -673,7 +673,7 @@ describe("Color", function() {
         it("should call setHue with the current value plus the provided value", function() {
           var color = new Color(0, 0, 0).setHue(30);
           spyOn(Color.prototype, 'setHue');
-          color.rotateHue(60);
+          color.rotate(60);
           expect(color.setHue).wasCalledWith(90);
         });
       });
@@ -685,7 +685,7 @@ describe("Color", function() {
         it("should call setHue with the current value plus the provided value", function() {
           var color = new Color(0, 0, 0).setHue(330);
           spyOn(Color.prototype, 'setHue');
-          color.rotateHue(60);
+          color.rotate(60);
           expect(color.setHue).wasCalledWith(390);
         });
       });
@@ -699,7 +699,7 @@ describe("Color", function() {
         it("should call setHue with the current value plus the provided value", function() {
           var color = new Color(0, 0, 0).setHue(330);
           spyOn(Color.prototype, 'setHue');
-          color.rotateHue(-60);
+          color.rotate(-60);
           expect(color.setHue).wasCalledWith(270);
         });
       });
@@ -711,7 +711,7 @@ describe("Color", function() {
         it("should call setHue with the current value plus the provided value", function() {
           var color = new Color(0, 0, 0).setHue(30);
           spyOn(Color.prototype, 'setHue');
-          color.rotateHue(-60);
+          color.rotate(-60);
           expect(color.setHue).wasCalledWith(-30);
         });
       });
