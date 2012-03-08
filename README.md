@@ -24,7 +24,7 @@ var navy = new Color(new Color.navy()); // copy constructor
 
 // color model functions.
 var maroon = Color.rgb(128, 0, 0);      // RGB color model
-var teal = Color.hsv(0, 128, 128);      // HSV color model
+var teal = Color.hsv(180, 100, 50);     // HSV color model
 
 // hexadecimal functions
 var cyan = Color.hex("#00FFFF");        // hexadecimal six digits with hash
